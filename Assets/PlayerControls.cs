@@ -31,17 +31,12 @@ public class PlayerControls : MonoBehaviour
         {
             m_jumpPressed = true;
         }
-    }
-
-    private void FixedUpdate()
-    {
         //adapted from some of the standard unity asset code
         float h_lstick = Input.GetAxis("Horizontal");
         float v_lstick = Input.GetAxis("Vertical");
 
-        Debug.Log(v_lstick);
         //camera relative input
-        if(m_Camera != null)
+        if (m_Camera != null)
         {
             m_CameraForward = Vector3.Scale(m_Camera.forward, new Vector3(1, 0, 1)).normalized;
 
@@ -52,5 +47,10 @@ public class PlayerControls : MonoBehaviour
         }
 
         m_jumpPressed = false;
+    }
+
+    private void FixedUpdate()
+    {
+      
     }
 }
