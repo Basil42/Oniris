@@ -56,6 +56,6 @@ public class PH_Movement : MonoBehaviour
         //a basic movement though, since it depends kind of heavily on that.
 
        // transform.position = new Vector3(transform.position.x + moveHorizontal * 0.1f, transform.position.y + jump, transform.position.z + moveVertical * 0.1f);
-        transform.position = new Vector3(transform.position.x + Camera.main.transform.forward.x * moveVertical * 0.1f, transform.position.y + jump, transform.position.z + Camera.main.transform.forward.z * moveVertical * 0.1f);
+        transform.position = new Vector3(transform.position.x + Camera.main.transform.forward.x * moveVertical * 0.3f, transform.position.y + jump, transform.position.z + Camera.main.transform.forward.z * moveVertical * 0.3f);
     }
 }
