@@ -2,24 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+[RequireComponent(typeof (CharacterController))]
+public class PlayerMovement : MonoBehaviour 
 {
     private CharacterController controller;
-    public float CharacterSpeed = 20.0f;
-    public float steeringSpeed = 1.0f;
+    public float m_RunningSpeed = 1.0f;//the walk animation runs if the input vector is small enough
+    public float m_SteeringSpeed = 1.0f;
+    public float m_gravity = 10.0f;
+    private Vector3 MovementVector;
 
-    enum controlState//the animator should ultimately removethe need for this,I put it there just in case it is needed
-    {
-        walking,
-        running,
-        sprinting,
-        airborne,
-        falling
-    }
+    
 
     private void Awake()
     {
-        controller = GetComponentInChildren<CharacterController>();
+        controller = GetComponent<CharacterController>();
     }
     // Update is called once per frame
     void Update()
@@ -29,22 +25,35 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (Input.GetButtonDown("Jump"))
-        {
-            Jump();
-        }
+        
 
-        //transform.rotation = 
+        
 
 
 
     }
 
-    private void Jump()
+    public void Jump(bool buttonPress)
     {
-        Debug.Log("Jump!");
+        if(buttonPress) Debug.Log("Jump!");
     }
 
+    public void Move(Vector3 inputVector)
+    {
+        if (controller.isGrounded)
+        {
+            
+            MovementVector = inputVector;
+            MovementVector = MovementVector * m_RunningSpeed;
+        }
+        else
+        {
+            Debug.Log("controller not grounded");
+            //put airborne behavior here
+        }
+        MovementVector.y = MovementVector.y - (m_gravity * Time.deltaTime);
 
+        controller.Move(MovementVector);
+    }
 
 }
