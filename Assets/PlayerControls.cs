@@ -38,7 +38,7 @@ public class PlayerControls : MonoBehaviour
         //camera relative input
         if (m_Camera != null)
         {
-            m_CameraForward = Vector3.Scale(m_Camera.forward, new Vector3(1, 0, 1)).normalized;
+            m_CameraForward = Vector3.Scale(m_Camera.forward, new Vector3(1, 0, 1)).normalized;//1,0,1 is the ground plane
 
             m_lStickInputVector = h_lstick * m_Camera.right + v_lstick * m_CameraForward;
             //pass the input vector to the stuff that caresabout it
