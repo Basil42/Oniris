@@ -22,6 +22,7 @@ public class PlayerControls : MonoBehaviour
         {
             Debug.LogError("No valid player movement script found",gameObject);
         }
+        Debug.Log("controls on");
     }
 
     // Update is called once per frame

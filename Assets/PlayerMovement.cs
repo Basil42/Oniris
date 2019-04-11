@@ -21,6 +21,7 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
+        Debug.Log("controller aquired");
     }
     // Update is called once per frame
     void Update()
