@@ -8,7 +8,7 @@ public class PH_Movement : MonoBehaviour
     //private int speed;
     private Rigidbody rb;
 
-    public Camera playerCamera;
+    //public Camera playerCamera;
 
     // Start is called before the first frame update
     void Start()
