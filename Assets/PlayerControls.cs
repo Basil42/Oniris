@@ -10,7 +10,8 @@ public class PlayerControls : MonoBehaviour
     private Vector3 m_lStickInputVector; //camera relative
     private PlayerMovement m_playerMove;
     //internal state
-    private bool m_jumpPressed =false;
+    private bool m_jumpPressed = false;
+    private bool m_jumpHeld = false;
 
 
     // Start is called before the first frame update
@@ -31,6 +32,14 @@ public class PlayerControls : MonoBehaviour
         if (Input.GetButtonDown("Jump"))
         {
             m_jumpPressed = true;
+
+            CharacterController characterController = GetComponentInChildren<CharacterController>();
+            Debug.Log(characterController.isGrounded + " " + m_jumpPressed);
+
+            //if (Input.GetButton("Jump"))
+            //{
+            //    m_jumpHeld = true;
+            //}
         }
         //adapted from some of the standard unity asset code
         float h_lstick = Input.GetAxis("Horizontal");
@@ -43,8 +52,9 @@ public class PlayerControls : MonoBehaviour
 
             m_lStickInputVector = h_lstick * m_Camera.right + v_lstick * m_CameraForward;
             //pass the input vector to the stuff that caresabout it
-            m_playerMove.Move(m_lStickInputVector);
             m_playerMove.Jump(m_jumpPressed);
+            m_playerMove.Move(m_lStickInputVector);
+           
         }
 
         m_jumpPressed = false;
