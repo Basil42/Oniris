@@ -78,9 +78,7 @@ public class PlayerMovement : MonoBehaviour
 
             //Short jump behaviour
 
-            //m_longJump gets true whenever the player jumps.
-            //This makes it so once the player no longer holds jump, they can not go back to slow fall.
-            //Might still go into the long jump the first frame even when not holding jump, this probably is fine.
+            // could do this another way: apply force if getbuttonDown, if not stop applying force
 
             if (m_jumpTransitionTimer < m_jumpTransitionLimit && Input.GetButtonUp("Jump"))
             {
@@ -93,11 +91,8 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
-                
                 MovementVector.y = MovementVector.y - (m_gravity * Time.deltaTime);
                 m_jumpTransitionTimer += Time.deltaTime;
-
-                
             }
 
             if (controller.isGrounded)
