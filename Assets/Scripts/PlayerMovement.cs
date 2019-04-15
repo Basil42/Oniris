@@ -19,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool m_shortJump;
     private float m_jumpTransitionTimer = 0;
-    public float m_jumpTransitionLimit = 0.3f;
+    public float m_jumpTransitionLimit = 0.3f; //Limit -> Length?
 
     
 
