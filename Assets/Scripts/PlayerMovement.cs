@@ -59,7 +59,23 @@ public class PlayerMovement : MonoBehaviour
 
     public void Move(Vector3 inputVector)
     {
-        if (controller.isGrounded)
+
+        RaycastHit hit;
+        // Does the ray intersect any objects?
+        if (Physics.Raycast(transform.position + new Vector3(0, 0.1f, 0), transform.TransformDirection(Vector3.down), out hit, 1))
+        {
+            Debug.DrawRay(transform.position + new Vector3(0, 0.1f, 0), transform.TransformDirection(Vector3.down) * hit.distance, Color.yellow);
+            Debug.Log("Did Hit");
+        }
+        else
+        {
+            Debug.DrawRay(transform.position + new Vector3(0, 0.1f, 0), transform.TransformDirection(Vector3.down) * 1000, Color.white);
+            Debug.Log("Did not Hit");
+        }
+
+
+
+        if (controller.isGrounded && Physics.Raycast(transform.position + new Vector3(0, 0.1f, 0), transform.TransformDirection(Vector3.down), out hit, 1))
         {
             //Lerp toward input vector
             MovementVector.x = inputVector.x;
