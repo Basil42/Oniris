@@ -19,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
     private bool m_airSwitch = false;
     private bool m_grounded = false;
 
+    private LayerMask blinkThrough;
     
 
     private Vector3 MovementVector;
@@ -33,6 +34,7 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
+        blinkThrough = ~ LayerMask.GetMask("Blinkable");
         Debug.Log("controller aquired");
     }
     // Update is called once per frame
@@ -41,9 +43,30 @@ public class PlayerMovement : MonoBehaviour
         GroundCheck();
     }
 
-    private void FixedUpdate()
+    private void LateUpdate()
     {
+        
+    }
 
+    public void Blink()
+    {
+        controller.enabled = false;
+        print("Don't Blink");
+        RaycastHit hit;
+
+        //TODO: Input direction
+        Physics.Raycast(transform.position + new Vector3(0, 0.1f, 0), transform.TransformDirection(Vector3.forward), out hit, 10, blinkThrough);
+
+        if (hit.distance == 0)
+        {
+            transform.position = transform.position + transform.forward * 10;
+        } else
+        {
+            transform.position = transform.position + transform.forward * (hit.distance - 0.5f);
+            print(hit.distance);
+        }
+        
+        controller.enabled = true;
     }
 
     public void Jump(bool buttonPress)
@@ -80,6 +103,8 @@ public class PlayerMovement : MonoBehaviour
 
             m_doubleJumped = false;
             m_airSwitch = false;
+
+
 
             //MovementVector.y = MovementVector.y - (m_gravity * Time.deltaTime);
             if (MovementVector.magnitude > 0.05f) transform.rotation = Quaternion.Slerp(transform.rotation,Quaternion.LookRotation(new Vector3(MovementVector.x,0.0f,MovementVector.z), Vector3.up), m_SteeringSpeed);
@@ -125,10 +150,8 @@ public class PlayerMovement : MonoBehaviour
                 
             }
         }
-        //if (m_grounded)
-        //{
-        //    MovementVector.y = MovementVector.y - (m_gravity * Time.deltaTime);
-        //}else 
+
+
         if (MovementVector.y < -1.0f && m_grounded)
         {
             
@@ -143,16 +166,22 @@ public class PlayerMovement : MonoBehaviour
     private void GroundCheck()
     {
         RaycastHit hit;
-
-        if (Physics.Raycast(transform.position + new Vector3(0, 0.1f, 0), transform.TransformDirection(Vector3.down), out hit, 0.1f))
+        RaycastHit hit2;
+        
+        
+        if (Physics.Raycast(transform.position + new Vector3(0, 0.1f, 0), transform.TransformDirection(Vector3.down), out hit, 0.1f) |
+            Physics.Raycast(transform.position + (transform.forward * 0.5f + transform.up * 0.1f), transform.TransformDirection(Vector3.down), out hit2, 0.3f)
+            )
         {
-            Debug.DrawRay(transform.position + new Vector3(0, 0.1f, 0), transform.TransformDirection(Vector3.down) * hit.distance, Color.yellow);
+            Debug.DrawRay(transform.position + new Vector3(0, 0.1f, 0), transform.TransformDirection(Vector3.down) * hit2.distance, Color.yellow);
+            Debug.DrawRay(transform.position + (transform.forward * 0.5f + transform.up * 0.3f), transform.TransformDirection(Vector3.down) * hit.distance, Color.red);
             Debug.Log("Did Hit");
             m_grounded = true;
         }
         else
         {
             Debug.DrawRay(transform.position + new Vector3(0, 0.1f, 0), transform.TransformDirection(Vector3.down) * 1000, Color.white);
+            Debug.DrawRay(transform.position + (transform.forward * 0.2f + transform.up * 0.1f), transform.TransformDirection(Vector3.down) * 1000, Color.white);
             Debug.Log("Did not Hit");
             m_grounded = false;
         }
