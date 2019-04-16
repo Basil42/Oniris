@@ -20,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
     private bool m_grounded = false;
 
     private LayerMask blinkThrough;
+    private Renderer[] blinkBodies;
     
 
     private Vector3 MovementVector;
@@ -35,7 +36,9 @@ public class PlayerMovement : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
         blinkThrough = ~ LayerMask.GetMask("Blinkable");
+        blinkBodies = GetComponentsInChildren<Renderer>();
         Debug.Log("controller aquired");
+
     }
     // Update is called once per frame
     void Update()
@@ -71,6 +74,12 @@ public class PlayerMovement : MonoBehaviour
         }
        // controller.enabled = true;
         controller.enabled = false;
+
+        foreach(Renderer renderer in blinkBodies)
+        {
+            renderer.enabled = false;
+        }
+
         Invoke("Appear", 1.3f);
         
         
@@ -79,6 +88,10 @@ public class PlayerMovement : MonoBehaviour
     private void Appear()
     {
         controller.enabled = true;
+        foreach (Renderer renderer in blinkBodies)
+        {
+            renderer.enabled = true;
+        }
     }
 
     public void Jump(bool buttonPress)
