@@ -21,6 +21,7 @@ public class PlayerMovement : MonoBehaviour
 
     private LayerMask blinkThrough;
     private Renderer[] blinkBodies;
+    public float blinkDelay = 1;
     
 
     private Vector3 MovementVector;
@@ -61,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
         inputVector = inputVector.normalized;
 
        
-        //Velocity, in air it might already keep it, unsure how it should behave on the ground
+        //Velocity, magnitude of movement gets applied in input direction after blink
         Physics.Raycast(transform.position + new Vector3(0, 0.1f, 0), transform.TransformDirection(Vector3.forward), out hit, 10, blinkThrough);
 
         if (hit.distance == 0)
@@ -72,26 +73,35 @@ public class PlayerMovement : MonoBehaviour
             transform.position = transform.position + inputVector * (hit.distance - 0.5f);
             print(hit.distance);
         }
-       // controller.enabled = true;
-        controller.enabled = false;
 
         foreach(Renderer renderer in blinkBodies)
         {
             renderer.enabled = false;
         }
 
-        Invoke("Appear", 1.3f);
-        
+        float mag = MovementVector.magnitude;
+
+        //Invoke("Appear", blinkDelay);
+        StartCoroutine(Appear(inputVector, mag));
         
     }
 
-    private void Appear()
+    private IEnumerator Appear(Vector3 direction, float magnitude)
     {
+        yield return new WaitForSeconds(blinkDelay);
+
         controller.enabled = true;
+
         foreach (Renderer renderer in blinkBodies)
         {
             renderer.enabled = true;
         }
+
+        MovementVector.x = direction.x;
+        MovementVector.z = direction.z;
+        MovementVector.y = 0;
+
+        MovementVector = MovementVector * magnitude;
     }
 
     public void Jump(bool buttonPress)
