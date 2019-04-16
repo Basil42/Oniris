@@ -48,24 +48,36 @@ public class PlayerMovement : MonoBehaviour
         
     }
 
-    public void Blink()
+    public void Blink(Vector3 inputVector)
     {
         controller.enabled = false;
         print("Don't Blink");
         RaycastHit hit;
 
-        //TODO: Input direction
+        inputVector.y = 0;
+        inputVector = inputVector.normalized;
+
+       
+        //Velocity, in air it might already keep it, unsure how it should behave on the ground
         Physics.Raycast(transform.position + new Vector3(0, 0.1f, 0), transform.TransformDirection(Vector3.forward), out hit, 10, blinkThrough);
 
         if (hit.distance == 0)
         {
-            transform.position = transform.position + transform.forward * 10;
+            transform.position = transform.position + inputVector * 10;
         } else
         {
-            transform.position = transform.position + transform.forward * (hit.distance - 0.5f);
+            transform.position = transform.position + inputVector * (hit.distance - 0.5f);
             print(hit.distance);
         }
+       // controller.enabled = true;
+        controller.enabled = false;
+        Invoke("Appear", 1.3f);
         
+        
+    }
+
+    private void Appear()
+    {
         controller.enabled = true;
     }
 

@@ -68,10 +68,7 @@ public class PlayerControls : MonoBehaviour
             //}
         }
 
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            m_playerMove.Blink();
-        }
+       
 
         //adapted from some of the standard unity asset code
         float h_lstick = Input.GetAxis("Horizontal");
@@ -87,6 +84,11 @@ public class PlayerControls : MonoBehaviour
             m_playerMove.Jump(m_jumpPressed);
             m_playerMove.Move(m_lStickInputVector);
            
+        }
+
+        if (Input.GetButtonDown("Blink"))
+        {
+            m_playerMove.Blink(m_lStickInputVector);
         }
 
         m_jumpPressed = false;
