@@ -12,28 +12,8 @@ public class PlayerControls : MonoBehaviour
     //internal state
     private bool m_jumpPressed = false;
     private bool m_jumpHeld = false;
-    private bool m_jumpTest = false;
 
-    //private float h_lstick;
-    //private float v_lstick;
-
-    //public InputManager controls;
-
-    //private void OnEnable()
-    //{
-    //    controls.Player.Jump.performed += jumptesting;
-    //    controls.Player.Jump.Enable();
-
-    //    controls.Player.Movement.performed += movetesting; //Context => movetesting(Context.ReadValue<Vector2>());
-    //    controls.Player.Movement.Enable();
-    //}
-
-    //private void OnDisable()
-    //{
-    //    controls.Player.Jump.performed -= jumptesting;
-    //    controls.Player.Jump.Disable();
-    //    controls.Player.Movement.Disable();
-    //}
+   
 
     // Start is called before the first frame update
     void Start()
@@ -56,15 +36,7 @@ public class PlayerControls : MonoBehaviour
         if (Input.GetButtonDown("Jump"))
         {
             m_jumpPressed = true;
-            //m_jumpTest = false;
-
-            //CharacterController characterController = GetComponentInChildren<CharacterController>();
-            //Debug.Log(characterController.isGrounded + " " + m_jumpPressed);
-
-            //if (Input.GetButton("Jump"))
-            //{
-            //    m_jumpHeld = true;
-            //}
+            
         }
 
        
@@ -94,20 +66,4 @@ public class PlayerControls : MonoBehaviour
         
     }
 
-    //private void jumptesting(InputAction.CallbackContext Context)
-    //{
-    //    m_jumpTest = true;
-    //}
-
-    //private void movetesting(InputAction.CallbackContext Context /* Vector2 direction*/)
-    //{
-    //    print("Trying to move ");
-    //    //h_lstick = direction.x;
-    //    //v_lstick = direction.y;
-    //}
-
-    private void FixedUpdate()
-    {
-      
-    }
 }
