@@ -210,17 +210,14 @@ public class PlayerMovement : MonoBehaviour
         {
             Debug.DrawRay(transform.position + new Vector3(0, 0.1f, 0), transform.TransformDirection(Vector3.down) * hit2.distance, Color.yellow);
             Debug.DrawRay(transform.position + (transform.forward * 0.5f + transform.up * 0.3f), transform.TransformDirection(Vector3.down) * hit.distance, Color.red);
-        
-           
+            Debug.Log("Did Hit");
             m_grounded = true;
         }
         else
         {
-                         }
-        {
             Debug.DrawRay(transform.position + new Vector3(0, 0.1f, 0), transform.TransformDirection(Vector3.down) * 1000, Color.white);
             Debug.DrawRay(transform.position + (transform.forward * 0.2f + transform.up * 0.1f), transform.TransformDirection(Vector3.down) * 1000, Color.white);
-            //Debug.Log("Did not Hit");
+            Debug.Log("Did not Hit");
             m_grounded = false;
         }
     }
