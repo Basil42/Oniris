@@ -67,11 +67,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4702990868415821592, guid: 6e31096b66eee80488f4603330ecb11e,
-        type: 3}
-      propertyPath: m_ApplyRootMotion
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4702990867084379359, guid: 6e31096b66eee80488f4603330ecb11e,
         type: 3}
       propertyPath: m_StepOffset
@@ -84,8 +79,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4702990867084379358, guid: 6e31096b66eee80488f4603330ecb11e,
         type: 3}
-      propertyPath: m_jumpingSpeed
-      value: 2
+      propertyPath: m_RunningSpeed
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4702990867084379358, guid: 6e31096b66eee80488f4603330ecb11e,
+        type: 3}
+      propertyPath: m_SteeringSpeed
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 4702990867084379358, guid: 6e31096b66eee80488f4603330ecb11e,
         type: 3}
@@ -99,13 +99,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4702990867084379358, guid: 6e31096b66eee80488f4603330ecb11e,
         type: 3}
-      propertyPath: m_jumpTransitionLimit
-      value: 0.1
+      propertyPath: m_jumpingSpeed
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4702990867084379358, guid: 6e31096b66eee80488f4603330ecb11e,
         type: 3}
-      propertyPath: m_RunningSpeed
-      value: 0.2
+      propertyPath: m_jumpTransitionLimit
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4702990868415821592, guid: 6e31096b66eee80488f4603330ecb11e,
+        type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6e31096b66eee80488f4603330ecb11e, type: 3}
