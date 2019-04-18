@@ -200,13 +200,13 @@ public class PlayerMovement : MonoBehaviour
 
             if (m_shortJump)
             {
-                MovementVector.y = MovementVector.y - (m_gravity * 4 * Time.deltaTime);
+                MovementVector.y = MovementVector.y - (m_gravity * 4 * Time.fixedDeltaTime);
                 //Debug.Log("Movement " + MovementVector.y);
             }
             else
             {
-                MovementVector.y = MovementVector.y - (m_gravity * Time.deltaTime);
-                m_jumpTransitionTimer += Time.deltaTime;
+                MovementVector.y = MovementVector.y - (m_gravity * Time.fixedDeltaTime);
+                m_jumpTransitionTimer += Time.fixedDeltaTime;
                 //Debug.Log("Movement " + MovementVector.y);
             }
 

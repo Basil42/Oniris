@@ -87,6 +87,7 @@ public class PlayerControls : MonoBehaviour
 
         if (Input.GetButtonDown("Blink"))
         {
+            Camera.main.GetComponent<CameraController>().CamSwitchBlink();
             m_playerMove.Blink(m_lStickInputVector);
         }
 
@@ -106,8 +107,5 @@ public class PlayerControls : MonoBehaviour
     //    //v_lstick = direction.y;
     //}
 
-    private void FixedUpdate()
-    {
-      
-    }
+    
 }
