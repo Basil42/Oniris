@@ -24,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
     public float blinkDelay = 1;
     
 
-    private Vector3 MovementVector;
+    public Vector3 MovementVector;
     private Animator m_animator;
 
     private bool m_shortJump;
@@ -45,6 +45,8 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         GroundCheck();
+        //Debug.Log("speed " + MovementVector.y + "Gravity " + m_gravity);
+        //Debug.Log("Gravity " );
     }
 
     private void LateUpdate()
@@ -61,17 +63,20 @@ public class PlayerMovement : MonoBehaviour
         inputVector.y = 0;
         inputVector = inputVector.normalized;
 
+        Vector3 distanceTravelled;
        
         //Velocity, magnitude of movement gets applied in input direction after blink
-        Physics.Raycast(transform.position + new Vector3(0, 0.1f, 0), transform.TransformDirection(Vector3.forward), out hit, 10, blinkThrough);
+        Physics.Raycast(transform.position + new Vector3(0, 0.1f, 0), transform.TransformDirection(inputVector), out hit, 10, blinkThrough);
 
         if (hit.distance == 0)
         {
             transform.position = transform.position + inputVector * 10;
+            distanceTravelled = inputVector * 10;
         } else
         {
             transform.position = transform.position + inputVector * (hit.distance - 0.5f);
-            print(hit.distance);
+            distanceTravelled = inputVector * (hit.distance - 0.5f);
+            //print(hit.distance);
         }
 
         foreach(Renderer renderer in blinkBodies)
@@ -82,9 +87,32 @@ public class PlayerMovement : MonoBehaviour
         float mag = MovementVector.magnitude;
 
         //Invoke("Appear", blinkDelay);
+        //StartCoroutine(MoveCamera(distanceTravelled));
         StartCoroutine(Appear(inputVector, mag));
         
     }
+
+    //private IEnumerator MoveCamera(Vector3 targetPosition)
+    //{
+    //    //Clock?
+
+    //    Camera camera = Camera.main;
+
+    //    targetPosition = camera.transform.position + targetPosition;
+
+    //    camera.GetComponent<Cinemachine.CinemachineBrain>().enabled = false;
+        
+    //    while (camera.transform.position.x != targetPosition.x && camera.transform.position.z != targetPosition.z)
+    //    {
+    //        camera.transform.position = Vector3.Lerp(camera.transform.position, targetPosition, 0.2f);
+    //        Debug.Log("Moving");
+    //        yield return null;
+    //    }
+        
+    //    camera.GetComponent<Cinemachine.CinemachineBrain>().enabled = true;
+    //   //yield return null;
+    //    //    //Lerp towards the new position, which is in the direction traveled by the blink.
+    //}
 
     private IEnumerator Appear(Vector3 direction, float magnitude)
     {
@@ -102,6 +130,7 @@ public class PlayerMovement : MonoBehaviour
         MovementVector.y = 0;
 
         MovementVector = MovementVector * magnitude;
+        //Camera.main.GetComponent<Cinemachine.CinemachineBrain>().enabled = true;
     }
 
     public void Jump(bool buttonPress)
@@ -116,7 +145,7 @@ public class PlayerMovement : MonoBehaviour
             //m_currentjumps++;
         } else if (buttonPress && !m_doubleJumped)
         {
-            MovementVector.y = m_jumpingSpeed * m_RunningSpeed;
+            MovementVector.y = m_jumpingSpeed; // * m_RunningSpeed;
             Debug.Log("Double Jump " + MovementVector.y);
 
             m_doubleJumped = true;
@@ -132,9 +161,11 @@ public class PlayerMovement : MonoBehaviour
         if (m_grounded)
         {
             //Lerp toward input vector
-            MovementVector.x = inputVector.x;
-            MovementVector.z = inputVector.z;
-            MovementVector = MovementVector * m_RunningSpeed;
+            MovementVector.x = inputVector.x * m_RunningSpeed;
+
+            MovementVector.z = inputVector.z * m_RunningSpeed;
+
+            //MovementVector = MovementVector * m_RunningSpeed;
 
             m_doubleJumped = false;
             m_airSwitch = false;
