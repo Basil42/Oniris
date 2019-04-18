@@ -6,7 +6,9 @@ using UnityEngine;
 public class Blink : MonoBehaviour
 {
     PlayerMovement PlayerMovement;
-    
+
+    private CameraController cameraController;
+
     private LayerMask blinkThrough;
     private Renderer[] blinkBodies;
     public float blinkDelay = 1;
@@ -18,12 +20,14 @@ public class Blink : MonoBehaviour
         blinkThrough = ~LayerMask.GetMask("Blinkable");// "everything but blinkable
         blinkBodies = GetComponentsInChildren<Renderer>();
         PlayerMovement = GetComponent<PlayerMovement>();
+        cameraController = Camera.main.GetComponent<CameraController>();
     }
 
     // Update is called once per frame
     
     public void blink(Vector3 inputVector)
     {
+        cameraController.CamSwitchBlink();
         PlayerMovement.controller.enabled = false;
         print("Don't Blink");
         RaycastHit hit;

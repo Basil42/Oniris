@@ -28,12 +28,10 @@ public class PlayerControls : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        //camera realative input
-       
-
+    {  
         if (Input.GetButtonDown("Jump")) m_playerMove.Jump();
-        if (Input.GetButtonDown("Blink")) m_blinkScript.blink(m_lStickInputVector);//TO DO: put it in separate script
+        if (Input.GetButtonDown("Blink")) m_blinkScript.blink(m_lStickInputVector);
+       
     }
 
     private void FixedUpdate()
