@@ -7,63 +7,41 @@ public class PlayerControls : MonoBehaviour
     //references
     private Transform m_Camera;
     private Vector3 m_CameraForward;
+    private Vector3 m_CameraRight;
     private Vector3 m_lStickInputVector; //camera relative
     private PlayerMovement m_playerMove;
+    private Blink m_blinkScript;
     //internal state
-    private bool m_jumpPressed = false;
+    
     private bool m_jumpHeld = false;
+    
 
-   
+  
 
     // Start is called before the first frame update
     void Start()
     {
         m_Camera = Camera.main.transform;
         m_playerMove = GetComponentInChildren<PlayerMovement>();
-        if(m_playerMove == null)
-        {
-            Debug.LogError("No valid player movement script found",gameObject);
-        }
-
-        
-
-        Debug.Log("controls on");
+        m_blinkScript = GetComponentInChildren<Blink>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Jump"))
-        {
-            m_jumpPressed = true;
-            
-        }
-
+        //camera realative input
        
 
-        //adapted from some of the standard unity asset code
-        float h_lstick = Input.GetAxis("Horizontal");
-        float v_lstick = Input.GetAxis("Vertical");
-         
-        //camera relative input
-        if (m_Camera != null)
-        {
-            m_CameraForward = Vector3.Scale(m_Camera.forward, new Vector3(1, 0, 1)).normalized;//1,0,1 is the ground plane
-
-            m_lStickInputVector = h_lstick * m_Camera.right + v_lstick * m_CameraForward;
-            //pass the input vector to the stuff that caresabout it
-            m_playerMove.Jump(m_jumpPressed);
-            m_playerMove.Move(m_lStickInputVector);
-           
-        }
-
-        if (Input.GetButtonDown("Blink"))
-        {
-            m_playerMove.Blink(m_lStickInputVector);
-        }
-
-        m_jumpPressed = false;
-        
+        if (Input.GetButtonDown("Jump")) m_playerMove.Jump();
+        if (Input.GetButtonDown("Blink")) m_blinkScript.blink(m_lStickInputVector);//TO DO: put it in separate script
     }
 
+    private void FixedUpdate()
+    {
+        m_CameraForward = Vector3.Scale(m_Camera.forward, new Vector3(1, 0, 1)).normalized;//1,0,1 is the ground plane
+        m_CameraRight = Vector3.Scale(m_Camera.right, new Vector3(1, 0, 1)).normalized;
+        m_lStickInputVector = Input.GetAxis("Horizontal") * m_Camera.right + Input.GetAxis("Vertical") * m_CameraForward;
+
+        m_playerMove.Move(m_lStickInputVector);
+    }
 }
