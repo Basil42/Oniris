@@ -105,9 +105,11 @@ public class PlayerMovement : MonoBehaviour
         if (m_grounded)
         {
             //Lerp toward input vector
-            MovementVector.x = inputVector.x;
-            MovementVector.z = inputVector.z;
-            MovementVector = MovementVector * m_RunningSpeed;
+            MovementVector.x = inputVector.x * m_RunningSpeed;
+
+            MovementVector.z = inputVector.z * m_RunningSpeed;
+
+            //MovementVector = MovementVector * m_RunningSpeed;
 
             m_doubleJumped = false;
             m_airSwitch = false;
