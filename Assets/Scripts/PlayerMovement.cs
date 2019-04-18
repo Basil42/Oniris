@@ -6,25 +6,22 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class PlayerMovement : MonoBehaviour 
 {
-    private CharacterController controller;
+    [HideInInspector] public CharacterController controller;
     public float m_RunningSpeed = 1.0f;//the walk animation runs if the input vector is small enough
     public float m_SteeringSpeed = 0.2f;
     public float m_gravity = 10.0f;
     public float m_lowGravity = 5.0f;
-    public float m_jumpingSpeed = 10.0f;
+    [SerializeField] private float m_jumpingSpeed = 2.0f;
+    [SerializeField] private float m_DoubleJumpSpeed = 2.0f;
 
-    //public int m_maxJumps = 2;
-    //private int m_currentjumps = 0;
+    
     private bool m_doubleJumped = false;
     private bool m_airSwitch = false;
     private bool m_grounded = false;
+    public bool m_jumpEnabled = true;
+    public bool m_doubleJumpEnabled = false;
 
-    private LayerMask blinkThrough;
-    private Renderer[] blinkBodies;
-    public float blinkDelay = 1;
-    
-
-    private Vector3 MovementVector;
+    [HideInInspector] public Vector3 MovementVector;
     private Animator m_animator;
 
     private bool m_shortJump;
@@ -36,88 +33,37 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
-        blinkThrough = ~ LayerMask.GetMask("Blinkable");
-        blinkBodies = GetComponentsInChildren<Renderer>();
-        Debug.Log("controller aquired");
-
+      
     }
     // Update is called once per frame
     void Update()
     {
         GroundCheck();
-    }
-
-    private void LateUpdate()
-    {
-        
-    }
-
-    public void Blink(Vector3 inputVector)
-    {
-        controller.enabled = false;
-        print("Don't Blink");
-        RaycastHit hit;
-
-        inputVector.y = 0;
-        inputVector = inputVector.normalized;
-
-       
-        //Velocity, magnitude of movement gets applied in input direction after blink
-        Physics.Raycast(transform.position + new Vector3(0, 0.1f, 0), transform.TransformDirection(Vector3.forward), out hit, 10, blinkThrough);
-
-        if (hit.distance == 0)
+        if (m_grounded)
         {
-            transform.position = transform.position + inputVector * 10;
-        } else
-        {
-            transform.position = transform.position + inputVector * (hit.distance - 0.5f);
-            print(hit.distance);
+            m_doubleJumped = false;
+
         }
-
-        foreach(Renderer renderer in blinkBodies)
-        {
-            renderer.enabled = false;
-        }
-
-        float mag = MovementVector.magnitude;
-
-        //Invoke("Appear", blinkDelay);
-        StartCoroutine(Appear(inputVector, mag));
-        
     }
 
-    private IEnumerator Appear(Vector3 direction, float magnitude)
+    
+
+    
+
+    public void Jump()
     {
-        yield return new WaitForSeconds(blinkDelay);
-
-        controller.enabled = true;
-
-        foreach (Renderer renderer in blinkBodies)
-        {
-            renderer.enabled = true;
-        }
-
-        MovementVector.x = direction.x;
-        MovementVector.z = direction.z;
-        MovementVector.y = 0;
-
-        MovementVector = MovementVector * magnitude;
-    }
-
-    public void Jump(bool buttonPress)
-    {
-        if (buttonPress && /*m_currentjumps < m_maxJumps*/ m_grounded)
+        if (m_grounded)
         {
             MovementVector.y = m_jumpingSpeed;
-            Debug.Log("Input value " + MovementVector.y);
+           
 
             m_shortJump = false;
             m_jumpTransitionTimer = 0;
-            //m_currentjumps++;
-        } else if (buttonPress && !m_doubleJumped)
+            
+        } else if (!m_doubleJumped)
         {
-            MovementVector.y = m_jumpingSpeed * m_RunningSpeed;
-            Debug.Log("Double Jump " + MovementVector.y);
+            MovementVector.y = m_DoubleJumpSpeed;
+            
 
             m_doubleJumped = true;
             m_shortJump = false;
@@ -126,6 +72,33 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
+    public void ShortJump()
+    {
+        // could do this another way: apply force if getbuttonDown, if not stop applying force
+
+        if (m_jumpTransitionTimer < m_jumpTransitionLimit && Input.GetButtonUp("Jump"))//need tobe moved out
+        {
+            m_shortJump = true;
+        }
+
+        if (m_shortJump)
+        {
+            MovementVector.y = MovementVector.y - (m_gravity * 4 * Time.fixedDeltaTime);
+
+        }
+        else
+        {
+            MovementVector.y = MovementVector.y - (m_gravity * Time.fixedDeltaTime);
+            m_jumpTransitionTimer += Time.fixedDeltaTime;
+
+        }
+
+        if (m_grounded)
+        {
+            m_shortJump = false;
+
+        }
+    }
     public void Move(Vector3 inputVector)
     {
 
@@ -160,30 +133,7 @@ public class PlayerMovement : MonoBehaviour
 
             //Short jump behaviour
 
-            // could do this another way: apply force if getbuttonDown, if not stop applying force
-
-            if (m_jumpTransitionTimer < m_jumpTransitionLimit && Input.GetButtonUp("Jump"))
-            {
-                m_shortJump = true;
-            }
-
-            if (m_shortJump)
-            {
-                MovementVector.y = MovementVector.y - (m_gravity * 4 * Time.deltaTime);
-                //Debug.Log("Movement " + MovementVector.y);
-            }
-            else
-            {
-                MovementVector.y = MovementVector.y - (m_gravity * Time.deltaTime);
-                m_jumpTransitionTimer += Time.deltaTime;
-                //Debug.Log("Movement " + MovementVector.y);
-            }
-
-            if (m_grounded)
-            {
-                m_shortJump = false;
-                
-            }
+            ShortJump();//will be called by the input manager,like the rest
         }
 
 
@@ -195,7 +145,7 @@ public class PlayerMovement : MonoBehaviour
             Debug.Log("Physics movement vector " + MovementVector.y);
         }
 
-        controller.Move(MovementVector);
+        if(controller.enabled)controller.Move(MovementVector);
     }
 
     private void GroundCheck()
@@ -210,14 +160,14 @@ public class PlayerMovement : MonoBehaviour
         {
             Debug.DrawRay(transform.position + new Vector3(0, 0.1f, 0), transform.TransformDirection(Vector3.down) * hit2.distance, Color.yellow);
             Debug.DrawRay(transform.position + (transform.forward * 0.5f + transform.up * 0.3f), transform.TransformDirection(Vector3.down) * hit.distance, Color.red);
-            Debug.Log("Did Hit");
+            
             m_grounded = true;
         }
         else
         {
             Debug.DrawRay(transform.position + new Vector3(0, 0.1f, 0), transform.TransformDirection(Vector3.down) * 1000, Color.white);
-            Debug.DrawRay(transform.position + (transform.forward * 0.2f + transform.up * 0.1f), transform.TransformDirection(Vector3.down) * 1000, Color.white);
-            Debug.Log("Did not Hit");
+            Debug.DrawRay(transform.position + (transform.forward * 0.5f + transform.up * 0.3f), transform.TransformDirection(Vector3.down) * 1000, Color.white);
+            
             m_grounded = false;
         }
     }
