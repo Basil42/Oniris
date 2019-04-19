@@ -14,16 +14,19 @@ public class PlayerControls : MonoBehaviour
     //internal state
     
     private bool m_jumpHeld = false;
-    
 
-  
 
+
+    private void Awake()
+    {
+        m_playerMove = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
+        m_blinkScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Blink>();
+    }
     // Start is called before the first frame update
     void Start()
     {
         m_Camera = Camera.main.transform;
-        m_playerMove = GetComponentInChildren<PlayerMovement>();
-        m_blinkScript = GetComponentInChildren<Blink>();
+        
     }
 
     // Update is called once per frame
