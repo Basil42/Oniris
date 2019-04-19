@@ -61,7 +61,7 @@ public class PlayerMovement : MonoBehaviour
             m_shortJump = false;
             m_jumpTransitionTimer = 0;
             
-        } else if (!m_doubleJumped)
+        } else if (!m_doubleJumped)//might get it's own function (even at the cost of efficiency)
         {
             MovementVector.y = m_DoubleJumpSpeed;
             
@@ -75,6 +75,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void ShortJump()
     {
+
         // could do this another way: apply force if getbuttonDown, if not stop applying force
 
         if (m_jumpTransitionTimer < m_jumpTransitionLimit && Input.GetButtonUp("Jump"))//need tobe moved out
@@ -102,53 +103,57 @@ public class PlayerMovement : MonoBehaviour
     }
     public void Move(Vector3 inputVector)
     {
-
-        if (m_grounded)
-        {
-            //Lerp toward input vector
-            MovementVector.x = inputVector.x * m_RunningSpeed;
-
-            MovementVector.z = inputVector.z * m_RunningSpeed;
-
-            //MovementVector = MovementVector * m_RunningSpeed;
-
-            m_doubleJumped = false;
-            m_airSwitch = false;
-
-
-
-            //MovementVector.y = MovementVector.y - (m_gravity * Time.deltaTime);
-            if (MovementVector.z != 0 && MovementVector.x != 0) transform.rotation = Quaternion.Slerp(transform.rotation,Quaternion.LookRotation(new Vector3(MovementVector.x,0.0f,MovementVector.z), Vector3.up), m_SteeringSpeed);
-        }
-        else
+        if (controller.enabled)
         {
 
 
-            //put airborne behavior here
-
-            if(m_doubleJumped && !m_airSwitch)
+            if (m_grounded)
             {
-                m_airSwitch = true;
-
+                //Lerp toward input vector
                 MovementVector.x = inputVector.x * m_RunningSpeed;
+
                 MovementVector.z = inputVector.z * m_RunningSpeed;
+
+                //MovementVector = MovementVector * m_RunningSpeed;
+
+                m_doubleJumped = false;
+                m_airSwitch = false;
+
+
+
+                //MovementVector.y = MovementVector.y - (m_gravity * Time.deltaTime);
+                if (MovementVector.z != 0 && MovementVector.x != 0) transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(new Vector3(MovementVector.x, 0.0f, MovementVector.z), Vector3.up), m_SteeringSpeed);
+            }
+            else
+            {
+
+
+                //put airborne behavior here
+
+                if (m_doubleJumped && !m_airSwitch)
+                {
+                    m_airSwitch = true;
+
+                    MovementVector.x = inputVector.x * m_RunningSpeed;
+                    MovementVector.z = inputVector.z * m_RunningSpeed;
+                }
+
+                //Short jump behaviour
+
+                ShortJump();//will be called by the input manager,like the rest
             }
 
-            //Short jump behaviour
 
-            ShortJump();//will be called by the input manager,like the rest
+            if (MovementVector.y < m_groundedYvelocity && m_grounded)
+            {
+
+                MovementVector.y = m_groundedYvelocity;//arbitrary value to keep it from growing ever bigger
+
+                Debug.Log("Physics movement vector " + MovementVector.y);
+            }
+
+            controller.Move(MovementVector);
         }
-
-
-        if (MovementVector.y < m_groundedYvelocity && m_grounded)
-        {
-            
-            MovementVector.y = m_groundedYvelocity;//arbitrary value to keep it from growing ever bigger
-           
-            Debug.Log("Physics movement vector " + MovementVector.y);
-        }
-
-        if(controller.enabled)controller.Move(MovementVector);
     }
 
     private void GroundCheck()

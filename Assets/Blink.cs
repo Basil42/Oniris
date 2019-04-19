@@ -56,6 +56,7 @@ public class Blink : MonoBehaviour
 
         float Momentum = PlayerMovement.MovementVector.magnitude;
 
+    
 
         StartCoroutine(Appear(inputVector, Momentum));
 
@@ -76,6 +77,7 @@ public class Blink : MonoBehaviour
         PlayerMovement.MovementVector.z = direction.z;
         PlayerMovement.MovementVector.y = 0;
 
-        PlayerMovement.MovementVector = PlayerMovement.MovementVector * magnitude;
+        PlayerMovement.MovementVector = PlayerMovement.MovementVector.normalized * magnitude;
+        
     }
 }

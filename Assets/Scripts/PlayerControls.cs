@@ -13,7 +13,7 @@ public class PlayerControls : MonoBehaviour
     private Blink m_blinkScript;
     //internal state
     
-    private bool m_jumpHeld = false;
+
 
 
 

@@ -1882,7 +1882,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5791795394410252237}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.11, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1961,7 +1961,7 @@ MonoBehaviour:
   m_gravity: 0.3
   m_lowGravity: 0.2
   m_jumpingSpeed: 0.3
-  m_DoubleJumpSpeed: 2
+  m_DoubleJumpSpeed: 0.3
   m_jumpEnabled: 1
   m_doubleJumpEnabled: 0
   MovementVector: {x: 0, y: 0, z: 0}
