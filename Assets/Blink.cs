@@ -29,19 +29,19 @@ public class Blink : MonoBehaviour
     {
         cameraController.CamSwitchBlink();
         PlayerMovement.controller.enabled = false;
-        print("Don't Blink");
         RaycastHit hit;
 
         inputVector.y = 0;
-        inputVector = inputVector.normalized;//shouldn't be here
+        inputVector = inputVector.normalized;
 
 
         //Velocity, magnitude of movement gets applied in input direction after blink
-        Physics.Raycast(transform.position + new Vector3(0, 0.1f, 0), transform.TransformDirection(Vector3.forward), out hit, 10, blinkThrough);
+        Physics.Raycast(transform.position + new Vector3(0, 0.1f, 0), inputVector, out hit, 10, blinkThrough);
 
         if (hit.distance == 0)
         {
             transform.position = transform.position + inputVector * 10;
+            Debug.Log(inputVector);
         }
         else
         {
@@ -54,10 +54,10 @@ public class Blink : MonoBehaviour
             renderer.enabled = false;
         }
 
-        float mag = PlayerMovement.MovementVector.magnitude;
+        float Momentum = PlayerMovement.MovementVector.magnitude;
 
 
-        StartCoroutine(Appear(inputVector, mag));
+        StartCoroutine(Appear(inputVector, Momentum));
 
     }
 

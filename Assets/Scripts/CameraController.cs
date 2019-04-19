@@ -69,7 +69,6 @@ public class CameraController : MonoBehaviour
 
             //State transition
             cameraStateController.SetBool("Switch", false);
-            Debug.Log("camBlinking");
             PHcamBlinking = false;
         }
         

@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     public float m_SteeringSpeed = 0.2f;
     public float m_gravity = 10.0f;
     public float m_lowGravity = 5.0f;
+    private float m_groundedYvelocity = -1.0f;
     [SerializeField] private float m_jumpingSpeed = 2.0f;
     [SerializeField] private float m_DoubleJumpSpeed = 2.0f;
 
@@ -27,7 +28,7 @@ public class PlayerMovement : MonoBehaviour
     private bool m_shortJump;
     private float m_jumpTransitionTimer = 0;
     public float m_jumpTransitionLimit = 0.3f; //Limit -> Length?
-
+    
     
 
     private void Awake()
@@ -117,7 +118,7 @@ public class PlayerMovement : MonoBehaviour
 
 
             //MovementVector.y = MovementVector.y - (m_gravity * Time.deltaTime);
-            if (MovementVector.magnitude > 0.05f) transform.rotation = Quaternion.Slerp(transform.rotation,Quaternion.LookRotation(new Vector3(MovementVector.x,0.0f,MovementVector.z), Vector3.up), m_SteeringSpeed);
+            if (MovementVector.z != 0 && MovementVector.x != 0) transform.rotation = Quaternion.Slerp(transform.rotation,Quaternion.LookRotation(new Vector3(MovementVector.x,0.0f,MovementVector.z), Vector3.up), m_SteeringSpeed);
         }
         else
         {
@@ -139,10 +140,10 @@ public class PlayerMovement : MonoBehaviour
         }
 
 
-        if (MovementVector.y < -1.0f && m_grounded)
+        if (MovementVector.y < m_groundedYvelocity && m_grounded)
         {
             
-            MovementVector.y = -1.0f;//arbitrary value to keep it from growing ever bigger
+            MovementVector.y = m_groundedYvelocity;//arbitrary value to keep it from growing ever bigger
            
             Debug.Log("Physics movement vector " + MovementVector.y);
         }
