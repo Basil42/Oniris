@@ -17,7 +17,7 @@ public class CameraController : MonoBehaviour
 
     public CinemachineFreeLook lastCamera;
 
-    public Transform PHplayer;
+    public GameObject PHplayer;
 
     private bool PHcamBlinking = false;
  
@@ -25,7 +25,6 @@ public class CameraController : MonoBehaviour
     private void Awake()
     {
         Application.targetFrameRate = 60;
-        PHplayer = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     // Start is called before the first frame update
@@ -47,8 +46,8 @@ public class CameraController : MonoBehaviour
 
         if (!PHcamBlinking)
         {
-            lastCamera.m_Follow = PHplayer;
-            lastCamera.m_LookAt = PHplayer;
+            lastCamera.m_Follow = PHplayer.transform;
+            lastCamera.m_LookAt = PHplayer.transform;
             currentCamera.m_Follow = null;
             currentCamera.m_LookAt = null;
 
@@ -62,13 +61,14 @@ public class CameraController : MonoBehaviour
         }
         else
         {
-            currentCamera.m_Follow = PHplayer;
-            currentCamera.m_LookAt = PHplayer;
+            currentCamera.m_Follow = PHplayer.transform;
+            currentCamera.m_LookAt = PHplayer.transform;
             lastCamera.m_Follow = null;
             lastCamera.m_LookAt = null;
 
             //State transition
             cameraStateController.SetBool("Switch", false);
+            Debug.Log("camBlinking");
             PHcamBlinking = false;
         }
         

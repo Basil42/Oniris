@@ -11,7 +11,6 @@ public class PlayerMovement : MonoBehaviour
     public float m_SteeringSpeed = 0.2f;
     public float m_gravity = 10.0f;
     public float m_lowGravity = 5.0f;
-    private float m_groundedYvelocity = -1.0f;
     [SerializeField] private float m_jumpingSpeed = 2.0f;
     [SerializeField] private float m_DoubleJumpSpeed = 2.0f;
 
@@ -28,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
     private bool m_shortJump;
     private float m_jumpTransitionTimer = 0;
     public float m_jumpTransitionLimit = 0.3f; //Limit -> Length?
-    
+
     
 
     private void Awake()
@@ -61,7 +60,7 @@ public class PlayerMovement : MonoBehaviour
             m_shortJump = false;
             m_jumpTransitionTimer = 0;
             
-        } else if (!m_doubleJumped)//might get it's own function (even at the cost of efficiency)
+        } else if (!m_doubleJumped)
         {
             MovementVector.y = m_DoubleJumpSpeed;
             
@@ -75,7 +74,6 @@ public class PlayerMovement : MonoBehaviour
 
     public void ShortJump()
     {
-
         // could do this another way: apply force if getbuttonDown, if not stop applying force
 
         if (m_jumpTransitionTimer < m_jumpTransitionLimit && Input.GetButtonUp("Jump"))//need tobe moved out
@@ -103,57 +101,53 @@ public class PlayerMovement : MonoBehaviour
     }
     public void Move(Vector3 inputVector)
     {
-        if (controller.enabled)
+
+        if (m_grounded)
+        {
+            //Lerp toward input vector
+            MovementVector.x = inputVector.x * m_RunningSpeed;
+
+            MovementVector.z = inputVector.z * m_RunningSpeed;
+
+            //MovementVector = MovementVector * m_RunningSpeed;
+
+            m_doubleJumped = false;
+            m_airSwitch = false;
+
+
+
+            //MovementVector.y = MovementVector.y - (m_gravity * Time.deltaTime);
+            if (MovementVector.magnitude > 0.05f) transform.rotation = Quaternion.Slerp(transform.rotation,Quaternion.LookRotation(new Vector3(MovementVector.x,0.0f,MovementVector.z), Vector3.up), m_SteeringSpeed);
+        }
+        else
         {
 
 
-            if (m_grounded)
+            //put airborne behavior here
+
+            if(m_doubleJumped && !m_airSwitch)
             {
-                //Lerp toward input vector
+                m_airSwitch = true;
+
                 MovementVector.x = inputVector.x * m_RunningSpeed;
-
                 MovementVector.z = inputVector.z * m_RunningSpeed;
-
-                //MovementVector = MovementVector * m_RunningSpeed;
-
-                m_doubleJumped = false;
-                m_airSwitch = false;
-
-
-
-                //MovementVector.y = MovementVector.y - (m_gravity * Time.deltaTime);
-                if (MovementVector.z != 0 && MovementVector.x != 0) transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(new Vector3(MovementVector.x, 0.0f, MovementVector.z), Vector3.up), m_SteeringSpeed);
-            }
-            else
-            {
-
-
-                //put airborne behavior here
-
-                if (m_doubleJumped && !m_airSwitch)
-                {
-                    m_airSwitch = true;
-
-                    MovementVector.x = inputVector.x * m_RunningSpeed;
-                    MovementVector.z = inputVector.z * m_RunningSpeed;
-                }
-
-                //Short jump behaviour
-
-                ShortJump();//will be called by the input manager,like the rest
             }
 
+            //Short jump behaviour
 
-            if (MovementVector.y < m_groundedYvelocity && m_grounded)
-            {
-
-                MovementVector.y = m_groundedYvelocity;//arbitrary value to keep it from growing ever bigger
-
-                Debug.Log("Physics movement vector " + MovementVector.y);
-            }
-
-            controller.Move(MovementVector);
+            ShortJump();//will be called by the input manager,like the rest
         }
+
+
+        if (MovementVector.y < -1.0f && m_grounded)
+        {
+            
+            MovementVector.y = -1.0f;//arbitrary value to keep it from growing ever bigger
+           
+            Debug.Log("Physics movement vector " + MovementVector.y);
+        }
+
+        if(controller.enabled)controller.Move(MovementVector);
     }
 
     private void GroundCheck()
