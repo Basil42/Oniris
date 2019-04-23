@@ -11,9 +11,8 @@ public class PlayerControls : MonoBehaviour
     private Vector3 m_lStickInputVector; //camera relative
     private PlayerMovement m_playerMove;
     private Blink m_blinkScript;
+    private Dash m_dashScript;
     //internal state
-    
-    private bool m_jumpHeld = false;
     
 
   
@@ -24,6 +23,7 @@ public class PlayerControls : MonoBehaviour
         m_Camera = Camera.main.transform;
         m_playerMove = GetComponentInChildren<PlayerMovement>();
         m_blinkScript = GetComponentInChildren<Blink>();
+        m_dashScript = GetComponentInChildren<Dash>();
     }
 
     // Update is called once per frame
@@ -31,7 +31,8 @@ public class PlayerControls : MonoBehaviour
     {  
         if (Input.GetButtonDown("Jump")) m_playerMove.Jump();
         if (Input.GetButtonDown("Blink")) m_blinkScript.blink(m_lStickInputVector);
-       
+        if (Input.GetButtonDown("Dash")) m_dashScript.dash(m_lStickInputVector);
+
     }
 
     private void FixedUpdate()
