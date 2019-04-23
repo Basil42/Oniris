@@ -28,11 +28,16 @@ public class PlayerMovement : MonoBehaviour
     private float m_jumpTransitionTimer = 0;
     public float m_jumpTransitionLimit = 0.3f; //Limit -> Length?
 
-    
+    ContactPoint[] contacts;
+    private float colliderHeight;
+    public float colliderHeightOffset = 0.2f;
+
+
 
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
+        colliderHeight = GetComponent<CharacterController>().height - colliderHeightOffset;
       
     }
     // Update is called once per frame
@@ -99,6 +104,7 @@ public class PlayerMovement : MonoBehaviour
 
         }
     }
+
     public void Move(Vector3 inputVector)
     {
 
@@ -167,4 +173,30 @@ public class PlayerMovement : MonoBehaviour
             m_grounded = false;
         }
     }
+
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        Debug.Log("Hello");
+        //collision.GetContacts(contacts);
+
+        print(contacts);
+
+        if (hit.point.y >= transform.position.y + colliderHeight && MovementVector.y > 0)
+        {
+                //set velocity?
+                MovementVector.y = 0;
+        }
+
+            //for (int i = 0; i < hit.contacts.Length; ++i)
+            //{
+            //    ContactPoint contact = hit.contacts[i];
+
+            //    if (contact.point.y >= transform.position.y + 0.9f && MovementVector.y > 0)
+            //    {
+            //        //set velocity?
+            //        MovementVector.y = 0;
+            //    }
+            //}
+    }
+
 }
