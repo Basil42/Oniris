@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0b92798352bcba4e8ba8005e0a21206, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  blinkDelay: 1
+  m_BlinkEnabled: 1
 --- !u!1001 &8293155446738189727
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22,7 +24,7 @@ PrefabInstance:
     - target: {fileID: 4702990866400258350, guid: 6e31096b66eee80488f4603330ecb11e,
         type: 3}
       propertyPath: m_Name
-      value: Player Variant
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 4702990866400258349, guid: 6e31096b66eee80488f4603330ecb11e,
         type: 3}
@@ -91,8 +93,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4702990867084379358, guid: 6e31096b66eee80488f4603330ecb11e,
         type: 3}
-      propertyPath: m_jumpingSpeed
-      value: 2
+      propertyPath: m_RunningSpeed
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4702990867084379358, guid: 6e31096b66eee80488f4603330ecb11e,
+        type: 3}
+      propertyPath: m_SteeringSpeed
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 4702990867084379358, guid: 6e31096b66eee80488f4603330ecb11e,
         type: 3}
@@ -106,13 +113,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4702990867084379358, guid: 6e31096b66eee80488f4603330ecb11e,
         type: 3}
-      propertyPath: m_jumpTransitionLimit
-      value: 0.1
+      propertyPath: m_jumpingSpeed
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 4702990867084379358, guid: 6e31096b66eee80488f4603330ecb11e,
         type: 3}
-      propertyPath: m_RunningSpeed
-      value: 0.2
+      propertyPath: m_DoubleJumpSpeed
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4702990867084379358, guid: 6e31096b66eee80488f4603330ecb11e,
+        type: 3}
+      propertyPath: m_jumpTransitionLimit
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 4702990868415821592, guid: 6e31096b66eee80488f4603330ecb11e,
         type: 3}
