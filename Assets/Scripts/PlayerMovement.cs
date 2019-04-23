@@ -14,10 +14,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float m_jumpingSpeed = 2.0f;
     [SerializeField] private float m_DoubleJumpSpeed = 2.0f;
 
+    private bool m_busy = false;
     
     private bool m_doubleJumped = false;
     private bool m_airSwitch = false;
-    private bool m_grounded = false;
+    public bool m_grounded = false;
     public bool m_jumpEnabled = true;
     public bool m_doubleJumpEnabled = false;
 
@@ -28,7 +29,6 @@ public class PlayerMovement : MonoBehaviour
     private float m_jumpTransitionTimer = 0;
     public float m_jumpTransitionLimit = 0.3f; //Limit -> Length?
 
-    ContactPoint[] contacts;
     private float colliderHeight;
     public float colliderHeightOffset = 0.2f;
 
@@ -86,12 +86,12 @@ public class PlayerMovement : MonoBehaviour
             m_shortJump = true;
         }
 
-        if (m_shortJump)
+        if (m_shortJump && !m_busy)
         {
             MovementVector.y = MovementVector.y - (m_gravity * 4 * Time.fixedDeltaTime);
 
         }
-        else
+        else if (!m_busy)
         {
             MovementVector.y = MovementVector.y - (m_gravity * Time.fixedDeltaTime);
             m_jumpTransitionTimer += Time.fixedDeltaTime;
@@ -108,11 +108,10 @@ public class PlayerMovement : MonoBehaviour
     public void Move(Vector3 inputVector)
     {
 
-        if (m_grounded)
+        if (m_grounded && !m_busy)
         {
             m_doubleJumped = false;
             m_airSwitch = false;
-
             //Lerp'n Slerp towards a target velocity
             MovementVector.x = Mathf.Lerp(MovementVector.x, inputVector.x * m_RunningSpeed, 0.08f);
             MovementVector.z = Mathf.Lerp(MovementVector.z, inputVector.z * m_RunningSpeed, 0.08f);
@@ -176,27 +175,20 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        Debug.Log("Hello");
-        //collision.GetContacts(contacts);
-
-        print(contacts);
-
         if (hit.point.y >= transform.position.y + colliderHeight && MovementVector.y > 0)
         {
-                //set velocity?
                 MovementVector.y = 0;
         }
+    }
 
-            //for (int i = 0; i < hit.contacts.Length; ++i)
-            //{
-            //    ContactPoint contact = hit.contacts[i];
+    public void setBusy(bool boolean)
+    {
+        m_busy = boolean;
+    }
 
-            //    if (contact.point.y >= transform.position.y + 0.9f && MovementVector.y > 0)
-            //    {
-            //        //set velocity?
-            //        MovementVector.y = 0;
-            //    }
-            //}
+    public bool getBusy()
+    {
+        return m_busy;
     }
 
 }
