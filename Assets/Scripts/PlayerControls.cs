@@ -31,7 +31,7 @@ public class PlayerControls : MonoBehaviour
     {  
         if (Input.GetButtonDown("Jump")) m_playerMove.Jump();
         if (Input.GetButtonDown("Blink")) m_blinkScript.blink(m_lStickInputVector);
-        if (Input.GetButtonDown("Dash")) m_dashScript.dash(m_lStickInputVector);
+        if (Input.GetButtonDown("Dash")) m_dashScript.dash();
 
     }
 
