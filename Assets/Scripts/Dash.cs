@@ -29,17 +29,16 @@ public class Dash : MonoBehaviour
     }
 
     //Dash in direction of input
-    public void dash(Vector3 inputVector)
+    public void dash()
     {
         if (timer >= cooldown)
         {
             Debug.Log("dash");
-            inputVector = inputVector.normalized;
 
             originalVelocityX = PlayerMovement.MovementVector.x;
             originalVelocityZ = PlayerMovement.MovementVector.z;
 
-            PlayerMovement.MovementVector += speed * inputVector;
+            PlayerMovement.MovementVector += speed * transform.forward;
             PlayerMovement.MovementVector.y = 0;
             timer = 0;
 
@@ -54,7 +53,7 @@ public class Dash : MonoBehaviour
     {
         PlayerMovement.setBusy(true);
         yield return new WaitForSeconds(decelerationDelay);
-        for (int x = 0; x < 10; x++)
+        for (int x = 0; x < 10; x++) //Instead of a certain number of loops, go until reach target velocity
         {
             //Lerp'n Slerp towards a target velocity
             //One thing: Might want to mess with original velocity a bit, it can be wonky when you quickly change direction before blinking
