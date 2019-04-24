@@ -12,10 +12,11 @@ public class PlayerControls : MonoBehaviour
     private PlayerMovement m_playerMove;
     private Blink m_blinkScript;
     private Dash m_dashScript;
+    private Jump m_jumpScript;
     //internal state
-    
 
-  
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -24,12 +25,14 @@ public class PlayerControls : MonoBehaviour
         m_playerMove = GetComponentInChildren<PlayerMovement>();
         m_blinkScript = GetComponentInChildren<Blink>();
         m_dashScript = GetComponentInChildren<Dash>();
+        m_jumpScript = GetComponentInChildren<Jump>();
     }
 
     // Update is called once per frame
     void Update()
-    {  
-        if (Input.GetButtonDown("Jump")) m_playerMove.Jump();
+    {
+        if (Input.GetButtonDown("Jump")) m_jumpScript.jump(); // moving the input check to an argument for better logic in the jump
+        if (Input.GetButtonUp("Jump")) m_jumpScript.stopJumping();
         if (Input.GetButtonDown("Blink")) m_blinkScript.blink(m_lStickInputVector);
         if (Input.GetButtonDown("Dash")) m_dashScript.dash();
 
