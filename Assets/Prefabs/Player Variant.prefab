@@ -14,6 +14,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blinkDelay: 1
   m_BlinkEnabled: 1
+--- !u!114 &1820842316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3626336366891710639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94beb64a722493845839a2f2bf2b9b31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 0.5
+  cooldown: 1
+  decelerationDelay: 0.5
+  decelerationStep: 0.01
+--- !u!114 &1820842317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3626336366891710639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee02d7bec6362f54db05b8c81156ca46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_minimalWallHeightFactor: 0.5
 --- !u!1001 &8293155446738189727
 PrefabInstance:
   m_ObjectHideFlags: 0

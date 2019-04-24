@@ -1,6 +1,30 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+
+
+public enum movementState
+{
+    grounded,
+    falling,
+    jumping,
+    dashing,
+    wallrunLeft,
+    wallrunRight,
+    wallrunFront,
+    blinking,
+}
+
+[Flags]
+public enum AbilityAvailability
+{
+    All = 0,
+    doubleJumped= 1,
+    blinked = 2,
+    dashed = 4,
+    ledgeJump = 8
+}
 
 [RequireComponent(typeof (CharacterController))]
 [RequireComponent(typeof(Animator))]
@@ -11,6 +35,8 @@ public class PlayerMovement : MonoBehaviour
     public float m_SteeringSpeed = 0.2f;
     public float m_gravity = 10.0f;
     public float m_lowGravity = 5.0f;
+    public movementState state;
+    public AbilityAvailability abilityflags;
     [SerializeField] private float m_jumpingSpeed = 2.0f;
     [SerializeField] private float m_DoubleJumpSpeed = 2.0f;
 
@@ -121,7 +147,7 @@ public class PlayerMovement : MonoBehaviour
         else
         {
 
-            print("Not grounded");
+
             //put airborne behavior here
 
             if(m_doubleJumped && !m_airSwitch)
