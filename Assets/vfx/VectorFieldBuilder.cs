@@ -25,7 +25,7 @@ public class VectorFieldBuilder : EditorWindow
 
     private void CreateField()
     {
-        Texture3D field = new Texture3D(m_resolution, m_resolution, m_resolution, TextureFormat.RGBA32, true);
+        Texture3D field = new Texture3D(m_resolution, m_resolution, m_resolution, TextureFormat.RGBAFloat, true);
         Color[] array = new Color[m_resolution * m_resolution * m_resolution];
         //Color setting for a vortex field, could be extended
 
@@ -35,15 +35,18 @@ public class VectorFieldBuilder : EditorWindow
             {
                 for (int z = 0; z < m_resolution; z++)
                 {
-                    Vector3 d = new Vector3(x - (m_resolution / 2), 0.0f, z - (m_resolution / 2));
-                    Vector3 v = (Vector3.Cross(Vector3.up, d) / d.magnitude) * m_intensity;
-                    v = v - d * m_pull;
+                    Vector3 d = new Vector3(x -(m_resolution/2), 0.0f, z - (m_resolution/2));
+                    Vector3 v = (Vector3.Cross(Vector3.up, d).normalized) * m_intensity;
+                    if(d.magnitude < 0.1f) v = v - d * m_pull;
 
                     Color c = new Color(v.x, m_updraft, v.z, 1.0f);
                     array[x + (y * m_resolution) + (z * m_resolution * m_resolution)] = c;
                 }
             }
         }
+        Debug.Log(array[250].r);
+        Debug.Log(array[250].g);
+        Debug.Log(array[250].b);
         field.SetPixels(array);
         field.Apply();
         field.wrapMode = TextureWrapMode.Clamp;
