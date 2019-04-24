@@ -8,10 +8,11 @@ public class Dash : MonoBehaviour
     public float speed = 1;
     public float cooldown = 2;
     private float timer;
-    private float originalVelocityX;
-    private float originalVelocityZ;
+    private float targetVelocityX;
+    private float targetVelocityZ;
     public float decelerationDelay = 1;
-    public float decelerationAmount = 0.1f;
+    public float decelerationStep = 0.2f;
+    private float decelerationAmount;
 
 
 
@@ -35,9 +36,6 @@ public class Dash : MonoBehaviour
         {
             Debug.Log("dash");
 
-            originalVelocityX = PlayerMovement.MovementVector.x;
-            originalVelocityZ = PlayerMovement.MovementVector.z;
-
             PlayerMovement.MovementVector += speed * transform.forward;
             PlayerMovement.MovementVector.y = 0;
             timer = 0;
@@ -53,14 +51,21 @@ public class Dash : MonoBehaviour
     {
         PlayerMovement.setBusy(true);
         yield return new WaitForSeconds(decelerationDelay);
-        for (int x = 0; x < 10; x++) //Instead of a certain number of loops, go until reach target velocity
+        int x = 0;
+
+        decelerationAmount = 0;
+
+        while (x <= 250 && (PlayerMovement.MovementVector.magnitude > PlayerMovement.m_RunningSpeed)) 
         {
             //Lerp'n Slerp towards a target velocity
-            //One thing: Might want to mess with original velocity a bit, it can be wonky when you quickly change direction before blinking
-            PlayerMovement.MovementVector.x = Mathf.Lerp(PlayerMovement.MovementVector.x, originalVelocityX, decelerationAmount);
-            PlayerMovement.MovementVector.z = Mathf.Lerp(PlayerMovement.MovementVector.z, originalVelocityZ, decelerationAmount);
+            decelerationAmount += decelerationStep;
+            PlayerMovement.MovementVector.x = Mathf.Lerp(PlayerMovement.MovementVector.x, targetVelocityX, decelerationAmount);
+            PlayerMovement.MovementVector.z = Mathf.Lerp(PlayerMovement.MovementVector.z, targetVelocityZ, decelerationAmount);
             yield return new WaitForFixedUpdate();
+            x++;
+            print("decelerating");
         }
+        print("decelerated");
         PlayerMovement.setBusy(false);
     }
 }
