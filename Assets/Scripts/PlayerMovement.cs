@@ -1,6 +1,30 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+
+
+public enum movementState
+{
+    grounded,
+    falling,
+    jumping,
+    dashing,
+    wallrunLeft,
+    wallrunRight,
+    wallrunFront,
+    blinking,
+}
+
+[Flags]
+public enum AbilityAvailability
+{
+    All = 0,
+    doubleJumped= 1,
+    blinked = 2,
+    dashed = 4,
+    ledgeJump = 8
+}
 
 [RequireComponent(typeof (CharacterController))]
 [RequireComponent(typeof(Animator))]
@@ -13,6 +37,7 @@ public class PlayerMovement : MonoBehaviour
     //public float m_lowGravity = 5.0f;
     //[SerializeField] private float m_jumpingSpeed = 2.0f;
     //[SerializeField] private float m_DoubleJumpSpeed = 2.0f;
+    public movementState state;
 
     private bool m_busy = false;
     
@@ -64,12 +89,12 @@ public class PlayerMovement : MonoBehaviour
             MovementVector.x = Mathf.Lerp(MovementVector.x, inputVector.x * m_RunningSpeed, 0.08f);
             MovementVector.z = Mathf.Lerp(MovementVector.z, inputVector.z * m_RunningSpeed, 0.08f);
 
-            if (MovementVector.magnitude > 0.05f) transform.rotation = Quaternion.Slerp(transform.rotation,Quaternion.LookRotation(new Vector3(MovementVector.x,0.0f,MovementVector.z), Vector3.up), m_SteeringSpeed);
+            if (Vector3.Scale(MovementVector,new Vector3(1.0f,0.0f,1.0f)).magnitude > 0.05f) transform.rotation = Quaternion.Slerp(transform.rotation,Quaternion.LookRotation(new Vector3(MovementVector.x,0.0f,MovementVector.z), Vector3.up), m_SteeringSpeed);
         }
         else
         {
 
-            print("Not grounded");
+
             //put airborne behavior here
             
             if(m_airSwitch)

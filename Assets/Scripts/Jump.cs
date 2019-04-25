@@ -60,6 +60,10 @@ public class Jump : MonoBehaviour
     {
         print("stopJumping");
         jumping = false;
+        if (m_jumpTimer < m_jumpLength) //If the jump has not reached maximum height already, reduce velocity 
+        {                               //to increase responsiveness
+            PlayerMovement.MovementVector.y = PlayerMovement.MovementVector.y / 2;
+        }
     }
 
     //TODO: momentum does not carry over between doublejumps, might want to fix

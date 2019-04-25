@@ -37,7 +37,7 @@ public class Blink : MonoBehaviour
 
 
         //Velocity, magnitude of movement gets applied in input direction after blink
-        Physics.Raycast(transform.position + new Vector3(0, 0.1f, 0), transform.TransformDirection(Vector3.forward), out hit, 10, blinkThrough);
+        Physics.Raycast(transform.position + new Vector3(0, 0.1f, 0),inputVector, out hit, 10, blinkThrough);
 
         if (hit.distance == 0)
         {

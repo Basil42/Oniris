@@ -13,6 +13,7 @@ public class PlayerControls : MonoBehaviour
     private Blink m_blinkScript;
     private Dash m_dashScript;
     private Jump m_jumpScript;
+    private PauseMenu m_pauseMenuScript;
     //internal state
 
 
@@ -26,16 +27,18 @@ public class PlayerControls : MonoBehaviour
         m_blinkScript = GetComponentInChildren<Blink>();
         m_dashScript = GetComponentInChildren<Dash>();
         m_jumpScript = GetComponentInChildren<Jump>();
+        m_pauseMenuScript = GameObject.FindGameObjectWithTag("Canvas").GetComponent<PauseMenu>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Jump")) m_jumpScript.jump(); // moving the input check to an argument for better logic in the jump
+        if (Input.GetButtonDown("PauseMenu")) m_pauseMenuScript.PauseResume();
+        if (m_pauseMenuScript.GameIsPaused) return;
+        if (Input.GetButtonDown("Jump")) m_jumpScript.jump();
         if (Input.GetButtonUp("Jump")) m_jumpScript.stopJumping();
         if (Input.GetButtonDown("Blink")) m_blinkScript.blink(m_lStickInputVector);
         if (Input.GetButtonDown("Dash")) m_dashScript.dash();
-
     }
 
     private void FixedUpdate()
