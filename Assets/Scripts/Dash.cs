@@ -8,17 +8,18 @@ public class Dash : MonoBehaviour
     public float speed = 1;
     public float cooldown = 2;
     private float timer;
-    private float targetVelocityX;
-    private float targetVelocityZ;
+ 
     public float decelerationDelay = 1;
     public float decelerationStep = 0.2f;
     private float decelerationAmount;
-
-
+    private float targetVelocityX;
+    private float targetVelocityZ;
 
     private void Awake()
     {
         PlayerMovement = GetComponent<PlayerMovement>();
+        targetVelocityX = PlayerMovement.m_RunningSpeed;
+        targetVelocityZ = targetVelocityX;
     }
 
     private void Update()

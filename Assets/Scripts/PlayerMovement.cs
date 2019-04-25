@@ -33,26 +33,18 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector] public CharacterController controller;
     public float m_RunningSpeed = 1.0f;//the walk animation runs if the input vector is small enough
     public float m_SteeringSpeed = 0.2f;
-    //public float m_gravity = 10.0f;
-    //public float m_lowGravity = 5.0f;
-    //[SerializeField] private float m_jumpingSpeed = 2.0f;
-    //[SerializeField] private float m_DoubleJumpSpeed = 2.0f;
-    public movementState state;
+    
 
     private bool m_busy = false;
     
-    private bool m_doubleJumped = false;
+    
     private bool m_airSwitch = false;
     public bool m_grounded = false;
-    //public bool m_jumpEnabled = true;
-    //public bool m_doubleJumpEnabled = false;
+    
 
     [HideInInspector] public Vector3 MovementVector;
     private Animator m_animator;
 
-    //private bool m_shortJump;
-    //private float m_jumpTransitionTimer = 0;
-    //public float m_jumpTransitionLimit = 0.3f; //Limit -> Length?
 
     private float colliderHeight;
     public float colliderHeightOffset = 0.2f;
@@ -69,11 +61,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         GroundCheck();
-        if (m_grounded)
-        {
-            m_doubleJumped = false;
-
-        }
+        
     }
 
 
@@ -83,7 +71,6 @@ public class PlayerMovement : MonoBehaviour
 
         if (m_grounded && !m_busy)
         {
-            m_doubleJumped = false;
             m_airSwitch = false;
             //Lerp'n Slerp towards a target velocity
             MovementVector.x = Mathf.Lerp(MovementVector.x, inputVector.x * m_RunningSpeed, 0.08f);

@@ -6,12 +6,12 @@ public class Jump : MonoBehaviour
 {
 
     [SerializeField] private float m_jumpingSpeed = 2.0f;
-    [SerializeField] private float m_DoubleJumpSpeed = 2.0f;
+    //[SerializeField] private float m_DoubleJumpSpeed = 2.0f;//should matter, implement once state maching is in place
 
     private PlayerMovement PlayerMovement;
 
     private bool m_doubleJumped = false;
-    private bool m_airSwitch = false;
+
 
     public float m_gravity = 0.3f;
     //public float m_lowGravity = 5.0f;
