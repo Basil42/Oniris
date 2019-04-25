@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3497100209404044399}
   - component: {fileID: 1323927046926505809}
   - component: {fileID: 972727001692374097}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BlinkWall_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27,13 +27,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8289302414285865107}
-  m_LocalRotation: {x: -0, y: -0.53469366, z: -0, w: 0.845046}
-  m_LocalPosition: {x: -20, y: 5, z: 4}
+  m_LocalRotation: {x: -0.0009654934, y: -0.0014403078, z: -0.002929092, w: 0.9999942}
+  m_LocalPosition: {x: -21, y: 6, z: 4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -0.11100001, y: -0.165, z: -0.335}
 --- !u!33 &1753300500149906050
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -59,7 +59,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a4d812a08b5fa9c468ef04b47571e857, type: 2}
+  - {fileID: 2100000, guid: 99fe6839e8e196143a05afb8712de18a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
