@@ -20,10 +20,14 @@ public enum movementState
 public enum AbilityAvailability
 {
     All = 0,
-    doubleJumped= 1,
-    blinked = 2,
-    dashed = 4,
-    ledgeJump = 8
+    doubleJump= 1,
+    blink = 2,
+    dash = 4,
+    ledgeJump = 8,
+    hasBlink = 16,
+    hasDoublejump =32,
+    hasDash = 64,
+    hasWallJump = 128
 }
 
 [RequireComponent(typeof (CharacterController))]
@@ -40,6 +44,7 @@ public class PlayerMovement : MonoBehaviour
     
     private bool m_airSwitch = false;
     public bool m_grounded = false;
+    [HideInInspector] public movementState m_state;
     
 
     [HideInInspector] public Vector3 MovementVector;
@@ -58,9 +63,18 @@ public class PlayerMovement : MonoBehaviour
       
     }
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        GroundCheck();
+        switch (m_state)
+        {
+            case movementState.grounded:
+            case movementState.falling:
+                GroundCheck();
+                break;
+            default:
+                break;
+        }
+        
         
     }
 
@@ -125,8 +139,8 @@ public class PlayerMovement : MonoBehaviour
             Debug.DrawRay(transform.position + (-transform.forward * 0.5f + transform.up * 0.1f), transform.TransformDirection(Vector3.down) * hit.distance, Color.green);
             Debug.DrawRay(transform.position + (transform.right * 0.3f + transform.up * 0.1f), transform.TransformDirection(Vector3.down) * hit.distance, Color.blue);
             Debug.DrawRay(transform.position + (-transform.right * 0.3f + transform.up * 0.1f), transform.TransformDirection(Vector3.down) * hit.distance, Color.black);
-
-            m_grounded = true;
+            
+            m_state = movementState.grounded;
         }
         else
         {
@@ -135,7 +149,7 @@ public class PlayerMovement : MonoBehaviour
             Debug.DrawRay(transform.position + (-transform.forward * 0.5f + transform.up * 0.1f), transform.TransformDirection(Vector3.down) * 1000, Color.white);
             Debug.DrawRay(transform.position + (transform.right * 0.3f + transform.up * 0.1f), transform.TransformDirection(Vector3.down) * 1000, Color.white);
             Debug.DrawRay(-transform.position + (transform.right * 0.3f + transform.up * 0.1f), transform.TransformDirection(Vector3.down) * 1000, Color.white);
-            m_grounded = false;
+            m_state = movementState.falling;
         }
     }
 
