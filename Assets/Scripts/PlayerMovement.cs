@@ -48,7 +48,7 @@ public class PlayerMovement : MonoBehaviour
     public Vector3 m_inputvector;
 
     [HideInInspector] public movementState m_state;
-    public AbilityAvailability m_abilityFlags;
+    [HideInInspector]public AbilityAvailability m_abilityFlags;
 
     [HideInInspector] public Vector3 MovementVector;
     private Animator m_animator;
