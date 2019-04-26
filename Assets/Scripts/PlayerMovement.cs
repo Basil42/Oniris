@@ -42,12 +42,9 @@ public class PlayerMovement : MonoBehaviour
     public float m_gravity = 0.3f;
 
 
-
-
-    private bool m_airSwitch = false;
     public Vector3 m_inputvector;
 
-    [HideInInspector] public movementState m_state;
+    public movementState m_state;
     public AbilityAvailability m_abilityFlags;
 
     [HideInInspector] public Vector3 MovementVector;
@@ -101,7 +98,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (m_state == movementState.grounded)
         {
-            m_airSwitch = false;
+            
             //Lerp'n Slerp towards a target velocity
             MovementVector.x = Mathf.Lerp(MovementVector.x, inputVector.x * m_RunningSpeed, 0.08f);
             MovementVector.z = Mathf.Lerp(MovementVector.z, inputVector.z * m_RunningSpeed, 0.08f);
@@ -114,12 +111,7 @@ public class PlayerMovement : MonoBehaviour
 
             //put airborne behavior here
             
-            if(m_airSwitch)//remove that
-            {
-                m_airSwitch = false;
-                MovementVector.x = inputVector.x * m_RunningSpeed;
-                MovementVector.z = inputVector.z * m_RunningSpeed;
-            }
+            
         }
 
 
@@ -179,10 +171,7 @@ public class PlayerMovement : MonoBehaviour
 
     
 
-    public void airSwitch()
-    {
-        m_airSwitch = true; //sets true for a function in Move() for now
-    }
+    
     public void fallingBehavior()
     {
         MovementVector.y -= m_gravity * Time.fixedDeltaTime;

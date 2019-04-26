@@ -43,11 +43,13 @@ public class Jump : MonoBehaviour
             playerMovement.m_state = movementState.jumping;
             m_jumpTimer = 0; 
         }
-        else if (playerMovement.m_abilityFlags.HasFlag(AbilityAvailability.doubleJump)) 
+        else if (playerMovement.m_abilityFlags.HasFlag(AbilityAvailability.doubleJump) && playerMovement.m_state == movementState.falling) 
         {
             print("DoubleJump");
-            playerMovement.airSwitch();
-         
+            
+            playerMovement.MovementVector.x = playerMovement.m_inputvector.x * playerMovement.m_RunningSpeed;
+            playerMovement.MovementVector.z = playerMovement.m_inputvector.z * playerMovement.m_RunningSpeed;
+            transform.rotation = Quaternion.LookRotation(new Vector3(playerMovement.MovementVector.x,0.0f,playerMovement.MovementVector.z), Vector3.up);
             playerMovement.m_state = movementState.doubleJumping;
             playerMovement.m_abilityFlags &= ~AbilityAvailability.doubleJump;//set the double jump to unavailable
             m_jumpTimer = 0;
