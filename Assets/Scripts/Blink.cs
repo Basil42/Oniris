@@ -11,7 +11,8 @@ public class Blink : MonoBehaviour
 
     private LayerMask blinkThrough;
     private Renderer[] blinkBodies;
-    public float blinkDelay = 1;
+    public float Duration = 1;
+    public float distance = 10;
 
     public bool m_BlinkEnabled = true;
     // Start is called before the first frame update
@@ -37,11 +38,11 @@ public class Blink : MonoBehaviour
 
 
         //Velocity, magnitude of movement gets applied in input direction after blink
-        Physics.Raycast(transform.position + new Vector3(0, 0.1f, 0),inputVector, out hit, 10, blinkThrough);
+        Physics.Raycast(transform.position + new Vector3(0, 0.1f, 0),inputVector, out hit, distance, blinkThrough);
 
         if (hit.distance == 0)
         {
-            transform.position = transform.position + inputVector * 10;
+            transform.position = transform.position + inputVector * distance;
         }
         else
         {
@@ -63,7 +64,7 @@ public class Blink : MonoBehaviour
 
     private IEnumerator Appear(Vector3 direction, float magnitude)
     {
-        yield return new WaitForSeconds(blinkDelay);
+        yield return new WaitForSeconds(Duration);
 
         PlayerMovement.controller.enabled = true;
 
