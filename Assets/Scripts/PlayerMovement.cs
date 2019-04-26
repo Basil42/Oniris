@@ -3,17 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-
+//This script is responsible for ground movement and for calling the update functions of each other state
 public enum movementState
 {
     grounded,
     falling,
     jumping,
+    doubleJumping,
     dashing,
     wallrunLeft,
     wallrunRight,
     wallrunFront,
     blinking,
+    offLedge //state in which the player is falling but can still jump when stepping off a ledge
 }
 
 [Flags]
@@ -37,15 +39,16 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector] public CharacterController controller;
     public float m_RunningSpeed = 1.0f;//the walk animation runs if the input vector is small enough
     public float m_SteeringSpeed = 0.2f;
-    
+    public float m_gravity = 0.3f;
 
-    private bool m_busy = false;
-    
-    
+
+
+
     private bool m_airSwitch = false;
-    public bool m_grounded = false;
+    public Vector3 m_inputvector;
+
     [HideInInspector] public movementState m_state;
-    
+    public AbilityAvailability m_abilityFlags;
 
     [HideInInspector] public Vector3 MovementVector;
     private Animator m_animator;
@@ -65,25 +68,38 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (m_state == movementState.grounded || m_state == movementState.falling) GroundCheck();
         switch (m_state)
         {
-            case movementState.grounded:
             case movementState.falling:
-                GroundCheck();
+                fallingBehavior();
                 break;
+            case movementState.grounded:
+                Move(m_inputvector);
+                break;
+            
+                
             default:
                 break;
         }
-        
-        
+        Abilityresets();
+        if (controller.enabled) controller.Move(MovementVector);
     }
 
+    
+    private void Abilityresets()
+    {
+        if (m_state == movementState.grounded)
+        {
 
+            m_abilityFlags |= AbilityAvailability.doubleJump;//sets double jump to available
+        }
+    }
 
     public void Move(Vector3 inputVector)
     {
 
-        if (m_grounded && !m_busy)
+        if (m_state == movementState.grounded)
         {
             m_airSwitch = false;
             //Lerp'n Slerp towards a target velocity
@@ -98,7 +114,7 @@ public class PlayerMovement : MonoBehaviour
 
             //put airborne behavior here
             
-            if(m_airSwitch)
+            if(m_airSwitch)//remove that
             {
                 m_airSwitch = false;
                 MovementVector.x = inputVector.x * m_RunningSpeed;
@@ -107,7 +123,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
 
-        if (MovementVector.y < -1.0f && m_grounded)
+        if (MovementVector.y < -1.0f && m_state == movementState.grounded)
         {
             
             MovementVector.y = -1.0f;//arbitrary value to keep it from growing ever bigger
@@ -115,10 +131,10 @@ public class PlayerMovement : MonoBehaviour
             Debug.Log("Physics movement vector " + MovementVector.y);
         }
 
-        if(controller.enabled)controller.Move(MovementVector);
+        
     }
 
-    private void GroundCheck()
+    public void GroundCheck()
     {
         RaycastHit hit;
         RaycastHit hit2;
@@ -161,19 +177,15 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void setBusy(bool boolean)
-    {
-        m_busy = boolean;
-    }
-
-    public bool getBusy()
-    {
-        return m_busy;
-    }
+    
 
     public void airSwitch()
     {
         m_airSwitch = true; //sets true for a function in Move() for now
     }
-
+    public void fallingBehavior()
+    {
+        MovementVector.y -= m_gravity * Time.fixedDeltaTime;
+}
+    
 }

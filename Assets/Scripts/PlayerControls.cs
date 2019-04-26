@@ -47,6 +47,6 @@ public class PlayerControls : MonoBehaviour
         m_CameraRight = Vector3.Scale(m_Camera.right, new Vector3(1, 0, 1)).normalized;
         m_lStickInputVector = Input.GetAxis("Horizontal") * m_Camera.right + Input.GetAxis("Vertical") * m_CameraForward;
 
-        m_playerMove.Move(m_lStickInputVector);
+        m_playerMove.m_inputvector = m_lStickInputVector;
     }
 }

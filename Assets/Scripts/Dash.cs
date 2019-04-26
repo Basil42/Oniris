@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Dash : MonoBehaviour
 {
-    private PlayerMovement PlayerMovement;
+    private PlayerMovement playerMovement;
     public float speed = 1;
     public float cooldown = 2;
     private float timer;
@@ -17,8 +17,8 @@ public class Dash : MonoBehaviour
 
     private void Awake()
     {
-        PlayerMovement = GetComponent<PlayerMovement>();
-        targetVelocityX = PlayerMovement.m_RunningSpeed;
+        playerMovement = GetComponent<PlayerMovement>();
+        targetVelocityX = playerMovement.m_RunningSpeed;
         targetVelocityZ = targetVelocityX;
     }
 
@@ -36,37 +36,41 @@ public class Dash : MonoBehaviour
         if (timer >= cooldown)
         {
             Debug.Log("dash");
-
-            PlayerMovement.MovementVector += speed * transform.forward;
-            PlayerMovement.MovementVector.y = 0;
+            playerMovement.m_state = movementState.dashing;
+            playerMovement.MovementVector += speed * transform.forward;
+            playerMovement.MovementVector.y = 0;
             timer = 0;
 
-            transform.rotation = Quaternion.LookRotation(new Vector3(PlayerMovement.MovementVector.x, 0.0f, PlayerMovement.MovementVector.z));
+            transform.rotation = Quaternion.LookRotation(new Vector3(playerMovement.MovementVector.x, 0.0f, playerMovement.MovementVector.z));
 
-        //coroutine function to reduce speed after having dashed
-        StartCoroutine("decelerate");
+            //coroutine function to reduce speed after having dashed
+            
+            StartCoroutine("decelerate");
         }
     }
 
     private IEnumerator decelerate()
     {
-        PlayerMovement.setBusy(true);
+        
+        
         yield return new WaitForSeconds(decelerationDelay);
+        playerMovement.GroundCheck();
         int x = 0;
-
+        float velocity;
         decelerationAmount = 0;
-
-        while (x <= 250 && (PlayerMovement.MovementVector.magnitude > PlayerMovement.m_RunningSpeed)) 
+        Vector3 HorizontalMovementVector = new Vector3(playerMovement.MovementVector.x, 0.0f, playerMovement.MovementVector.z);
+        while (x <= 250 && ( HorizontalMovementVector.magnitude > playerMovement.m_RunningSpeed)) 
         {
             //Lerp'n Slerp towards a target velocity
             decelerationAmount += decelerationStep;
-            PlayerMovement.MovementVector.x = Mathf.Lerp(PlayerMovement.MovementVector.x, targetVelocityX, decelerationAmount);
-            PlayerMovement.MovementVector.z = Mathf.Lerp(PlayerMovement.MovementVector.z, targetVelocityZ, decelerationAmount);
+            velocity = Mathf.Lerp(HorizontalMovementVector.magnitude, playerMovement.m_RunningSpeed, decelerationAmount);//playerMovement.MovementVector.magnitude
+            HorizontalMovementVector = HorizontalMovementVector.normalized * velocity;
             yield return new WaitForFixedUpdate();
             x++;
             print("decelerating");
         }
         print("decelerated");
-        PlayerMovement.setBusy(false);
+        
+        
     }
 }

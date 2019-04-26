@@ -42,10 +42,7 @@ public class WallJump : MonoBehaviour
         {
             InitiateWallRun();
         }
-        else
-        {
-            Debug.Log(m_shortestHitDistance);
-        }
+        
 
     }
 
