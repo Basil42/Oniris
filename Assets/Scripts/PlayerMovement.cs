@@ -3,27 +3,33 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-
+//This script is responsible for ground movement and for calling the update functions of each other state
 public enum movementState
 {
     grounded,
     falling,
     jumping,
+    doubleJumping,
     dashing,
     wallrunLeft,
     wallrunRight,
     wallrunFront,
     blinking,
+    offLedge //state in which the player is falling but can still jump when stepping off a ledge
 }
 
 [Flags]
 public enum AbilityAvailability
 {
     All = 0,
-    doubleJumped= 1,
-    blinked = 2,
-    dashed = 4,
-    ledgeJump = 8
+    doubleJump= 1,
+    blink = 2,
+    dash = 4,
+    ledgeJump = 8,
+    hasBlink = 16,
+    hasDoublejump =32,
+    hasDash = 64,
+    hasWallJump = 128
 }
 
 [RequireComponent(typeof (CharacterController))]
@@ -33,26 +39,20 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector] public CharacterController controller;
     public float m_RunningSpeed = 1.0f;//the walk animation runs if the input vector is small enough
     public float m_SteeringSpeed = 0.2f;
-    //public float m_gravity = 10.0f;
-    //public float m_lowGravity = 5.0f;
-    //[SerializeField] private float m_jumpingSpeed = 2.0f;
-    //[SerializeField] private float m_DoubleJumpSpeed = 2.0f;
-    public movementState state;
+    public float m_gravity = 0.3f;
 
-    private bool m_busy = false;
-    
-    private bool m_doubleJumped = false;
+
+
+
     private bool m_airSwitch = false;
-    public bool m_grounded = false;
-    //public bool m_jumpEnabled = true;
-    //public bool m_doubleJumpEnabled = false;
+    public Vector3 m_inputvector;
+
+    [HideInInspector] public movementState m_state;
+    public AbilityAvailability m_abilityFlags;
 
     [HideInInspector] public Vector3 MovementVector;
     private Animator m_animator;
 
-    //private bool m_shortJump;
-    //private float m_jumpTransitionTimer = 0;
-    //public float m_jumpTransitionLimit = 0.3f; //Limit -> Length?
 
     private float colliderHeight;
     public float colliderHeightOffset = 0.2f;
@@ -66,24 +66,41 @@ public class PlayerMovement : MonoBehaviour
       
     }
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        GroundCheck();
-        if (m_grounded)
+        if (m_state == movementState.grounded || m_state == movementState.falling) GroundCheck();
+        switch (m_state)
         {
-            m_doubleJumped = false;
-
+            case movementState.falling:
+                fallingBehavior();
+                break;
+            case movementState.grounded:
+                Move(m_inputvector);
+                break;
+            
+                
+            default:
+                break;
         }
+        Abilityresets();
+        if (controller.enabled) controller.Move(MovementVector);
     }
 
+    
+    private void Abilityresets()
+    {
+        if (m_state == movementState.grounded)
+        {
 
+            m_abilityFlags |= AbilityAvailability.doubleJump;//sets double jump to available
+        }
+    }
 
     public void Move(Vector3 inputVector)
     {
 
-        if (m_grounded && !m_busy)
+        if (m_state == movementState.grounded)
         {
-            m_doubleJumped = false;
             m_airSwitch = false;
             //Lerp'n Slerp towards a target velocity
             MovementVector.x = Mathf.Lerp(MovementVector.x, inputVector.x * m_RunningSpeed, 0.08f);
@@ -97,7 +114,7 @@ public class PlayerMovement : MonoBehaviour
 
             //put airborne behavior here
             
-            if(m_airSwitch)
+            if(m_airSwitch)//remove that
             {
                 m_airSwitch = false;
                 MovementVector.x = inputVector.x * m_RunningSpeed;
@@ -106,7 +123,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
 
-        if (MovementVector.y < -1.0f && m_grounded)
+        if (MovementVector.y < -1.0f && m_state == movementState.grounded)
         {
             
             MovementVector.y = -1.0f;//arbitrary value to keep it from growing ever bigger
@@ -114,10 +131,10 @@ public class PlayerMovement : MonoBehaviour
             Debug.Log("Physics movement vector " + MovementVector.y);
         }
 
-        if(controller.enabled)controller.Move(MovementVector);
+        
     }
 
-    private void GroundCheck()
+    public void GroundCheck()
     {
         RaycastHit hit;
         RaycastHit hit2;
@@ -138,8 +155,8 @@ public class PlayerMovement : MonoBehaviour
             Debug.DrawRay(transform.position + (-transform.forward * 0.5f + transform.up * 0.1f), transform.TransformDirection(Vector3.down) * hit.distance, Color.green);
             Debug.DrawRay(transform.position + (transform.right * 0.3f + transform.up * 0.1f), transform.TransformDirection(Vector3.down) * hit.distance, Color.blue);
             Debug.DrawRay(transform.position + (-transform.right * 0.3f + transform.up * 0.1f), transform.TransformDirection(Vector3.down) * hit.distance, Color.black);
-
-            m_grounded = true;
+            
+            m_state = movementState.grounded;
         }
         else
         {
@@ -148,7 +165,7 @@ public class PlayerMovement : MonoBehaviour
             Debug.DrawRay(transform.position + (-transform.forward * 0.5f + transform.up * 0.1f), transform.TransformDirection(Vector3.down) * 1000, Color.white);
             Debug.DrawRay(transform.position + (transform.right * 0.3f + transform.up * 0.1f), transform.TransformDirection(Vector3.down) * 1000, Color.white);
             Debug.DrawRay(-transform.position + (transform.right * 0.3f + transform.up * 0.1f), transform.TransformDirection(Vector3.down) * 1000, Color.white);
-            m_grounded = false;
+            m_state = movementState.falling;
         }
     }
 
@@ -160,19 +177,15 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void setBusy(bool boolean)
-    {
-        m_busy = boolean;
-    }
-
-    public bool getBusy()
-    {
-        return m_busy;
-    }
+    
 
     public void airSwitch()
     {
         m_airSwitch = true; //sets true for a function in Move() for now
     }
-
+    public void fallingBehavior()
+    {
+        MovementVector.y -= m_gravity * Time.fixedDeltaTime;
+}
+    
 }

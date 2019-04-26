@@ -36,7 +36,11 @@ public class PlayerControls : MonoBehaviour
         if (Input.GetButtonDown("PauseMenu")) m_pauseMenuScript.PauseResume();
         if (m_pauseMenuScript.GameIsPaused) return;
         if (Input.GetButtonDown("Jump")) m_jumpScript.jump();
-        if (Input.GetButtonUp("Jump")) m_jumpScript.stopJumping();
+        if (Input.GetButtonUp("Jump"))
+        {
+            if (m_playerMove.m_state == movementState.jumping) m_jumpScript.stopJumping();
+            else if (m_playerMove.m_state == movementState.doubleJumping) m_jumpScript.stopDoublejumping();
+        }
         if (Input.GetButtonDown("Blink")) m_blinkScript.blink(m_lStickInputVector);
         if (Input.GetButtonDown("Dash")) m_dashScript.dash();
     }
@@ -47,6 +51,6 @@ public class PlayerControls : MonoBehaviour
         m_CameraRight = Vector3.Scale(m_Camera.right, new Vector3(1, 0, 1)).normalized;
         m_lStickInputVector = Input.GetAxis("Horizontal") * m_Camera.right + Input.GetAxis("Vertical") * m_CameraForward;
 
-        m_playerMove.Move(m_lStickInputVector);
+        m_playerMove.m_inputvector = m_lStickInputVector;
     }
 }

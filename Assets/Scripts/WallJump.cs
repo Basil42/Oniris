@@ -42,10 +42,7 @@ public class WallJump : MonoBehaviour
         {
             InitiateWallRun();
         }
-        else
-        {
-            Debug.Log(m_shortestHitDistance);
-        }
+        
 
     }
 
@@ -55,11 +52,9 @@ public class WallJump : MonoBehaviour
         m_direction = Direction.None;
         m_origin = transform.position + new Vector3(0.0f, m_controlller.height / 2.0f, 0.0f);
         CheckDirection(new Ray(m_origin, transform.forward), Direction.Front);
-        Debug.DrawRay(m_origin, transform.forward, Color.green);
         CheckDirection(new Ray(m_origin, transform.right), Direction.Right);
-        Debug.DrawRay(m_origin, transform.right, Color.green);
         CheckDirection(new Ray(m_origin, -transform.right), Direction.Left);
-        Debug.DrawRay(m_origin, transform.right, Color.green);
+        
         return (m_direction != Direction.None);
     }
 

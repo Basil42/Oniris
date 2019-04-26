@@ -2,56 +2,54 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//responsible for jumping and double jumping
 public class Jump : MonoBehaviour
 {
 
     [SerializeField] private float m_jumpingSpeed = 2.0f;
-    [SerializeField] private float m_DoubleJumpSpeed = 2.0f;
+    //[SerializeField] private float m_DoubleJumpSpeed = 2.0f;//should matter, implement once state maching is in place
 
-    private PlayerMovement PlayerMovement;
+    private PlayerMovement playerMovement;
 
-    private bool m_doubleJumped = false;
-    private bool m_airSwitch = false;
+    
 
-    public float m_gravity = 0.3f;
+
+    
     //public float m_lowGravity = 5.0f;
 
 
-    private bool jumping = false;
     private float m_jumpTimer;
     public float m_jumpLength = 1.5f;
 
     // Start is called before the first frame update
     void Start()
     {
-        PlayerMovement = GetComponent<PlayerMovement>();
+        playerMovement = GetComponent<PlayerMovement>();
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        AirBehavior();
-        if (PlayerMovement.m_grounded)
-        {
-            m_doubleJumped = false;
-        }
+        if (playerMovement.m_state == movementState.jumping) JumpBehavior();
+        else if (playerMovement.m_state == movementState.doubleJumping) DoubleJumpBehavior();
     }
 
     public void jump()
     {
         
-        if (PlayerMovement.m_grounded)
+        if (playerMovement.m_state == movementState.grounded || playerMovement.m_state == movementState.offLedge)
         {
             print("Jumping");
-            jumping = true;
+            playerMovement.m_state = movementState.jumping;
             m_jumpTimer = 0; 
         }
-        else if (!m_doubleJumped) 
+        else if (playerMovement.m_abilityFlags.HasFlag(AbilityAvailability.doubleJump)) 
         {
             print("DoubleJump");
-            PlayerMovement.airSwitch();
-            jumping = true;
-            m_doubleJumped = true;
+            playerMovement.airSwitch();
+         
+            playerMovement.m_state = movementState.doubleJumping;
+            playerMovement.m_abilityFlags &= ~AbilityAvailability.doubleJump;//set the double jump to unavailable
             m_jumpTimer = 0;
         }
     }
@@ -59,26 +57,51 @@ public class Jump : MonoBehaviour
     public void stopJumping()
     {
         print("stopJumping");
-        jumping = false;
+       
+        playerMovement.m_state = movementState.falling;
         if (m_jumpTimer < m_jumpLength) //If the jump has not reached maximum height already, reduce velocity 
         {                               //to increase responsiveness
-            PlayerMovement.MovementVector.y = PlayerMovement.MovementVector.y / 2;
+            playerMovement.MovementVector.y = playerMovement.MovementVector.y / 2;
         }
     }
 
-    //TODO: momentum does not carry over between doublejumps, might want to fix
+    public void stopDoublejumping()
+    {
+        playerMovement.m_state = movementState.falling;
+        if (m_jumpTimer < m_jumpLength) //If the jump has not reached maximum height already, reduce velocity 
+        {                               //to increase responsiveness
+            playerMovement.MovementVector.y = playerMovement.MovementVector.y / 2;
+        }
+
+    }
+
+   
 
     //Run this while in the air
-    public void AirBehavior()
+    public void JumpBehavior()
     {
-        if (jumping && m_jumpTimer < m_jumpLength)
+        if (m_jumpTimer < m_jumpLength)
         {
-            PlayerMovement.MovementVector.y = m_jumpingSpeed;
+            playerMovement.MovementVector.y = m_jumpingSpeed;
             m_jumpTimer += Time.deltaTime;
         }
-        else if (!PlayerMovement.m_grounded)
+        else 
         {
-            PlayerMovement.MovementVector.y = PlayerMovement.MovementVector.y - (m_gravity * Time.fixedDeltaTime);
+            playerMovement.m_state = movementState.falling;
+            
+        }
+    }
+    private void DoubleJumpBehavior()
+    {
+        if (m_jumpTimer < m_jumpLength)
+        {
+            playerMovement.MovementVector.y = m_jumpingSpeed;
+            m_jumpTimer += Time.deltaTime;
+        }
+        else
+        {
+            playerMovement.m_state = movementState.falling;
+
         }
     }
 }
