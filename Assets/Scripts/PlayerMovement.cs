@@ -36,6 +36,7 @@ public enum AbilityAvailability
 [RequireComponent(typeof(Animator))]
 public class PlayerMovement : MonoBehaviour 
 {
+    public const float inertiaIntensity = 0.08f;
     [HideInInspector] public CharacterController controller;
     public float m_RunningSpeed = 1.0f;//the walk animation runs if the input vector is small enough
     public float m_SteeringSpeed = 0.2f;
@@ -100,8 +101,8 @@ public class PlayerMovement : MonoBehaviour
         {
             
             //Lerp'n Slerp towards a target velocity
-            MovementVector.x = Mathf.Lerp(MovementVector.x, inputVector.x * m_RunningSpeed, 0.08f);
-            MovementVector.z = Mathf.Lerp(MovementVector.z, inputVector.z * m_RunningSpeed, 0.08f);
+            MovementVector.x = Mathf.Lerp(MovementVector.x, inputVector.x * m_RunningSpeed, inertiaIntensity);
+            MovementVector.z = Mathf.Lerp(MovementVector.z, inputVector.z * m_RunningSpeed, inertiaIntensity);
 
             if (Vector3.Scale(MovementVector,new Vector3(1.0f,0.0f,1.0f)).magnitude > 0.05f) transform.rotation = Quaternion.Slerp(transform.rotation,Quaternion.LookRotation(new Vector3(MovementVector.x,0.0f,MovementVector.z), Vector3.up), m_SteeringSpeed);
         }
