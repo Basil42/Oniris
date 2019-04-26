@@ -30,8 +30,8 @@ public class Jump : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(playerMovement.m_state == movementState.jumping)JumpBehavior();
-        
+        if (playerMovement.m_state == movementState.jumping) JumpBehavior();
+        else if (playerMovement.m_state == movementState.doubleJumping) DoubleJumpBehavior();
     }
 
     public void jump()
@@ -65,6 +65,16 @@ public class Jump : MonoBehaviour
         }
     }
 
+    public void stopDoublejumping()
+    {
+        playerMovement.m_state = movementState.falling;
+        if (m_jumpTimer < m_jumpLength) //If the jump has not reached maximum height already, reduce velocity 
+        {                               //to increase responsiveness
+            playerMovement.MovementVector.y = playerMovement.MovementVector.y / 2;
+        }
+
+    }
+
    
 
     //Run this while in the air
@@ -79,6 +89,19 @@ public class Jump : MonoBehaviour
         {
             playerMovement.m_state = movementState.falling;
             
+        }
+    }
+    private void DoubleJumpBehavior()
+    {
+        if (m_jumpTimer < m_jumpLength)
+        {
+            playerMovement.MovementVector.y = m_jumpingSpeed;
+            m_jumpTimer += Time.deltaTime;
+        }
+        else
+        {
+            playerMovement.m_state = movementState.falling;
+
         }
     }
 }
