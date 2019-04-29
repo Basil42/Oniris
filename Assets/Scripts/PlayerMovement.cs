@@ -128,7 +128,7 @@ public class PlayerMovement : MonoBehaviour
             
             MovementVector.y = -1.0f;//arbitrary value to keep it from growing ever bigger
            
-            Debug.Log("Physics movement vector " + MovementVector.y);
+            
         }
 
         
@@ -171,9 +171,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        if (hit.point.y >= transform.position.y + colliderHeight && MovementVector.y > 0)
+        if (hit.point.y >= transform.position.y + colliderHeight && MovementVector.y > 0 && new Vector2(hit.point.x,hit.point.z).magnitude < controller.radius * 0.8)
         {
                 MovementVector.y = 0;
+            Debug.Log("bump");
         }
     }
 

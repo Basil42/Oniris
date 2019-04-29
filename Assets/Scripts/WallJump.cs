@@ -7,18 +7,26 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class WallJump : MonoBehaviour
 {
-    //this is a temporary implementation
+    
     PlayerMovement m_movementScript;
     CharacterController m_controlller;
     [Tooltip("Distance beyond the player's collider the game will 'feel' for walls")]
     [SerializeField] private float m_reach = 0.5f;
+    [Tooltip("tolerance in slope for what checks out as a wall (higher values make requirement less strigent")]
+    [SerializeField] private float m_slopeTreshold = 0.05f;//this value determines how much leeway the game gives something to be considered a wall (colliders can have a bit of slope and still by "walljumpable")
+    [Tooltip("Speed at which the character wall run vertically")]
+    [SerializeField] private float wallClimbSpeed = 0.3f;
+    [Tooltip("Speed at which the player bounces off the wall if they did not jump off of it before the wall run ends")]
+    [SerializeField] private float bounceVelocity = 1.0f;
+
     private float m_absoluteReach;
 
-    //allocations
+    //allocations for values that need regular updating (blackboard)
     private float m_shortestHitDistance;//used in choosing which ray determines the angle of collision with walls
     private RaycastHit m_hit;//allocated memory to read raycast hits
     private Direction m_direction;
     private Vector3 m_origin;  //origin of the rays that detect walls
+    
     enum Direction
     {
         None,
@@ -37,20 +45,68 @@ public class WallJump : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //check for falling/jumping state
-        if (detectWalls())
+        //check for falling/jumping state check for minimal speed
+        m_origin = transform.position + new Vector3(0.0f, m_controlller.height / 2.0f, 0.0f);
+        switch (m_movementScript.m_state)
         {
-            InitiateWallRun();
-        }
-        
+            case movementState.grounded:
+            case movementState.falling:
+            case movementState.doubleJumping:
+            case movementState.offLedge:
+            case movementState.jumping:
+                if (detectWalls()) InitiateWallRun();
+                break;
 
+            case movementState.wallrunLeft:
+                wallRunLeftBehavior();
+                break;
+            case movementState.wallrunRight:
+                wallRunRightBehavior();
+                break;
+            case movementState.wallrunFront:
+                wallRunFrontBehavior();
+                break;
+            default:
+                break;
+        }
+
+
+
+    }
+
+    private void wallRunFrontBehavior()
+    {
+        if (!Physics.Raycast(m_origin, transform.forward, out m_hit))
+        {
+            m_movementScript.MovementVector = m_hit.normal * bounceVelocity;
+            m_movementScript.m_state = movementState.falling;
+            Debug.Log("bounce");
+        }
+    }
+
+    private void wallRunRightBehavior()
+    {
+        if (!Physics.Raycast(m_origin, transform.right, out m_hit))
+        {
+            m_movementScript.MovementVector += m_hit.normal * bounceVelocity;
+            m_movementScript.m_state = movementState.falling;
+        }
+    }
+
+    private void wallRunLeftBehavior()
+    {
+        if (!Physics.Raycast(m_origin, -transform.right, out m_hit))
+        {
+            m_movementScript.MovementVector += m_hit.normal * bounceVelocity;
+            m_movementScript.m_state = movementState.falling;
+        }
     }
 
     private bool detectWalls()
     {
         m_shortestHitDistance = m_absoluteReach + 1.0f;//initialized here so any hit will be shorter
         m_direction = Direction.None;
-        m_origin = transform.position + new Vector3(0.0f, m_controlller.height / 2.0f, 0.0f);
+        
         CheckDirection(new Ray(m_origin, transform.forward), Direction.Front);
         CheckDirection(new Ray(m_origin, transform.right), Direction.Right);
         CheckDirection(new Ray(m_origin, -transform.right), Direction.Left);
@@ -60,7 +116,7 @@ public class WallJump : MonoBehaviour
 
     private void CheckDirection(Ray ray, Direction direction)
     {
-        if (Physics.Raycast(ray, out m_hit, m_absoluteReach) && m_hit.distance < m_shortestHitDistance)
+        if (Physics.Raycast(ray, out m_hit, m_absoluteReach) && m_hit.distance < m_shortestHitDistance && Vector3.Angle(m_hit.normal,-ray.direction)< m_slopeTreshold)
         {
             m_shortestHitDistance = m_hit.distance;
             m_direction = direction;
@@ -76,13 +132,17 @@ public class WallJump : MonoBehaviour
                 Debug.LogError("Invalid walljump direction, value has been modified at an unexpected point");
                 break;
             case Direction.Front:
-                Debug.Log("wall in front");
+                m_movementScript.m_state = movementState.wallrunFront;
+                m_movementScript.MovementVector = Vector3.up * wallClimbSpeed;
+                transform.LookAt(m_origin - m_hit.normal);//line upthe character properly
+                Debug.Log("wallrun forward");
                 break;
             case Direction.Left:
-                Debug.Log("Wall on the left");
+                m_movementScript.m_state = movementState.wallrunLeft;
+
                 break;
             case Direction.Right:
-                Debug.Log("Wall on the right");
+                m_movementScript.m_state = movementState.wallrunRight;
                 break;
             default:
                 break;
