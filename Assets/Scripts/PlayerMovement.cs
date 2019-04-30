@@ -22,12 +22,12 @@ public enum movementState
 public enum AbilityAvailability
 {
     All = 0,
-    doubleJump= 1,
+    doubleJump = 1,
     blink = 2,
     dash = 4,
     ledgeJump = 8,
     hasBlink = 16,
-    hasDoublejump =32,
+    hasDoublejump = 32,
     hasDash = 64,
     hasWallJump = 128
 }
@@ -40,6 +40,10 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector] public CharacterController controller;
     public float m_RunningSpeed = 1.0f;//the walk animation runs if the input vector is small enough
     public float m_SteeringSpeed = 0.2f;
+    public float m_AirSteeringSpeed = 0.2f;
+    public float m_AirForwardSpeed = 0.2f;
+    public const float m_AirInertiaIntensity = 0.08f;
+    public float m_AirMinSpeed = 0.01f; //Need a better name
     public float m_gravity = 0.3f;
 
 
@@ -71,9 +75,16 @@ public class PlayerMovement : MonoBehaviour
         {
             case movementState.falling:
                 fallingBehavior();
+                airControl(m_inputvector);
                 break;
             case movementState.grounded:
                 Move(m_inputvector);
+                break;
+            case movementState.jumping:
+                airControl(m_inputvector);
+                break;
+            case movementState.doubleJumping:
+                airControl(m_inputvector);
                 break;
             
                 
@@ -96,35 +107,19 @@ public class PlayerMovement : MonoBehaviour
 
     public void Move(Vector3 inputVector)
     {
-
-        if (m_state == movementState.grounded)
-        {
-            
             //Lerp'n Slerp towards a target velocity
             MovementVector.x = Mathf.Lerp(MovementVector.x, inputVector.x * m_RunningSpeed, inertiaIntensity);
             MovementVector.z = Mathf.Lerp(MovementVector.z, inputVector.z * m_RunningSpeed, inertiaIntensity);
 
             if (Vector3.Scale(MovementVector,new Vector3(1.0f,0.0f,1.0f)).magnitude > 0.05f) transform.rotation = Quaternion.Slerp(transform.rotation,Quaternion.LookRotation(new Vector3(MovementVector.x,0.0f,MovementVector.z), Vector3.up), m_SteeringSpeed);
-        }
-        else
-        {
 
-
-            //put airborne behavior here
-            
-            
-        }
-
-
-        if (MovementVector.y < -1.0f && m_state == movementState.grounded)
+        if (MovementVector.y < -1.0f)
         {
             
             MovementVector.y = -1.0f;//arbitrary value to keep it from growing ever bigger
            
             Debug.Log("Physics movement vector " + MovementVector.y);
         }
-
-        
     }
 
     public void GroundCheck()
@@ -170,12 +165,39 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    
+    private void airControl(Vector3 inputVector)
+    {
+        //Start of Tomis solution, kept for reference for now.
+        //float k = Vector3.Dot(inputVector.normalized, controller.);
+
+        //Vector3 i = inputVector.normalized * 0.1f;
+
+        //Vector3 m = MovementVector.normalized;
+
+        //Vector3 n = (m + i).normalized;
+
+        //Vector3 v;
+        //v = Vector3.Scale(inputVector, transform.forward);
+
+        float dotProduct = Vector3.Dot(inputVector,  transform.forward);
+        Vector3 airInput = dotProduct * transform.forward;
+
+        dotProduct = Vector3.Dot(inputVector, transform.right);
+        airInput += dotProduct * transform.right;
+
+        dotProduct = Vector3.Dot(MovementVector, transform.forward);
+
+        if (dotProduct > m_AirMinSpeed) //If the value is too high, manuevering doesnt happen
+        {
+            MovementVector.z = Mathf.Lerp(MovementVector.z, airInput.z * m_AirForwardSpeed, m_AirInertiaIntensity);
+            MovementVector.x = Mathf.Lerp(MovementVector.x, airInput.x * m_AirSteeringSpeed, m_AirInertiaIntensity);
+        }
+    }
 
     
     public void fallingBehavior()
     {
         MovementVector.y -= m_gravity * Time.fixedDeltaTime;
-}
+    }
     
 }

@@ -11,13 +11,6 @@ public class Jump : MonoBehaviour
 
     private PlayerMovement playerMovement;
 
-    
-
-
-    
-    //public float m_lowGravity = 5.0f;
-
-
     private float m_jumpTimer;
     public float m_jumpLength = 1.5f;
 
@@ -79,7 +72,7 @@ public class Jump : MonoBehaviour
 
    
 
-    //Run this while in the air
+    //Run this while jumping
     public void JumpBehavior()
     {
         if (m_jumpTimer < m_jumpLength)
