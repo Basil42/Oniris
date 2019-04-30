@@ -13,7 +13,7 @@ public class WallJump : MonoBehaviour
     [Tooltip("Distance beyond the player's collider the game will 'feel' for walls")]
     [SerializeField] private float m_reach = 0.5f;
     [Tooltip("tolerance in slope for what checks out as a wall (higher values make requirement less strigent")]
-    [SerializeField] private float m_slopeTreshold = 0.05f;//this value determines how much leeway the game gives something to be considered a wall (colliders can have a bit of slope and still by "walljumpable")
+    [SerializeField] private float m_slopeTreshold = 0.1f;//this value determines how much leeway the game gives something to be considered a wall (colliders can have a bit of slope and still by "walljumpable")
     [Tooltip("Speed at which the character wall run vertically")]
     [SerializeField] private float wallClimbSpeed = 0.3f;
     [Tooltip("Speed at which the player bounces off the wall if they did not jump off of it before the wall run ends")]
@@ -50,6 +50,7 @@ public class WallJump : MonoBehaviour
         switch (m_movementScript.m_state)
         {
             case movementState.grounded:
+                break;
             case movementState.falling:
             case movementState.doubleJumping:
             case movementState.offLedge:
@@ -76,10 +77,12 @@ public class WallJump : MonoBehaviour
 
     private void wallRunFrontBehavior()
     {
+        
         if (!Physics.Raycast(m_origin, transform.forward, out m_hit))
         {
-            m_movementScript.MovementVector = m_hit.normal * bounceVelocity;
+            m_movementScript.MovementVector = -transform.forward * bounceVelocity;
             m_movementScript.m_state = movementState.falling;
+            transform.forward = -transform.forward;
             Debug.Log("bounce");
         }
     }
@@ -116,7 +119,7 @@ public class WallJump : MonoBehaviour
 
     private void CheckDirection(Ray ray, Direction direction)
     {
-        if (Physics.Raycast(ray, out m_hit, m_absoluteReach) && m_hit.distance < m_shortestHitDistance && Vector3.Angle(m_hit.normal,-ray.direction)< m_slopeTreshold)
+        if (Physics.Raycast(ray, out m_hit, m_absoluteReach) && m_hit.distance < m_shortestHitDistance && Vector3.Dot(m_hit.normal, m_movementScript.MovementVector) < 0  && Mathf.Abs(m_hit.normal.y)< m_slopeTreshold)
         {
             m_shortestHitDistance = m_hit.distance;
             m_direction = direction;
@@ -134,7 +137,7 @@ public class WallJump : MonoBehaviour
             case Direction.Front:
                 m_movementScript.m_state = movementState.wallrunFront;
                 m_movementScript.MovementVector = Vector3.up * wallClimbSpeed;
-                transform.LookAt(m_origin - m_hit.normal);//line upthe character properly
+                transform.rotation = Quaternion.LookRotation(-m_hit.normal,Vector3.up);//line upthe character properly
                 Debug.Log("wallrun forward");
                 break;
             case Direction.Left:
