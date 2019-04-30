@@ -43,7 +43,7 @@ public class Jump : MonoBehaviour
             playerMovement.m_state = movementState.jumping;
             m_jumpTimer = 0; 
         }
-        else if (playerMovement.m_abilityFlags.HasFlag(AbilityAvailability.doubleJump)) 
+        else if (playerMovement.m_abilityFlags.HasFlag(AbilityAvailability.doubleJump) && playerMovement.m_state == movementState.falling) 
         {
             print("DoubleJump");
             playerMovement.airSwitch();

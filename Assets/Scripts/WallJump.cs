@@ -16,16 +16,25 @@ public class WallJump : MonoBehaviour
     [SerializeField] private float m_slopeTreshold = 0.1f;//this value determines how much leeway the game gives something to be considered a wall (colliders can have a bit of slope and still by "walljumpable")
     [Tooltip("Speed at which the character wall run vertically")]
     [SerializeField] private float wallClimbSpeed = 0.3f;
+    [Tooltip("Speed at which the character wall run horizontally")]
+    [SerializeField] private float m_wallrunSpeed = 0.3f;
     [Tooltip("Speed at which the player bounces off the wall if they did not jump off of it before the wall run ends")]
     [SerializeField] private float bounceVelocity = 1.0f;
-
+    [Tooltip("Angle at which the player starts their horizontal wall run 90 is purely horizontal")]
+    [SerializeField] private float m_RunAngle = 90.0f;
+    [Tooltip("Time in seconds the player can 'stick' to a wall while wall running horizontally")]
+    [SerializeField] private float m_LateralRunTime = 3.0f;
+    [Tooltip("Time in seconds the player can 'stick' to a wall while wall running vertically")]
+    [SerializeField] private float m_VerticalRunTime = 1.5f;
     private float m_absoluteReach;
 
     //allocations for values that need regular updating (blackboard)
     private float m_shortestHitDistance;//used in choosing which ray determines the angle of collision with walls
     private RaycastHit m_hit;//allocated memory to read raycast hits
+    private RaycastHit m_chosenHit;
     private Direction m_direction;
     private Vector3 m_origin;  //origin of the rays that detect walls
+    private float m_RunTimer;
     
     enum Direction
     {
@@ -77,30 +86,32 @@ public class WallJump : MonoBehaviour
 
     private void wallRunFrontBehavior()
     {
-        
-        if (!Physics.Raycast(m_origin, transform.forward, out m_hit))
+        m_RunTimer -= Time.fixedDeltaTime;
+        if (!Physics.Raycast(m_origin, transform.forward, out m_hit, m_absoluteReach) || m_RunTimer < 0)//to do timer
         {
             m_movementScript.MovementVector = -transform.forward * bounceVelocity;
             m_movementScript.m_state = movementState.falling;
             transform.forward = -transform.forward;
-            Debug.Log("bounce");
         }
     }
 
     private void wallRunRightBehavior()
     {
-        if (!Physics.Raycast(m_origin, transform.right, out m_hit))
+        m_RunTimer -= Time.fixedDeltaTime;
+        if (!Physics.Raycast(m_origin, transform.right, out m_hit, m_absoluteReach) || m_RunTimer < 0)//to do : timer
         {
-            m_movementScript.MovementVector += m_hit.normal * bounceVelocity;
+            m_movementScript.MovementVector += -transform.right * bounceVelocity;
             m_movementScript.m_state = movementState.falling;
+            //facethe character in the appropriate direction(this function might not be responsible for it)
         }
     }
 
     private void wallRunLeftBehavior()
     {
-        if (!Physics.Raycast(m_origin, -transform.right, out m_hit))
+        m_RunTimer -= Time.fixedDeltaTime;
+        if (!Physics.Raycast(m_origin, -transform.right, out m_hit,m_absoluteReach) || m_RunTimer < 0)//timer
         {
-            m_movementScript.MovementVector += m_hit.normal * bounceVelocity;
+            m_movementScript.MovementVector += transform.right * bounceVelocity;
             m_movementScript.m_state = movementState.falling;
         }
     }
@@ -123,6 +134,7 @@ public class WallJump : MonoBehaviour
         {
             m_shortestHitDistance = m_hit.distance;
             m_direction = direction;
+            m_chosenHit = m_hit;
         }
     }
     
@@ -135,17 +147,26 @@ public class WallJump : MonoBehaviour
                 Debug.LogError("Invalid walljump direction, value has been modified at an unexpected point");
                 break;
             case Direction.Front:
+                m_RunTimer = m_VerticalRunTime;
                 m_movementScript.m_state = movementState.wallrunFront;
                 m_movementScript.MovementVector = Vector3.up * wallClimbSpeed;
-                transform.rotation = Quaternion.LookRotation(-m_hit.normal,Vector3.up);//line upthe character properly
-                Debug.Log("wallrun forward");
+                transform.rotation = Quaternion.LookRotation(-m_chosenHit.normal,Vector3.up);//line up the character properly
+                Debug.Log("front wall run");
+                //animation stuff
                 break;
             case Direction.Left:
+                m_RunTimer = m_LateralRunTime;
                 m_movementScript.m_state = movementState.wallrunLeft;
-
+                m_movementScript.MovementVector = (Quaternion.AngleAxis(m_RunAngle,m_chosenHit.normal) * Vector3.up)* m_wallrunSpeed;
+                Debug.Log("left wall run");
+                //to do: line up character properly
+                //to do : plane running
                 break;
             case Direction.Right:
+                m_RunTimer = m_LateralRunTime;
                 m_movementScript.m_state = movementState.wallrunRight;
+                m_movementScript.MovementVector = (Quaternion.AngleAxis(-m_RunAngle, m_chosenHit.normal) * Vector3.up) * m_wallrunSpeed;
+                Debug.Log("right wall run");
                 break;
             default:
                 break;
