@@ -12,8 +12,8 @@ public class WallJump : MonoBehaviour
     CharacterController m_controlller;
     [Tooltip("Distance beyond the player's collider the game will 'feel' for walls")]
     [SerializeField] private float m_reach = 0.5f;
-    [Tooltip("tolerance in slope for what checks out as a wall (higher values make requirement less strigent")]
-    [SerializeField] private float m_slopeTreshold = 0.1f;//this value determines how much leeway the game gives something to be considered a wall (colliders can have a bit of slope and still by "walljumpable")
+    [Tooltip("tolerance in slope for what checks out as a wall (higher values make requirement less strigent, 1 makes horizontal surface valid)")]
+    [SerializeField] private float m_slopeTreshold = 0.2f;//this value determines how much leeway the game gives something to be considered a wall (colliders can have a bit of slope and still by "walljumpable")
     [Tooltip("Speed at which the character wall run vertically")]
     [SerializeField] private float wallClimbSpeed = 0.3f;
     [Tooltip("Speed at which the character wall run horizontally")]
@@ -26,6 +26,8 @@ public class WallJump : MonoBehaviour
     [SerializeField] private float m_LateralRunTime = 3.0f;
     [Tooltip("Time in seconds the player can 'stick' to a wall while wall running vertically")]
     [SerializeField] private float m_VerticalRunTime = 1.5f;
+    [SerializeField] private float verticalWallJumpHeight = 0.5f;
+    [SerializeField] private float verticalWallJumpLength = 0.2f;
     private float m_absoluteReach;
 
     //allocations for values that need regular updating (blackboard)
@@ -94,7 +96,12 @@ public class WallJump : MonoBehaviour
             transform.forward = -transform.forward;
         }
     }
-
+    public void WallJumpFront()
+    {
+        //animation stuff 
+        m_movementScript.MovementVector = Vector3.up * verticalWallJumpHeight + m_chosenHit.normal * verticalWallJumpLength;
+        m_movementScript.m_state = movementState.falling;
+    }
     private void wallRunRightBehavior()
     {
         m_RunTimer -= Time.fixedDeltaTime;
@@ -113,9 +120,13 @@ public class WallJump : MonoBehaviour
         {
             m_movementScript.MovementVector += transform.right * bounceVelocity;
             m_movementScript.m_state = movementState.falling;
+            Debug.Log("bounce");
         }
     }
+    public void WallJumpLateral()
+    {
 
+    }
     private bool detectWalls()
     {
         m_shortestHitDistance = m_absoluteReach + 1.0f;//initialized here so any hit will be shorter

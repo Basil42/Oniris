@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class PlayerControls : MonoBehaviour
 {
     //references
@@ -13,6 +14,7 @@ public class PlayerControls : MonoBehaviour
     private Blink m_blinkScript;
     private Dash m_dashScript;
     private Jump m_jumpScript;
+    private WallJump m_wallJumpScript;
     private PauseMenu m_pauseMenuScript;
     //internal state
 
@@ -27,6 +29,7 @@ public class PlayerControls : MonoBehaviour
         m_blinkScript = GetComponentInChildren<Blink>();
         m_dashScript = GetComponentInChildren<Dash>();
         m_jumpScript = GetComponentInChildren<Jump>();
+        m_wallJumpScript = GetComponentInChildren<WallJump>();
         m_pauseMenuScript = GameObject.FindGameObjectWithTag("Canvas").GetComponent<PauseMenu>();
     }
 
@@ -35,7 +38,29 @@ public class PlayerControls : MonoBehaviour
     {
         if (Input.GetButtonDown("PauseMenu")) m_pauseMenuScript.PauseResume();
         if (m_pauseMenuScript.GameIsPaused) return;
-        if (Input.GetButtonDown("Jump")) m_jumpScript.jump();
+        if (Input.GetButtonDown("Jump"))
+        {
+            switch (m_playerMove.m_state)
+            {
+                case movementState.grounded:
+                case movementState.falling:
+                case movementState.dashing:
+                case movementState.offLedge:
+                    m_jumpScript.jump();
+                    break;
+                case movementState.wallrunLeft:
+                case movementState.wallrunRight:
+                    m_wallJumpScript.WallJumpLateral();
+                    break; 
+                case movementState.wallrunFront:
+                    m_wallJumpScript.WallJumpFront();
+                    break;    
+                default:
+                    //jump buffering ?
+                    break;
+            }
+            m_jumpScript.jump();
+        }
         if (Input.GetButtonUp("Jump"))
         {
             if (m_playerMove.m_state == movementState.jumping) m_jumpScript.stopJumping();
