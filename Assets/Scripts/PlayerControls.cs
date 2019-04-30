@@ -6,7 +6,7 @@ public class PlayerControls : MonoBehaviour
 {
     //references
     private Transform m_Camera;
-    private Vector3 m_CameraForward;
+    public Vector3 m_CameraForward;
     private Vector3 m_CameraRight;
     private Vector3 m_lStickInputVector; //camera relative
     private PlayerMovement m_playerMove;
