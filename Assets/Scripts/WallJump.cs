@@ -90,10 +90,14 @@ public class WallJump : MonoBehaviour
         m_RunTimer -= Time.fixedDeltaTime;
         if (!Physics.Raycast(m_origin, transform.forward, out m_hit, m_absoluteReach) || m_RunTimer < 0)//to do timer
         {
+           
+            
             m_movementScript.MovementVector = -transform.forward * bounceVelocity;
             m_movementScript.m_state = movementState.falling;
             transform.forward = -transform.forward;
+            Debug.Log("bounce");
         }
+        
     }
     public void WallJumpFront()
     {
@@ -111,6 +115,7 @@ public class WallJump : MonoBehaviour
             m_movementScript.m_state = movementState.falling;
             transform.forward = new Vector3(m_movementScript.MovementVector.x, 0.0f, m_movementScript.MovementVector.z).normalized;
             //facethe character in the appropriate direction(this function might not be responsible for it)
+            Debug.Log("bounce");
         }
     }
     private void wallRunLeftBehavior()
@@ -162,6 +167,7 @@ public class WallJump : MonoBehaviour
                 m_movementScript.m_state = movementState.wallrunFront;
                 m_movementScript.MovementVector = Vector3.up * wallClimbSpeed;
                 transform.rotation = Quaternion.LookRotation(-m_chosenHit.normal,Vector3.up);//line up the character properly
+                
                 Debug.Log("front wall run");
                 //animation stuff
                 break;
@@ -182,5 +188,7 @@ public class WallJump : MonoBehaviour
             default:
                 break;
         }
+        //to do : snap to the wall
+        m_movementScript.MovementVector += -m_chosenHit.normal;
     }
 }
