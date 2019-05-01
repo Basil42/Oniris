@@ -8,6 +8,7 @@ public class Blink : MonoBehaviour
     PlayerMovement PlayerMovement;
 
     private CameraController cameraController;
+    private CharacterController charCtrl;
 
     private LayerMask blinkThrough;
     private Renderer[] blinkBodies;
@@ -25,6 +26,7 @@ public class Blink : MonoBehaviour
         blinkThrough = ~LayerMask.GetMask("Blinkable");// "everything but blinkable
         blinkBodies = GetComponentsInChildren<Renderer>();
         PlayerMovement = GetComponent<PlayerMovement>();
+        charCtrl = GetComponentInParent<CharacterController>();
     }
 
     // Update is called once per frame
@@ -45,7 +47,12 @@ public class Blink : MonoBehaviour
 
         //Velocity, magnitude of movement gets applied in input direction after blink
         RaycastHit hit;
-        Physics.Raycast(transform.position + new Vector3(0, 0.1f, 0),inputVector, out hit, distance, blinkThrough);
+
+        //spherecast starts from center of player, slightly behind them in the opposite direction of the inputVector
+        Vector3 p1 = transform.position + charCtrl.center - inputVector;
+
+        Physics.SphereCast(p1, charCtrl.height / 2, inputVector, out hit, distance, blinkThrough);
+
 
         if (hit.distance == 0)
         {
