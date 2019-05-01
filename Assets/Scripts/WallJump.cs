@@ -28,6 +28,8 @@ public class WallJump : MonoBehaviour
     [SerializeField] private float m_VerticalRunTime = 1.5f;
     [SerializeField] private float verticalWallJumpHeight = 0.5f;
     [SerializeField] private float verticalWallJumpLength = 0.2f;
+    [SerializeField] private float m_lateralWallJumpHeight = 0.5f;
+    [SerializeField] private float m_lateralWallJumpLength = 0.2f;
     private float m_absoluteReach;
 
     //allocations for values that need regular updating (blackboard)
@@ -45,7 +47,6 @@ public class WallJump : MonoBehaviour
         Left,
         Right,
     }
-
     private void Awake()
     {
         m_movementScript = GetComponent<PlayerMovement>();
@@ -53,7 +54,6 @@ public class WallJump : MonoBehaviour
         m_absoluteReach = m_controlller.radius + m_controlller.skinWidth + m_reach;
 
     }
-
     private void FixedUpdate()
     {
         //check for falling/jumping state check for minimal speed
@@ -85,7 +85,6 @@ public class WallJump : MonoBehaviour
 
 
     }
-
     private void wallRunFrontBehavior()
     {
         m_RunTimer -= Time.fixedDeltaTime;
@@ -100,7 +99,8 @@ public class WallJump : MonoBehaviour
     {
         //animation stuff 
         m_movementScript.MovementVector = Vector3.up * verticalWallJumpHeight + m_chosenHit.normal * verticalWallJumpLength;
-        m_movementScript.m_state = movementState.falling;
+        transform.forward = new Vector3(m_movementScript.MovementVector.x, 0.0f, m_movementScript.MovementVector.z).normalized;
+        m_movementScript.m_state = movementState.jumping;
     }
     private void wallRunRightBehavior()
     {
@@ -109,23 +109,26 @@ public class WallJump : MonoBehaviour
         {
             m_movementScript.MovementVector += -transform.right * bounceVelocity;
             m_movementScript.m_state = movementState.falling;
+            transform.forward = new Vector3(m_movementScript.MovementVector.x, 0.0f, m_movementScript.MovementVector.z).normalized;
             //facethe character in the appropriate direction(this function might not be responsible for it)
         }
     }
-
     private void wallRunLeftBehavior()
     {
         m_RunTimer -= Time.fixedDeltaTime;
         if (!Physics.Raycast(m_origin, -transform.right, out m_hit,m_absoluteReach) || m_RunTimer < 0)//timer
         {
-            m_movementScript.MovementVector += transform.right * bounceVelocity;
-            m_movementScript.m_state = movementState.falling;
+            m_movementScript.MovementVector += transform.right * bounceVelocity;//bounce
+            m_movementScript.m_state = movementState.falling;//might implement a custom walljump state and behavior later
+            transform.forward = new Vector3(m_movementScript.MovementVector.x, 0.0f, m_movementScript.MovementVector.z).normalized;
             Debug.Log("bounce");
         }
     }
     public void WallJumpLateral()
     {
-
+        m_movementScript.MovementVector = Vector3.up * m_lateralWallJumpHeight + m_chosenHit.normal * m_lateralWallJumpLength;
+        transform.forward = new Vector3(m_movementScript.MovementVector.x, 0.0f, m_movementScript.MovementVector.z).normalized;
+        m_movementScript.m_state = movementState.jumping;
     }
     private bool detectWalls()
     {
@@ -138,7 +141,6 @@ public class WallJump : MonoBehaviour
         
         return (m_direction != Direction.None);
     }
-
     private void CheckDirection(Ray ray, Direction direction)
     {
         if (Physics.Raycast(ray, out m_hit, m_absoluteReach) && m_hit.distance < m_shortestHitDistance && Vector3.Dot(m_hit.normal, m_movementScript.MovementVector) < 0  && Mathf.Abs(m_hit.normal.y)< m_slopeTreshold)
@@ -148,8 +150,6 @@ public class WallJump : MonoBehaviour
             m_chosenHit = m_hit;
         }
     }
-    
-
     private void InitiateWallRun()
     {
         switch (m_direction)

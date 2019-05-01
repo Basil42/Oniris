@@ -59,7 +59,7 @@ public class PlayerControls : MonoBehaviour
                     //jump buffering ?
                     break;
             }
-            m_jumpScript.jump();
+            
         }
         if (Input.GetButtonUp("Jump"))
         {
