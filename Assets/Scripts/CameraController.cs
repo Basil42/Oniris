@@ -15,7 +15,7 @@ public class CameraController : MonoBehaviour
 
     public CinemachineFreeLook currentCamera; 
 
-    public CinemachineFreeLook lastCamera;
+   // public CinemachineFreeLook lastCamera;
 
     public GameObject PHplayer;
 
@@ -27,52 +27,37 @@ public class CameraController : MonoBehaviour
         Application.targetFrameRate = 60;
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
-    public void CamSwitchBlink()
-    {
-        //Turn off current camera, move to next camera, turn on last camera
-        //Another idea is to make a camera follow a rail in the direction of blink
+    //public void CamSwitchBlink()
+    //{
+    //    //Turn off current camera, move to next camera, turn on last camera
+    //    //Another idea is to make a camera follow a rail in the direction of blink
 
-        if (!PHcamBlinking)
-        {
-            lastCamera.m_Follow = PHplayer.transform;
-            lastCamera.m_LookAt = PHplayer.transform;
-            currentCamera.m_Follow = null;
-            currentCamera.m_LookAt = null;
+    //    if (!PHcamBlinking)
+    //    {
+    //        lastCamera.m_Follow = PHplayer.transform;
+    //        lastCamera.m_LookAt = PHplayer.transform;
+    //        currentCamera.m_Follow = null;
+    //        currentCamera.m_LookAt = null;
 
-            //Give next camera the rotation and altitude of the current camera (Maybe just y position)
-            //Y position, rotation... 
+    //        //State transition
+    //        cameraStateController.SetBool("Switch", true);
+    //        Debug.Log("camBlinking");
+    //        PHcamBlinking = true;
+    //    }
+    //    else
+    //    {
+    //        currentCamera.m_Follow = PHplayer.transform;
+    //        currentCamera.m_LookAt = PHplayer.transform;
+    //        lastCamera.m_Follow = null;
+    //        lastCamera.m_LookAt = null;
 
-            //State transition
-            cameraStateController.SetBool("Switch", true);
-            Debug.Log("camBlinking");
-            PHcamBlinking = true;
-        }
-        else
-        {
-            currentCamera.m_Follow = PHplayer.transform;
-            currentCamera.m_LookAt = PHplayer.transform;
-            lastCamera.m_Follow = null;
-            lastCamera.m_LookAt = null;
-
-            //State transition
-            cameraStateController.SetBool("Switch", false);
-            Debug.Log("camBlinking");
-            PHcamBlinking = false;
-        }
+    //        //State transition
+    //        cameraStateController.SetBool("Switch", false);
+    //        Debug.Log("camBlinking");
+    //        PHcamBlinking = false;
+    //    }
         
         
-    }
-
 }
