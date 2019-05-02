@@ -37,6 +37,7 @@ public class Dash : MonoBehaviour
         {
             Debug.Log("dash");
             playerMovement.m_state = movementState.dashing;
+            playerMovement.m_animator.SetTrigger("dash");
             playerMovement.MovementVector += speed * transform.forward;
             playerMovement.MovementVector.y = 0;
             timer = 0;
@@ -55,6 +56,7 @@ public class Dash : MonoBehaviour
         
         yield return new WaitForSeconds(decelerationDelay);
         playerMovement.GroundCheck();
+        playerMovement.m_animator.SetTrigger((playerMovement.m_state == movementState.grounded ? "run" : "fall"));
         int x = 0;
         float velocity;
         decelerationAmount = 0;

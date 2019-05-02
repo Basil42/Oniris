@@ -7,7 +7,7 @@ public class PlayerControls : MonoBehaviour
 {
     //references
     private Transform m_Camera;
-    public Vector3 m_CameraForward;
+    private Vector3 m_CameraForward;
     private Vector3 m_CameraRight;
     private Vector3 m_lStickInputVector; //camera relative
     private PlayerMovement m_playerMove;
@@ -74,7 +74,7 @@ public class PlayerControls : MonoBehaviour
     {
         m_CameraForward = Vector3.Scale(m_Camera.forward, new Vector3(1, 0, 1)).normalized;//1,0,1 is the ground plane
         m_CameraRight = Vector3.Scale(m_Camera.right, new Vector3(1, 0, 1)).normalized;
-        m_lStickInputVector = Input.GetAxis("Horizontal") * m_Camera.right + Input.GetAxis("Vertical") * m_CameraForward;
+        m_lStickInputVector = Input.GetAxis("Horizontal") * m_CameraRight + Input.GetAxis("Vertical") * m_CameraForward;
 
         m_playerMove.m_inputvector = m_lStickInputVector;
     }
