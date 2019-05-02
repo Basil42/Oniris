@@ -47,19 +47,28 @@ public class Blink : MonoBehaviour
 
         //Velocity, magnitude of movement gets applied in input direction after blink
         RaycastHit hit;
-
         //spherecast starts from center of player, slightly behind them in the opposite direction of the inputVector
         Vector3 p1 = transform.position + charCtrl.center - inputVector;
-
         Physics.SphereCast(p1, charCtrl.height / 2, inputVector, out hit, distance, blinkThrough);
-
 
         if (hit.distance == 0)
         {
-            StartCoroutine(Blinking(inputVector ,transform.position + inputVector * distance));  
+            //Raycast to check for blinkable colliders. 
+            RaycastHit hit2;
+            Physics.Raycast(transform.position + new Vector3(0, charCtrl.height / 2, 0), inputVector, out hit2, distance);
+            
+            //Checking whether there is a blinkable collider, and if the target blink position is inside it.
+            if (hit2.collider == true && hit2.collider.gameObject.layer == 8 && hit2.collider.bounds.Contains(transform.position + inputVector * distance))
+            {
+                //If the target position is inside the collider, use the raycast that checks for blinkables as distance instead
+                StartCoroutine(Blinking(inputVector, transform.position + inputVector * (hit2.distance - 0.5f)));
+            }
+            //No blinkable collider was found, or the target position was beyond it. Continue as normal, blink full distance
+            else StartCoroutine(Blinking(inputVector, transform.position + inputVector * distance));
         }
         else
         {
+            //Found a non-blinkable collider, position uses the hit.distance minus a small offset
             StartCoroutine(Blinking(inputVector ,transform.position + inputVector * (hit.distance - 0.5f)));
             print(hit.distance);
         }
