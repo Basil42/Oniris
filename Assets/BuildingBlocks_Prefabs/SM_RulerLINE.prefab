@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 74817450289075645}
   - component: {fileID: 5923719467068614980}
   - component: {fileID: 7208394893840139837}
+  - component: {fileID: 8189373382680728821}
   m_Layer: 0
   m_Name: SM_RulerLINE
   m_TagString: Untagged
@@ -87,8 +88,21 @@ MeshCollider:
   m_GameObject: {fileID: 5334955164793232792}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4332328772286336593, guid: e1e2548f80a671c45a04d5980821f2a0, type: 3}
+--- !u!65 &8189373382680728821
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5334955164793232792}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.19999999, y: 3.0000007, z: 0.020000001}
+  m_Center: {x: 0, y: 0, z: 0.010000001}
