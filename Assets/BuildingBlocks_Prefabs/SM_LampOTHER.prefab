@@ -59,7 +59,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 670224309865224971, guid: fb5f2e1aa62597e48b0640abec94a0ce, type: 3}
+  - {fileID: 2100000, guid: a10b9cac7bb01d14686ab0c470833331, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -100,11 +100,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8295273610942145740}
     m_Modifications:
-    - target: {fileID: 7876516128510321831, guid: 9e9083403f21e9444bfe973293de826f,
-        type: 3}
-      propertyPath: m_Name
-      value: Area Light
-      objectReference: {fileID: 0}
     - target: {fileID: 7876516128510321830, guid: 9e9083403f21e9444bfe973293de826f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -169,6 +164,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 1.2306756
+      objectReference: {fileID: 0}
+    - target: {fileID: 7876516128510321831, guid: 9e9083403f21e9444bfe973293de826f,
+        type: 3}
+      propertyPath: m_Name
+      value: Area Light
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9e9083403f21e9444bfe973293de826f, type: 3}

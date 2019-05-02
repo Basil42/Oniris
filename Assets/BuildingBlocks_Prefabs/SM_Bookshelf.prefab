@@ -51,7 +51,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 670224309865224971, guid: 71d48698c744235448cbcec51e3792f4, type: 3}
+  - {fileID: 2100000, guid: 7c455fb617bd9d947b1fc223e5169d71, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -111,7 +111,7 @@ BoxCollider:
   m_GameObject: {fileID: 8934353461857560626}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 4.237236, y: 1.7005304, z: 8.500003}
   m_Center: {x: -0.09781265, y: 0.13202819, z: 4.2500005}
@@ -124,8 +124,8 @@ MeshCollider:
   m_GameObject: {fileID: 8934353461857560626}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: -7703943960837072560, guid: 71d48698c744235448cbcec51e3792f4, type: 3}
