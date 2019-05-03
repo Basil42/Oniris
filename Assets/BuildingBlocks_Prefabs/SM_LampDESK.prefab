@@ -100,6 +100,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8123683938936751271}
     m_Modifications:
+    - target: {fileID: 474058735891100569, guid: 5c5ec8a9ced226c48b806fe910e9e868,
+        type: 3}
+      propertyPath: m_Name
+      value: Spot Light
+      objectReference: {fileID: 0}
+    - target: {fileID: 474058735891100569, guid: 5c5ec8a9ced226c48b806fe910e9e868,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 474058735891100568, guid: 5c5ec8a9ced226c48b806fe910e9e868,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -169,11 +179,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 1.0000002
-      objectReference: {fileID: 0}
-    - target: {fileID: 474058735891100569, guid: 5c5ec8a9ced226c48b806fe910e9e868,
-        type: 3}
-      propertyPath: m_Name
-      value: Spot Light
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5c5ec8a9ced226c48b806fe910e9e868, type: 3}
