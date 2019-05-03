@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.059586506, g: 0.07837775, b: 0.11477315, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -10023,7 +10023,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh24372
+  m_Name: pb_Mesh24474
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -10175,7 +10175,7 @@ Mesh:
   m_BakedTriangleCollisionMesh: 
   m_MeshMetrics[0]: 1
   m_MeshMetrics[1]: 1
-  m_MeshOptimizationFlags: -1
+  m_MeshOptimizationFlags: 1
   m_StreamData:
     offset: 0
     size: 0
@@ -18338,6 +18338,85 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &3310119332607217178
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3310119333350681534, guid: 333f1f045366e6847bf715455effa1fc,
+        type: 3}
+      propertyPath: m_Name
+      value: FallingPlatform
+      objectReference: {fileID: 0}
+    - target: {fileID: 3310119333350681521, guid: 333f1f045366e6847bf715455effa1fc,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -4.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 3310119333350681521, guid: 333f1f045366e6847bf715455effa1fc,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 10.407325
+      objectReference: {fileID: 0}
+    - target: {fileID: 3310119333350681521, guid: 333f1f045366e6847bf715455effa1fc,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 16.864334
+      objectReference: {fileID: 0}
+    - target: {fileID: 3310119333350681521, guid: 333f1f045366e6847bf715455effa1fc,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 3310119333350681521, guid: 333f1f045366e6847bf715455effa1fc,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3310119333350681521, guid: 333f1f045366e6847bf715455effa1fc,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3310119333350681521, guid: 333f1f045366e6847bf715455effa1fc,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 3310119333350681521, guid: 333f1f045366e6847bf715455effa1fc,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 3310119333350681521, guid: 333f1f045366e6847bf715455effa1fc,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 3310119333350681521, guid: 333f1f045366e6847bf715455effa1fc,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -0.000015258789
+      objectReference: {fileID: 0}
+    - target: {fileID: 3310119333350681521, guid: 333f1f045366e6847bf715455effa1fc,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -0.000015258789
+      objectReference: {fileID: 0}
+    - target: {fileID: 3310119333350681520, guid: 333f1f045366e6847bf715455effa1fc,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 1467613355}
+    - target: {fileID: 3310119333350681533, guid: 333f1f045366e6847bf715455effa1fc,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 1467613355}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 333f1f045366e6847bf715455effa1fc, type: 3}
 --- !u!1001 &7310634086611941595
 PrefabInstance:
   m_ObjectHideFlags: 0
