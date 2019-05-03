@@ -8,6 +8,7 @@ public class FallingPlatform : MonoBehaviour
     public float respawnTime = 1;
     private Rigidbody rb;
     private Vector3 originalPosition;
+    private Quaternion originalRotation;
 
     // Start is called before the first frame update
     void Start()
@@ -15,6 +16,8 @@ public class FallingPlatform : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.useGravity = false;
         originalPosition = transform.position;
+        originalRotation = transform.rotation;
+        rb.freezeRotation = true;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -37,5 +40,6 @@ public class FallingPlatform : MonoBehaviour
         rb.useGravity = false;
         rb.constraints = RigidbodyConstraints.FreezeAll;
         transform.position = originalPosition;
+        transform.rotation = originalRotation;
     }
 }
