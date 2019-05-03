@@ -57,33 +57,33 @@ public class WallJump : MonoBehaviour
     private void FixedUpdate()
     {
         //check for falling/jumping state check for minimal speed
-        m_origin = transform.position + new Vector3(0.0f, m_controlller.height / 2.0f, 0.0f);
-        switch (m_movementScript.m_state)
+        if (m_movementScript.m_abilityFlags.HasFlag(AbilityAvailability.hasWallJump))
         {
-            case movementState.grounded:
-                break;
-            case movementState.falling:
-            case movementState.doubleJumping:
-            case movementState.offLedge:
-            case movementState.jumping:
-                if (detectWalls()) InitiateWallRun();
-                break;
+            m_origin = transform.position + new Vector3(0.0f, m_controlller.height / 2.0f, 0.0f);
+            switch (m_movementScript.m_state)
+            {
+                case movementState.grounded:
+                    break;
+                case movementState.falling:
+                case movementState.doubleJumping:
+                case movementState.offLedge:
+                case movementState.jumping:
+                    if (detectWalls()) InitiateWallRun();
+                    break;
 
-            case movementState.wallrunLeft:
-                wallRunLeftBehavior();
-                break;
-            case movementState.wallrunRight:
-                wallRunRightBehavior();
-                break;
-            case movementState.wallrunFront:
-                wallRunFrontBehavior();
-                break;
-            default:
-                break;
+                case movementState.wallrunLeft:
+                    wallRunLeftBehavior();
+                    break;
+                case movementState.wallrunRight:
+                    wallRunRightBehavior();
+                    break;
+                case movementState.wallrunFront:
+                    wallRunFrontBehavior();
+                    break;
+                default:
+                    break;
+            }
         }
-
-
-
     }
     private void wallRunFrontBehavior()
     {
