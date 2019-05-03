@@ -59,7 +59,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 670224309865224971, guid: a0857eed81dd1d044b03e1b653a59d1d, type: 3}
+  - {fileID: 2100000, guid: 74a40f949d607b348ba589c987eeb12a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -104,6 +104,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Spot Light
+      objectReference: {fileID: 0}
+    - target: {fileID: 474058735891100569, guid: 5c5ec8a9ced226c48b806fe910e9e868,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 474058735891100568, guid: 5c5ec8a9ced226c48b806fe910e9e868,
         type: 3}
