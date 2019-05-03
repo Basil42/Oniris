@@ -93,6 +93,7 @@ public class WallJump : MonoBehaviour
            
             
             m_movementScript.MovementVector = -transform.forward * bounceVelocity;
+            m_movementScript.MovementVector -= -m_chosenHit.normal;
             m_movementScript.m_state = movementState.falling;
             transform.forward = -transform.forward;
             Debug.Log("bounce");
@@ -113,6 +114,7 @@ public class WallJump : MonoBehaviour
         {
             m_movementScript.MovementVector += -transform.right * bounceVelocity;
             m_movementScript.m_state = movementState.falling;
+            m_movementScript.MovementVector -= -m_chosenHit.normal;
             transform.forward = new Vector3(m_movementScript.MovementVector.x, 0.0f, m_movementScript.MovementVector.z).normalized;
             //facethe character in the appropriate direction(this function might not be responsible for it)
             Debug.Log("bounce");
@@ -124,6 +126,7 @@ public class WallJump : MonoBehaviour
         if (!Physics.Raycast(m_origin, -transform.right, out m_hit,m_absoluteReach) || m_RunTimer < 0)//timer
         {
             m_movementScript.MovementVector += transform.right * bounceVelocity;//bounce
+            m_movementScript.MovementVector -= -m_chosenHit.normal;
             m_movementScript.m_state = movementState.falling;//might implement a custom walljump state and behavior later
             transform.forward = new Vector3(m_movementScript.MovementVector.x, 0.0f, m_movementScript.MovementVector.z).normalized;
             Debug.Log("bounce");
@@ -131,6 +134,7 @@ public class WallJump : MonoBehaviour
     }
     public void WallJumpLateral()
     {
+       
         m_movementScript.MovementVector = Vector3.up * m_lateralWallJumpHeight + m_chosenHit.normal * m_lateralWallJumpLength;
         transform.forward = new Vector3(m_movementScript.MovementVector.x, 0.0f, m_movementScript.MovementVector.z).normalized;
         m_movementScript.m_state = movementState.jumping;
