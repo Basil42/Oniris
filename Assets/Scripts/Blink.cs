@@ -34,7 +34,8 @@ public class Blink : MonoBehaviour
     public void blink(Vector3 inputVector)
     {
         PlayerMovement.controller.enabled = false;
-        PlayerMovement.m_state = movementState.blinking;
+        
+        Vector3 blinkDirection = inputVector;
         print("Don't Blink");
 
         inputVector.y = 0;
@@ -47,29 +48,40 @@ public class Blink : MonoBehaviour
 
         //Velocity, magnitude of movement gets applied in input direction after blink
         RaycastHit hit;
+        RaycastHit hit2;
+
+        if (PlayerMovement.m_state == movementState.grounded)
+        {
+            print("grounded Blink");
+            Physics.Raycast(transform.position + charCtrl.center, Vector3.down, out hit2, distance);
+            blinkDirection = Vector3.ProjectOnPlane(inputVector, hit2.normal).normalized;
+        }
+
         //spherecast starts from center of player, slightly behind them in the opposite direction of the inputVector
-        Vector3 p1 = transform.position + charCtrl.center - inputVector;
-        Physics.SphereCast(p1, charCtrl.height / 2, inputVector, out hit, distance, blinkThrough);
+        Vector3 p1 = transform.position + charCtrl.center - blinkDirection;
+        Physics.SphereCast(p1, charCtrl.height / 2, blinkDirection, out hit, distance, blinkThrough);
+
+        PlayerMovement.m_state = movementState.blinking;
 
         if (hit.distance == 0)
         {
             //Raycast to check for blinkable colliders. 
-            RaycastHit hit2;
-            Physics.Raycast(transform.position + new Vector3(0, charCtrl.height / 2, 0), inputVector, out hit2, distance);
+            RaycastHit hit3;
+            Physics.Raycast(transform.position + new Vector3(0, charCtrl.height / 2, 0), blinkDirection, out hit3, distance);
             
             //Checking whether there is a blinkable collider, and if the target blink position is inside it.
-            if (hit2.collider == true && hit2.collider.gameObject.layer == 8 && hit2.collider.bounds.Contains(transform.position + inputVector * distance))
+            if (hit3.collider == true && hit3.collider.gameObject.layer == 8 && hit3.collider.bounds.Contains(transform.position + inputVector * distance))
             {
                 //If the target position is inside the collider, use the raycast that checks for blinkables as distance instead
-                StartCoroutine(Blinking(inputVector, transform.position + inputVector * (hit2.distance - 0.5f)));
+                StartCoroutine(Blinking(inputVector, transform.position + blinkDirection * (hit3.distance - 0.5f)));
             }
             //No blinkable collider was found, or the target position was beyond it. Continue as normal, blink full distance
-            else StartCoroutine(Blinking(inputVector, transform.position + inputVector * distance));
+            else StartCoroutine(Blinking(inputVector, transform.position + blinkDirection * distance));
         }
         else
         {
             //Found a non-blinkable collider, position uses the hit.distance minus a small offset
-            StartCoroutine(Blinking(inputVector ,transform.position + inputVector * (hit.distance - 0.5f)));
+            StartCoroutine(Blinking(inputVector ,transform.position + blinkDirection * (hit.distance - 0.5f)));
             print(hit.distance);
         }
     }
