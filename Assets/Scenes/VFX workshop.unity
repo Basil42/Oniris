@@ -437,8 +437,7 @@ VFXRenderer:
   m_ReflectionProbeUsage: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 0}
+  m_Materials: []
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -466,7 +465,7 @@ VisualEffect:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 272236689}
   m_Enabled: 1
-  m_Asset: {fileID: 8926484042661614526, guid: 1249e71338403724aa054f3b073551b0, type: 3}
+  m_Asset: {fileID: 0}
   m_StartSeed: 0
   m_ResetSeedOnPlay: 1
   m_PropertySheet:
@@ -503,7 +502,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 272236689}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 52.87, y: 12.517099, z: -8.32}
+  m_LocalPosition: {x: 52.87, y: 12.517099, z: -7.22}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2082384702}
@@ -558,7 +557,7 @@ PrefabInstance:
     - target: {fileID: 8767232551298824233, guid: 63f9cc5498adb684b9dc14e3efa9b3e8,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 52.78
+      value: 52.95
       objectReference: {fileID: 0}
     - target: {fileID: 8767232551298824233, guid: 63f9cc5498adb684b9dc14e3efa9b3e8,
         type: 3}
@@ -568,7 +567,7 @@ PrefabInstance:
     - target: {fileID: 8767232551298824233, guid: 63f9cc5498adb684b9dc14e3efa9b3e8,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -5.82
+      value: -6.87
       objectReference: {fileID: 0}
     - target: {fileID: 8767232551298824233, guid: 63f9cc5498adb684b9dc14e3efa9b3e8,
         type: 3}
@@ -934,7 +933,7 @@ VisualEffect:
       m_Array: []
     m_Vector3f:
       m_Array:
-      - m_Value: {x: 52.78, y: 13.33, z: -5.82}
+      - m_Value: {x: 52.95, y: 13.33, z: -6.87}
         m_Name: attractive target position
         m_Overridden: 1
     m_Vector4f:
