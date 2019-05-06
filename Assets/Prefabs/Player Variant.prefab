@@ -29,6 +29,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_reach: 0.1
+  m_slopeTreshold: 0.2
+  wallClimbSpeed: 0.3
+  m_wallrunSpeed: 0.3
+  bounceVelocity: 1
+  m_RunAngle: 90
+  m_LateralRunTime: 3
+  m_VerticalRunTime: 1.5
+  verticalWallJumpHeight: 0.5
+  verticalWallJumpLength: 0.2
+  m_lateralWallJumpHeight: 0.5
+  m_lateralWallJumpLength: 0.2
 --- !u!114 &1820842322
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -55,7 +66,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0b92798352bcba4e8ba8005e0a21206, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blinkDelay: 1
+  distance: 10
+  blinkStep: 40
+  blinkDuration: 0.5
   m_BlinkEnabled: 1
 --- !u!1001 &8293155446738189727
 PrefabInstance:
@@ -64,11 +77,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4702990868406453552, guid: 6e31096b66eee80488f4603330ecb11e,
-        type: 3}
-      propertyPath: m_TagString
-      value: Player
-      objectReference: {fileID: 0}
     - target: {fileID: 4702990866400258350, guid: 6e31096b66eee80488f4603330ecb11e,
         type: 3}
       propertyPath: m_Name
@@ -129,6 +137,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4702990868406453552, guid: 6e31096b66eee80488f4603330ecb11e,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 4702990867084379359, guid: 6e31096b66eee80488f4603330ecb11e,
         type: 3}
       propertyPath: m_StepOffset
@@ -138,6 +151,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Center.y
       value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4702990867084379359, guid: 6e31096b66eee80488f4603330ecb11e,
+        type: 3}
+      propertyPath: m_SkinWidth
+      value: 0.12
       objectReference: {fileID: 0}
     - target: {fileID: 4702990867084379358, guid: 6e31096b66eee80488f4603330ecb11e,
         type: 3}

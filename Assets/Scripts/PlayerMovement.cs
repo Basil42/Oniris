@@ -180,18 +180,17 @@ public class PlayerMovement : MonoBehaviour
         //Vector3 v;
         //v = Vector3.Scale(inputVector, transform.forward);
 
-        float dotProduct = Vector3.Dot(inputVector,  transform.forward);
-        Vector3 airInput = dotProduct * transform.forward;
+        Vector3 airInput = Vector3.Project(inputVector, transform.forward) * m_AirForwardSpeed;
 
-        dotProduct = Vector3.Dot(inputVector, transform.right);
-        airInput += dotProduct * transform.right;
 
-        dotProduct = Vector3.Dot(MovementVector, transform.forward);
+        airInput += Vector3.Project(inputVector, transform.right)* m_AirSteeringSpeed;
 
-        if (dotProduct > m_AirMinSpeed) //If the value is too high, manuevering doesnt happen
+        
+
+        if (Vector3.Dot(MovementVector, transform.forward) > m_AirMinSpeed) //If the value is too high, manuevering doesnt happen
         {
-            MovementVector.z = Mathf.Lerp(MovementVector.z, airInput.z * m_AirForwardSpeed, m_AirInertiaIntensity);
-            MovementVector.x = Mathf.Lerp(MovementVector.x, airInput.x * m_AirSteeringSpeed, m_AirInertiaIntensity);
+            MovementVector.z = Mathf.Lerp(MovementVector.z, airInput.z, m_AirInertiaIntensity);
+            MovementVector.x = Mathf.Lerp(MovementVector.x, airInput.x, m_AirInertiaIntensity);
         }
     }
 
