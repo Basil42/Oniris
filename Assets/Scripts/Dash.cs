@@ -6,6 +6,7 @@ public class Dash : MonoBehaviour
 {
     private PlayerMovement playerMovement;
     public float speed = 1;
+    private float originalSpeed;
     public float cooldown = 2;
     private float timer;
  
@@ -20,6 +21,7 @@ public class Dash : MonoBehaviour
         playerMovement = GetComponent<PlayerMovement>();
         targetVelocityX = playerMovement.m_RunningSpeed;
         targetVelocityZ = targetVelocityX;
+        originalSpeed = speed;
     }
 
     private void Update()
@@ -35,6 +37,7 @@ public class Dash : MonoBehaviour
         if (timer >= cooldown)
         {
             Debug.Log("dash");
+            speed = originalSpeed;
             playerMovement.m_state = movementState.dashing;
             playerMovement.MovementVector += speed * transform.forward;
             playerMovement.MovementVector.y = 0;
@@ -59,10 +62,14 @@ public class Dash : MonoBehaviour
         while (x <= 250 && ( HorizontalMovementVector.magnitude > playerMovement.m_RunningSpeed) && playerMovement.m_state == movementState.falling) 
         {
             //Lerp'n Slerp towards a target velocity
-            decelerationAmount += decelerationStep;
-            velocity = Mathf.Lerp(HorizontalMovementVector.magnitude, playerMovement.m_RunningSpeed, decelerationAmount);//playerMovement.MovementVector.magnitude
-            HorizontalMovementVector = HorizontalMovementVector.normalized * velocity;
+            //decelerationAmount += decelerationStep;
+            //velocity = Mathf.Lerp(HorizontalMovementVector.magnitude, playerMovement.m_RunningSpeed, decelerationAmount);//playerMovement.MovementVector.magnitude
+            //HorizontalMovementVector = HorizontalMovementVector.normalized * velocity;
             yield return new WaitForFixedUpdate();
+
+            //speed *= 0.995f;
+            //playerMovement.MovementVector = playerMovement.MovementVector - (originalSpeed * transform.forward) + (speed * transform.forward);
+            HorizontalMovementVector = new Vector3(playerMovement.MovementVector.x, 0.0f, playerMovement.MovementVector.z);
             x++;
             print("decelerating");
         }
