@@ -95,6 +95,7 @@ public class WallJump : MonoBehaviour
             m_movementScript.MovementVector = -transform.forward * bounceVelocity;
             m_movementScript.MovementVector -= -m_chosenHit.normal;
             m_movementScript.m_state = movementState.falling;
+            m_movementScript.m_animator.SetTrigger("fall");
             transform.forward = -transform.forward;
             Debug.Log("bounce");
         }
@@ -106,6 +107,7 @@ public class WallJump : MonoBehaviour
         m_movementScript.MovementVector = Vector3.up * verticalWallJumpHeight + m_chosenHit.normal * verticalWallJumpLength;
         transform.forward = new Vector3(m_movementScript.MovementVector.x, 0.0f, m_movementScript.MovementVector.z).normalized;
         m_movementScript.m_state = movementState.jumping;
+        m_movementScript.m_animator.SetTrigger("jump");
     }
     private void wallRunRightBehavior()
     {
@@ -115,6 +117,7 @@ public class WallJump : MonoBehaviour
             m_movementScript.MovementVector += -transform.right * bounceVelocity;
             m_movementScript.m_state = movementState.falling;
             m_movementScript.MovementVector -= -m_chosenHit.normal;
+            m_movementScript.m_animator.SetTrigger("fall");
             transform.forward = new Vector3(m_movementScript.MovementVector.x, 0.0f, m_movementScript.MovementVector.z).normalized;
             //facethe character in the appropriate direction(this function might not be responsible for it)
             Debug.Log("bounce");
@@ -128,6 +131,7 @@ public class WallJump : MonoBehaviour
             m_movementScript.MovementVector += transform.right * bounceVelocity;//bounce
             m_movementScript.MovementVector -= -m_chosenHit.normal;
             m_movementScript.m_state = movementState.falling;//might implement a custom walljump state and behavior later
+            m_movementScript.m_animator.SetTrigger("fall");
             transform.forward = new Vector3(m_movementScript.MovementVector.x, 0.0f, m_movementScript.MovementVector.z).normalized;
             Debug.Log("bounce");
         }
@@ -138,6 +142,7 @@ public class WallJump : MonoBehaviour
         m_movementScript.MovementVector = Vector3.up * m_lateralWallJumpHeight + m_chosenHit.normal * m_lateralWallJumpLength;
         transform.forward = new Vector3(m_movementScript.MovementVector.x, 0.0f, m_movementScript.MovementVector.z).normalized;
         m_movementScript.m_state = movementState.jumping;
+        m_movementScript.m_animator.SetTrigger("jump");
     }
     private bool detectWalls()
     {
@@ -169,6 +174,7 @@ public class WallJump : MonoBehaviour
             case Direction.Front:
                 m_RunTimer = m_VerticalRunTime;
                 m_movementScript.m_state = movementState.wallrunFront;
+                m_movementScript.m_animator.SetTrigger("wallrunFront");
                 m_movementScript.MovementVector = Vector3.up * wallClimbSpeed;
                 transform.rotation = Quaternion.LookRotation(-m_chosenHit.normal,Vector3.up);//line up the character properly
                 
@@ -178,6 +184,7 @@ public class WallJump : MonoBehaviour
             case Direction.Left:
                 m_RunTimer = m_LateralRunTime;
                 m_movementScript.m_state = movementState.wallrunLeft;
+                m_movementScript.m_animator.SetTrigger("wallrunlateral");
                 m_movementScript.MovementVector = (Quaternion.AngleAxis(m_RunAngle,m_chosenHit.normal) * Vector3.up)* m_wallrunSpeed;
                 Debug.Log("left wall run");
                 //to do: line up character properly
@@ -186,6 +193,7 @@ public class WallJump : MonoBehaviour
             case Direction.Right:
                 m_RunTimer = m_LateralRunTime;
                 m_movementScript.m_state = movementState.wallrunRight;
+                m_movementScript.m_animator.SetTrigger("wallrunlateral");
                 m_movementScript.MovementVector = (Quaternion.AngleAxis(-m_RunAngle, m_chosenHit.normal) * Vector3.up) * m_wallrunSpeed;
                 Debug.Log("right wall run");
                 break;

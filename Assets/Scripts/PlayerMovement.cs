@@ -34,6 +34,7 @@ public enum AbilityAvailability
 
 [RequireComponent(typeof (CharacterController))]
 [RequireComponent(typeof(Animator))]
+
 public class PlayerMovement : MonoBehaviour 
 {
     public const float inertiaIntensity = 0.08f;
@@ -53,7 +54,7 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector]public AbilityAvailability m_abilityFlags;
 
     [HideInInspector] public Vector3 MovementVector;
-    private Animator m_animator;
+    [HideInInspector] public Animator m_animator;
 
 
     private float colliderHeight;
@@ -76,10 +77,13 @@ public class PlayerMovement : MonoBehaviour
         if (StartWithDash) m_abilityFlags |= AbilityAvailability.hasDash;
         if (StartWithDoubleJump) m_abilityFlags |= AbilityAvailability.hasDoublejump;
         if (StartWithWallJump) m_abilityFlags |= AbilityAvailability.hasWallJump;
+        m_animator = GetComponent<Animator>();
     }
     // Update is called once per frame
     void FixedUpdate()
     {
+        m_animator.SetBool("isGrounded", m_state == movementState.grounded);
+        m_animator.SetFloat("speed", controller.velocity.magnitude);
         if (m_state == movementState.grounded || m_state == movementState.falling) GroundCheck();
         switch (m_state)
         {
@@ -110,11 +114,10 @@ public class PlayerMovement : MonoBehaviour
     {
         if (m_state == movementState.grounded)
         {
-
+            //to do at timers
             m_abilityFlags |= AbilityAvailability.doubleJump;//sets double jump to available
             m_abilityFlags |= AbilityAvailability.blink;
             m_abilityFlags |= AbilityAvailability.dash;
-           
         }
     }
 
@@ -156,8 +159,9 @@ public class PlayerMovement : MonoBehaviour
             Debug.DrawRay(transform.position + (-transform.forward * 0.5f + transform.up * 0.1f), transform.TransformDirection(Vector3.down) * hit.distance, Color.green);
             Debug.DrawRay(transform.position + (transform.right * 0.3f + transform.up * 0.1f), transform.TransformDirection(Vector3.down) * hit.distance, Color.blue);
             Debug.DrawRay(transform.position + (-transform.right * 0.3f + transform.up * 0.1f), transform.TransformDirection(Vector3.down) * hit.distance, Color.black);
-            
+            if(m_state == movementState.falling)m_animator.SetTrigger("run");
             m_state = movementState.grounded;
+            
         }
         else
         {
@@ -166,6 +170,7 @@ public class PlayerMovement : MonoBehaviour
             Debug.DrawRay(transform.position + (-transform.forward * 0.5f + transform.up * 0.1f), transform.TransformDirection(Vector3.down) * 1000, Color.white);
             Debug.DrawRay(transform.position + (transform.right * 0.3f + transform.up * 0.1f), transform.TransformDirection(Vector3.down) * 1000, Color.white);
             Debug.DrawRay(-transform.position + (transform.right * 0.3f + transform.up * 0.1f), transform.TransformDirection(Vector3.down) * 1000, Color.white);
+            if(m_state == movementState.grounded)m_animator.SetTrigger("fall");
             m_state = movementState.falling;
         }
     }
