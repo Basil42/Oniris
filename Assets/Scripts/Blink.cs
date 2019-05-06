@@ -19,6 +19,7 @@ public class Blink : MonoBehaviour
     private float timer = 0.0f;
 
     public bool m_BlinkEnabled = true;
+    private Vector3 blinkDirection;
 
     // Start is called before the first frame update
     void Start()
@@ -50,7 +51,7 @@ public class Blink : MonoBehaviour
         RaycastHit hit;
         RaycastHit hit2;
 
-        if (PlayerMovement.m_state == movementState.grounded)
+        if (m_playerMovement.m_state == movementState.grounded)
         {
             print("grounded Blink");
             Physics.Raycast(transform.position + charCtrl.center, Vector3.down, out hit2, distance);
@@ -61,7 +62,7 @@ public class Blink : MonoBehaviour
         Vector3 p1 = transform.position + charCtrl.center - blinkDirection;
         Physics.SphereCast(p1, charCtrl.height / 2, blinkDirection, out hit, distance, blinkThrough);
 
-        PlayerMovement.m_state = movementState.blinking;
+        m_playerMovement.m_state = movementState.blinking;
 
         if (hit.distance == 0)
         {
