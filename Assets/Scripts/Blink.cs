@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerMovement))]
 public class Blink : MonoBehaviour
 {
-    PlayerMovement PlayerMovement;
+    PlayerMovement m_playerMovement;
 
     private CameraController cameraController;
     private CharacterController charCtrl;
@@ -25,7 +25,7 @@ public class Blink : MonoBehaviour
     {
         blinkThrough = ~LayerMask.GetMask("Blinkable");// "everything but blinkable
         blinkBodies = GetComponentsInChildren<Renderer>();
-        PlayerMovement = GetComponent<PlayerMovement>();
+        m_playerMovement = GetComponent<PlayerMovement>();
         charCtrl = GetComponentInParent<CharacterController>();
     }
 
@@ -33,9 +33,9 @@ public class Blink : MonoBehaviour
     
     public void blink(Vector3 inputVector)
     {
-        PlayerMovement.controller.enabled = false;
-        
-        Vector3 blinkDirection = inputVector;
+        m_playerMovement.controller.enabled = false;
+        m_playerMovement.m_state = movementState.blinking;
+        m_playerMovement.m_animator.SetTrigger("blink");
         print("Don't Blink");
 
         inputVector.y = 0;
@@ -89,11 +89,11 @@ public class Blink : MonoBehaviour
     private IEnumerator Blinking(Vector3 inputVector, Vector3 targetPosition)
     {
         //Deciding momentum upon leaving the blink
-        float mag = PlayerMovement.MovementVector.magnitude;
-        PlayerMovement.MovementVector.x = inputVector.x;
-        PlayerMovement.MovementVector.z = inputVector.z;
-        PlayerMovement.MovementVector.y = 0;
-        PlayerMovement.MovementVector = PlayerMovement.MovementVector * mag;
+        float mag = m_playerMovement.MovementVector.magnitude;
+        m_playerMovement.MovementVector.x = inputVector.x;
+        m_playerMovement.MovementVector.z = inputVector.z;
+        m_playerMovement.MovementVector.y = 0;
+        m_playerMovement.MovementVector = m_playerMovement.MovementVector * mag;
 
         //Blinking
         timer = 0.0f;
@@ -109,8 +109,9 @@ public class Blink : MonoBehaviour
             renderer.enabled = true;
         }
 
-        PlayerMovement.controller.enabled = true;
-        PlayerMovement.m_state = movementState.falling;
+        m_playerMovement.controller.enabled = true;
+        m_playerMovement.GroundCheck();
+        m_playerMovement.m_animator.SetTrigger((m_playerMovement.m_state == movementState.grounded ? "run" : "fall"));
         print("Finished blinking");
     }
 }

@@ -34,6 +34,7 @@ public class Jump : MonoBehaviour
         {
             print("Jumping");
             playerMovement.m_state = movementState.jumping;
+            playerMovement.m_animator.SetTrigger("jump");
             m_jumpTimer = 0; 
         }
         else if (playerMovement.m_abilityFlags.HasFlag(AbilityAvailability.doubleJump) && playerMovement.m_state == movementState.falling && playerMovement.m_abilityFlags.HasFlag(AbilityAvailability.hasDoublejump)) 
@@ -44,6 +45,7 @@ public class Jump : MonoBehaviour
             playerMovement.MovementVector.z = playerMovement.m_inputvector.z * playerMovement.m_RunningSpeed;
             transform.rotation = Quaternion.LookRotation(new Vector3(playerMovement.MovementVector.x,0.0f,playerMovement.MovementVector.z), Vector3.up);
             playerMovement.m_state = movementState.doubleJumping;
+            playerMovement.m_animator.SetTrigger("jump");
             playerMovement.m_abilityFlags &= ~AbilityAvailability.doubleJump;//set the double jump to unavailable
             m_jumpTimer = 0;
         }
@@ -54,6 +56,7 @@ public class Jump : MonoBehaviour
         print("stopJumping");
        
         playerMovement.m_state = movementState.falling;
+        playerMovement.m_animator.SetTrigger("fall");
         if (m_jumpTimer < m_jumpLength) //If the jump has not reached maximum height already, reduce velocity 
         {                               //to increase responsiveness
             playerMovement.MovementVector.y = playerMovement.MovementVector.y / 2;
@@ -63,6 +66,7 @@ public class Jump : MonoBehaviour
     public void stopDoublejumping()
     {
         playerMovement.m_state = movementState.falling;
+        playerMovement.m_animator.SetTrigger("fall");
         if (m_jumpTimer < m_jumpLength) //If the jump has not reached maximum height already, reduce velocity 
         {                               //to increase responsiveness
             playerMovement.MovementVector.y = playerMovement.MovementVector.y / 2;
@@ -83,7 +87,7 @@ public class Jump : MonoBehaviour
         else 
         {
             playerMovement.m_state = movementState.falling;
-            
+            playerMovement.m_animator.SetTrigger("fall");
         }
     }
     private void DoubleJumpBehavior()
@@ -96,7 +100,7 @@ public class Jump : MonoBehaviour
         else
         {
             playerMovement.m_state = movementState.falling;
-
+            playerMovement.m_animator.SetTrigger("fall");
         }
     }
 }
