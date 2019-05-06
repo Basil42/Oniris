@@ -22,7 +22,7 @@ public class FallingPlatform : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.tag == "Player" && rb.useGravity == false)
         {
             Invoke("fall", fallTime);
         }
