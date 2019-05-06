@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: CarpetMat
-  m_Shader: {fileID: -6465566751694194690, guid: 9eff551c58fbe0e48aa59d715c303e77,
+  m_Name: LampWALLMat
+  m_Shader: {fileID: -6465566751694194690, guid: 61c98cf3968c0c94cacfdb90ce4eb890,
     type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -82,16 +82,24 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _SampleTexture2D_3A30C029_Texture:
-        m_Texture: {fileID: 2800000, guid: 6b2046927f594534eba40e858d8057a7, type: 3}
+    - _SampleTexture2D_1918F1E7_Texture:
+        m_Texture: {fileID: 2800000, guid: 12b0edd55c5bab44fa47a11ac356447e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _SampleTexture2D_9E780C05_Texture:
-        m_Texture: {fileID: 2800000, guid: 006073a688e95de498030d806ed8a563, type: 3}
+    - _SampleTexture2D_2C22FFD7_Texture:
+        m_Texture: {fileID: 2800000, guid: 5756477be320f5649922eff830d48060, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _SampleTexture2D_C98439D2_Texture:
-        m_Texture: {fileID: 2800000, guid: 423a6bd5985bb3e47988c1ad3a0ecf27, type: 3}
+    - _SampleTexture2D_49D8D409_Texture:
+        m_Texture: {fileID: 2800000, guid: 668991dd7dbc21f4484bfdc50bb9fccf, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_B1E52FA8_Texture:
+        m_Texture: {fileID: 2800000, guid: f5cd7c12a07f40f438d0a19196da0fa3, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_B77D7D59_Texture:
+        m_Texture: {fileID: 2800000, guid: 5585737c3804a954ba1cd663afd6e022, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SpecularColorMap:
@@ -244,7 +252,6 @@ Material:
     - _ZTestModeDistortion: 8
     - _ZWrite: 1
     m_Colors:
-    - Vector2_2B601205: {r: 4.09, g: 7.16, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColorMap_MipInfo: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
