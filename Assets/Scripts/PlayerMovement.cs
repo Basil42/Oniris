@@ -59,13 +59,23 @@ public class PlayerMovement : MonoBehaviour
     private float colliderHeight;
     public float colliderHeightOffset = 0.2f;
 
+    [Header("debuging functions")]
+    public bool StartWithBlink;
+    public bool StartWithDoubleJump;
+    public bool StartWithWallJump;
+    public bool StartWithDash;
+
 
 
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
         colliderHeight = GetComponent<CharacterController>().height - colliderHeightOffset;
-      
+
+        if (StartWithBlink) m_abilityFlags |= AbilityAvailability.hasBlink;
+        if (StartWithDash) m_abilityFlags |= AbilityAvailability.hasDash;
+        if (StartWithDoubleJump) m_abilityFlags |= AbilityAvailability.hasDoublejump;
+        if (StartWithWallJump) m_abilityFlags |= AbilityAvailability.hasWallJump;
     }
     // Update is called once per frame
     void FixedUpdate()
@@ -102,6 +112,9 @@ public class PlayerMovement : MonoBehaviour
         {
 
             m_abilityFlags |= AbilityAvailability.doubleJump;//sets double jump to available
+            m_abilityFlags |= AbilityAvailability.blink;
+            m_abilityFlags |= AbilityAvailability.dash;
+           
         }
     }
 
