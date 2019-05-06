@@ -57,7 +57,7 @@ public class PlayerMovement : MonoBehaviour
 
 
     private float colliderHeight;
-    public float colliderHeightOffset = 0.2f;
+    public float colliderHeightOffset = 0.1f;
 
     [Header("debuging functions")]
     public bool StartWithBlink;
@@ -172,10 +172,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        if (hit.point.y >= transform.position.y + colliderHeight && MovementVector.y > 0 && new Vector2(hit.point.x,hit.point.z).magnitude < controller.radius * 0.8)
+        if (hit.point.y >= transform.position.y + colliderHeight && MovementVector.y > 0)
         {
-                MovementVector.y = 0;
-            Debug.Log("bump");
+            MovementVector.y = 0;
+            m_state = movementState.falling;
         }
     }
 

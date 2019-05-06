@@ -19,7 +19,7 @@ public class CameraController : MonoBehaviour
 
     public GameObject PHplayer;
 
-    private bool PHcamBlinking = false;
+    //private bool PHcamBlinking = false;
  
     //Testing to see if this works
     private void Awake()
