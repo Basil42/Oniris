@@ -10,8 +10,8 @@ AnimatorStateMachine:
   m_Name: Horizontal_f
   m_ChildStates:
   - serializedVersion: 1
-    m_State: {fileID: -66417392444143313}
-    m_Position: {x: 320, y: 120, z: 0}
+    m_State: {fileID: -3867864824111420946}
+    m_Position: {x: 130, y: 220, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -21,15 +21,15 @@ AnimatorStateMachine:
   m_EntryPosition: {x: 50, y: 120, z: 0}
   m_ExitPosition: {x: 800, y: 120, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
-  m_DefaultState: {fileID: -66417392444143313}
---- !u!1102 &-66417392444143313
+  m_DefaultState: {fileID: -3867864824111420946}
+--- !u!1102 &-3867864824111420946
 AnimatorState:
   serializedVersion: 5
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: walk
+  m_Name: Run_fin
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -42,7 +42,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -3419257869308726280, guid: 51278af1242bbb745aa65a41a023e1fc,
+  m_Motion: {fileID: -7317002865435754205, guid: 5ac451c3fd7f4804c97d5838288141a4,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 
