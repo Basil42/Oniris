@@ -180,18 +180,25 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private void airControl(Vector3 inputVector)
-    {   
+    {
         
-        Vector3 airInput = Vector3.Project(inputVector, transform.forward) * m_AirForwardSpeed;
-
-        airInput += Vector3.Project(inputVector, transform.right)* m_AirSteeringSpeed;
-
-        if (Vector3.Dot(MovementVector, transform.forward) > m_AirMinSpeed) //If the value is too high, manuevering doesnt happen
+        //If dash would not be useable, then do not use aircontrol
+        if (m_abilityFlags.HasFlag(AbilityAvailability.dash))
         {
-            MovementVector.z = Mathf.Lerp(MovementVector.z, airInput.z, m_AirInertiaIntensity);
-            MovementVector.x = Mathf.Lerp(MovementVector.x, airInput.x, m_AirInertiaIntensity);
+            print("Air Control");
+            Vector3 airInput = Vector3.Project(inputVector, transform.forward) * m_AirForwardSpeed;
+
+            airInput += Vector3.Project(inputVector, transform.right) * m_AirSteeringSpeed;
+
+            if (Vector3.Dot(MovementVector, transform.forward) > m_AirMinSpeed) //If the value is too high, manuevering doesnt happen
+            {
+                MovementVector.z = Mathf.Lerp(MovementVector.z, airInput.z, m_AirInertiaIntensity);
+                MovementVector.x = Mathf.Lerp(MovementVector.x, airInput.x, m_AirInertiaIntensity);
+            }
+        }else
+        {
+            print("no air control, dash not ready");
         }
-        
     }
 
     
