@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.049276087, g: 0.0680558, b: 0.10151389, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -18838,6 +18838,16 @@ PrefabInstance:
       propertyPath: StartWithWallJump
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3626336366135376193, guid: e72c6b89864658d44b51be5581dec5b0,
+        type: 3}
+      propertyPath: m_RunningSpeed
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3626336366135376193, guid: e72c6b89864658d44b51be5581dec5b0,
+        type: 3}
+      propertyPath: m_AirForwardSpeed
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 2411048761383293832, guid: e72c6b89864658d44b51be5581dec5b0,
         type: 3}
       propertyPath: blinkTime
@@ -18855,7 +18865,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1820842316, guid: e72c6b89864658d44b51be5581dec5b0, type: 3}
       propertyPath: decelerationStep
-      value: 0.001
+      value: 0.005
+      objectReference: {fileID: 0}
+    - target: {fileID: 1820842317, guid: e72c6b89864658d44b51be5581dec5b0, type: 3}
+      propertyPath: bounceVelocity
+      value: 0.01
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4258308030239949481, guid: e72c6b89864658d44b51be5581dec5b0, type: 3}
