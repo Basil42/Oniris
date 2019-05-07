@@ -19,7 +19,6 @@ public class Blink : MonoBehaviour
     private float timer = 0.0f;
 
     public bool m_BlinkEnabled = true;
-    private Vector3 blinkDirection;
 
     // Start is called before the first frame update
     void Start()
@@ -31,12 +30,12 @@ public class Blink : MonoBehaviour
     }
 
     // Update is called once per frame
-    
+
     public void blink(Vector3 inputVector)
     {
         m_playerMovement.controller.enabled = false;
-        m_playerMovement.m_state = movementState.blinking;
-        m_playerMovement.m_animator.SetTrigger("blink");
+
+        Vector3 blinkDirection = inputVector;
         print("Don't Blink");
 
         inputVector.y = 0;
@@ -69,7 +68,7 @@ public class Blink : MonoBehaviour
             //Raycast to check for blinkable colliders. 
             RaycastHit hit3;
             Physics.Raycast(transform.position + new Vector3(0, charCtrl.height / 2, 0), blinkDirection, out hit3, distance);
-            
+
             //Checking whether there is a blinkable collider, and if the target blink position is inside it.
             if (hit3.collider == true && hit3.collider.gameObject.layer == 8 && hit3.collider.bounds.Contains(transform.position + inputVector * distance))
             {
@@ -82,7 +81,7 @@ public class Blink : MonoBehaviour
         else
         {
             //Found a non-blinkable collider, position uses the hit.distance minus a small offset
-            StartCoroutine(Blinking(inputVector ,transform.position + blinkDirection * (hit.distance - 0.5f)));
+            StartCoroutine(Blinking(inputVector, transform.position + blinkDirection * (hit.distance - 0.5f)));
             print(hit.distance);
         }
     }
@@ -98,7 +97,7 @@ public class Blink : MonoBehaviour
 
         //Blinking
         timer = 0.0f;
-        while(timer <= blinkDuration)
+        while (timer <= blinkDuration)
         {
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, blinkStep * Time.fixedDeltaTime);
             yield return new WaitForFixedUpdate();
@@ -111,8 +110,7 @@ public class Blink : MonoBehaviour
         }
 
         m_playerMovement.controller.enabled = true;
-        m_playerMovement.GroundCheck();
-        m_playerMovement.m_animator.SetTrigger((m_playerMovement.m_state == movementState.grounded ? "run" : "fall"));
+        m_playerMovement.m_state = movementState.falling;
         print("Finished blinking");
     }
 }
