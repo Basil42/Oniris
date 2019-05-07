@@ -79,7 +79,6 @@ public class Dash : MonoBehaviour
             x++;
             print("decelerating");
         }
-        playerMovement.GroundCheck();
         print("decelerated");
     }
 }
