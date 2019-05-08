@@ -10,6 +10,10 @@ public class Blink : MonoBehaviour
 
     private CameraController cameraController;
     private CharacterController charCtrl;
+    public GameObject blinkStream;
+    private GameObject currentBlinkStream;
+    public GameObject blinkParticles;
+    private GameObject currentBlinkParticles;
 
     private LayerMask blinkThrough;
     private Renderer[] blinkBodies;
@@ -34,18 +38,18 @@ public class Blink : MonoBehaviour
 
     public void blink(Vector3 inputVector)
     {
-        m_playerMovement.controller.enabled = false;
-
-        Vector3 blinkDirection = inputVector;
         print("Don't Blink");
-
-        inputVector.y = 0;
-        inputVector = inputVector.normalized;//shouldn't be here
-
+        m_playerMovement.controller.enabled = false;
+        m_playerMovement.m_abilityFlags &= ~AbilityAvailability.blink;
         foreach (Renderer renderer in blinkBodies)
         {
             renderer.enabled = false;
         }
+
+        Vector3 blinkDirection = inputVector;
+        
+        inputVector.y = 0;
+        inputVector = inputVector.normalized;//shouldn't be here
 
         //Velocity, magnitude of movement gets applied in input direction after blink
         RaycastHit hit;
@@ -63,6 +67,7 @@ public class Blink : MonoBehaviour
         Physics.SphereCast(p1, charCtrl.height / 2, blinkDirection, out hit, distance, blinkThrough);
 
         m_playerMovement.m_state = movementState.blinking;
+        SpawnBlinkVFX();
 
         if (hit.distance == 0)
         {
@@ -95,7 +100,7 @@ public class Blink : MonoBehaviour
         m_playerMovement.MovementVector.z = inputVector.z;
         m_playerMovement.MovementVector.y = 0;
         m_playerMovement.MovementVector = m_playerMovement.MovementVector * mag;
-
+        
         //Blinking
         timer = 0.0f;
         while (timer <= blinkDuration)
@@ -110,8 +115,22 @@ public class Blink : MonoBehaviour
             renderer.enabled = true;
         }
 
+        EndBlinkVFX();
+
         m_playerMovement.controller.enabled = true;
         m_playerMovement.m_state = movementState.falling;
         print("Finished blinking");
+    }
+
+    private void SpawnBlinkVFX()
+    {
+        currentBlinkStream = Instantiate(blinkStream, transform.position, transform.rotation);
+        currentBlinkParticles = Instantiate(blinkParticles, transform.position, transform.rotation);
+    }
+
+    private void EndBlinkVFX()
+    {
+        currentBlinkStream.GetComponent<SetVFXParameters>().StopEffect();
+        currentBlinkParticles.GetComponent<SetVFXParameters>().StopEffect();
     }
 }

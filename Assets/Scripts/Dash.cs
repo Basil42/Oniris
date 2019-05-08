@@ -44,7 +44,7 @@ public class Dash : MonoBehaviour
             playerMovement.MovementVector.y = 0;
             timer = 0;
 
-            playerMovement.m_abilityFlags ^= AbilityAvailability.dash;
+            playerMovement.m_abilityFlags &= ~AbilityAvailability.dash;
 
             transform.rotation = Quaternion.LookRotation(new Vector3(playerMovement.MovementVector.x, 0.0f, playerMovement.MovementVector.z));
 

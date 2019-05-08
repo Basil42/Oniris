@@ -9,13 +9,15 @@ public class SetVFXParameters : MonoBehaviour
     private VisualEffect effect;
     private GameObject targetPosition;
     public bool following;
+    public float destroyTime;
+    //public float lifeTime; might want this? not sure yet
 
     // Start is called before the first frame update
     void Start()
     {
         effect = GetComponent<VisualEffect>();
         targetPosition = GameObject.FindGameObjectWithTag("Player");
-        
+        effect.Play();
     }
 
     // Update is called once per frame
@@ -24,11 +26,17 @@ public class SetVFXParameters : MonoBehaviour
         if (following)
         {
             effect.SetVector3("attractive target position", (targetPosition.transform.position + new Vector3(0, 1, 0)));
-            effect.Play();
         }
-        else
-        {
-            effect.Stop();
-        }
+    }
+
+    public void StopEffect()
+    {
+        effect.Stop();
+        Invoke("destroyObj", destroyTime);
+    }
+
+    private void destroyObj()
+    {
+        Destroy(gameObject);
     }
 }
