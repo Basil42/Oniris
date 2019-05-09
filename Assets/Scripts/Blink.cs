@@ -16,20 +16,32 @@ public class Blink : MonoBehaviour
     private GameObject currentBlinkParticles;
 
     private LayerMask blinkThrough;
-    private Renderer[] blinkBodies;
     public float distance = 10;
     public float blinkStep = 50;
 
+    private List<Material> dissolveBodies;
+
     public float blinkDuration = 10;
     private float timer = 0.0f;
+
+    public float dissolveSpeed = 4;
+    public float appearSpeed = 1;
 
     public bool m_BlinkEnabled = true;
 
     // Start is called before the first frame update
     void Start()
     {
-        blinkThrough = ~LayerMask.GetMask("Blinkable");// "everything but blinkable
-        blinkBodies = GetComponentsInChildren<Renderer>();
+        blinkThrough = ~LayerMask.GetMask("Blinkable");// everything but blinkable
+
+        dissolveBodies = new List<Material>();
+        foreach (Renderer renderer in GetComponentsInChildren<Renderer>())
+        {
+            if(renderer.material != null)
+            {
+                dissolveBodies.Add(renderer.material);
+            }
+        }
         m_playerMovement = GetComponent<PlayerMovement>();
         charCtrl = GetComponentInParent<CharacterController>();
     }
@@ -41,10 +53,12 @@ public class Blink : MonoBehaviour
         print("Don't Blink");
         m_playerMovement.controller.enabled = false;
         m_playerMovement.m_abilityFlags &= ~AbilityAvailability.blink;
-        foreach (Renderer renderer in blinkBodies)
-        {
-            renderer.enabled = false;
-        }
+
+        //foreach (Renderer renderer in blinkBodies)
+        //{
+        //    renderer.enabled = false;
+        //}
+        StartCoroutine("Dissolve");
 
         Vector3 blinkDirection = inputVector;
         
@@ -110,16 +124,40 @@ public class Blink : MonoBehaviour
             timer += Time.fixedDeltaTime;
         }
 
-        foreach (Renderer renderer in blinkBodies)
-        {
-            renderer.enabled = true;
-        }
-
+        StartCoroutine("Appear");
         EndBlinkVFX();
 
         m_playerMovement.controller.enabled = true;
         m_playerMovement.m_state = movementState.falling;
         print("Finished blinking");
+    }
+
+    private IEnumerator Dissolve()
+    {
+        float dissolveAmount = 0;
+        while(dissolveAmount < 1)
+        {
+            foreach(Material mat in dissolveBodies)
+            {
+                mat.SetFloat("_Dissolve_Value", dissolveAmount);   
+            }
+            dissolveAmount += Time.fixedDeltaTime * dissolveSpeed;
+            yield return new WaitForFixedUpdate();
+        }
+    }
+
+    private IEnumerator Appear()
+    {
+        float dissolveAmount = 1;
+        while (dissolveAmount > 0)
+        {
+            foreach (Material mat in dissolveBodies)
+            {
+                mat.SetFloat("_Dissolve_Value", dissolveAmount);
+            }
+            dissolveAmount -= Time.fixedDeltaTime * appearSpeed;
+            yield return new WaitForFixedUpdate();
+        }
     }
 
     private void SpawnBlinkVFX()
