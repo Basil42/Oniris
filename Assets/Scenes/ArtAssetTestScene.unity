@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.17810236, g: 0.19339463, b: 0.20410387, a: 1}
+  m_IndirectSpecularColor: {r: 0.054524705, g: 0.049781032, b: 0.03142412, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -9920,7 +9920,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 735432213}
   m_LocalRotation: {x: -0.038945943, y: 0.6601679, z: 0.014617851, w: -0.74996525}
-  m_LocalPosition: {x: 80.33, y: 54.5, z: -45.72}
+  m_LocalPosition: {x: 94.37, y: 55.65, z: -55.19}
   m_LocalScale: {x: 3.5412068, y: 3.5412068, z: 3.5412073}
   m_Children: []
   m_Father: {fileID: 0}
@@ -25037,11 +25037,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1541570833}
     m_Modifications:
-    - target: {fileID: 474058735891100569, guid: 5c5ec8a9ced226c48b806fe910e9e868,
-        type: 3}
-      propertyPath: m_Name
-      value: Spot Light
-      objectReference: {fileID: 0}
     - target: {fileID: 474058735891100568, guid: 5c5ec8a9ced226c48b806fe910e9e868,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -25097,6 +25092,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 474058735891100569, guid: 5c5ec8a9ced226c48b806fe910e9e868,
+        type: 3}
+      propertyPath: m_Name
+      value: Spot Light
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5c5ec8a9ced226c48b806fe910e9e868, type: 3}
 --- !u!1001 &7876516127514831465
@@ -25106,11 +25106,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 233668319}
     m_Modifications:
-    - target: {fileID: 7876516128510321831, guid: 9e9083403f21e9444bfe973293de826f,
-        type: 3}
-      propertyPath: m_Name
-      value: Area Light
-      objectReference: {fileID: 0}
     - target: {fileID: 7876516128510321830, guid: 9e9083403f21e9444bfe973293de826f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -25165,6 +25160,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7876516128510321831, guid: 9e9083403f21e9444bfe973293de826f,
+        type: 3}
+      propertyPath: m_Name
+      value: Area Light
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9e9083403f21e9444bfe973293de826f, type: 3}
