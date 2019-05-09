@@ -7,12 +7,14 @@ public class Jump : MonoBehaviour
 {
 
     [SerializeField] private float m_jumpingSpeed = 2.0f;
-    //[SerializeField] private float m_DoubleJumpSpeed = 2.0f;//should matter, implement once state maching is in place
+    [SerializeField] private float m_doubleJumpingSpeed = 2.0f;
+    
 
     private PlayerMovement playerMovement;
 
     private float m_jumpTimer;
     public float m_jumpLength = 1.5f;
+    public float m_doubleJumpLength = 1.5f;
 
     // Start is called before the first frame update
     void Start()
@@ -92,9 +94,9 @@ public class Jump : MonoBehaviour
     }
     private void DoubleJumpBehavior()
     {
-        if (m_jumpTimer < m_jumpLength)
+        if (m_jumpTimer < m_doubleJumpLength)
         {
-            playerMovement.MovementVector.y = m_jumpingSpeed;
+            playerMovement.MovementVector.y = m_doubleJumpingSpeed;
             m_jumpTimer += Time.deltaTime;
         }
         else
