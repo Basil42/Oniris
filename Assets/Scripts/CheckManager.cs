@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Runtime.InteropServices;
 
 public enum checkContent
 {
@@ -12,15 +13,28 @@ public enum checkContent
 public class CheckManager : MonoBehaviour
 {
 
-    public checkContent[] content;
+    private int[] content;
     bool[] assignedStatus;
 
     [Tooltip("Set to 0 unless you need to test sometingand you know what you are doing.")]
     public int dashFragCount = 0;
+
+    [DllImport("Oniris_Randomizer.dll")]
+    static public extern void Randomizer(int[] content, int size);
+    private void Awake()
+    {
+        content = new int[66];
+        content[0] = (int)checkContent.Double_jump;
+        content[1] = (int)checkContent.Blink;
+        content[2] = (int)checkContent.Wall_Jump;
+        assignedStatus = new bool[66];
+        //run randomizer
+        Randomizer(content, content.Length);
+    }
     // Start is called before the first frame update
     void Start()
     {
-        assignedStatus = new bool[content.Length];
+        
         //for(int i = 0; i < content.Length; i++)
         //{
         //    assignedStatus[i] = false;
@@ -35,6 +49,8 @@ public class CheckManager : MonoBehaviour
 
     public checkContent getContent(int index)
     {
-        return content[index];
+        if (assignedStatus[index]) Debug.LogError("multiple checks with identical indexes detected");
+        return (checkContent)content[index];
+
     }
 }
