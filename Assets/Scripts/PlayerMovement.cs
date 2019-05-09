@@ -180,7 +180,14 @@ public class PlayerMovement : MonoBehaviour
         if (hit.point.y >= transform.position.y + colliderHeight && MovementVector.y > 0)
         {
             MovementVector.y = 0;
-            m_state = movementState.falling;
+            if(m_state == movementState.wallrunFront) {
+                GetComponent<WallJump>().Eject();
+            }
+            else
+            {
+                m_state = movementState.falling;
+            }
+            
         }
     }
 

@@ -203,5 +203,8 @@ public class WallJump : MonoBehaviour
         //to do : snap to the wall
         m_movementScript.MovementVector += -m_chosenHit.normal;
     }
-    
+    public void Eject()
+    {
+        m_RunTimer = -1;
+    }
 }
