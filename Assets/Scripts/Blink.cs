@@ -128,7 +128,7 @@ public class Blink : MonoBehaviour
         EndBlinkVFX();
 
         m_playerMovement.controller.enabled = true;
-        m_playerMovement.m_state = movementState.falling;
+        m_playerMovement.GroundCheck();
         print("Finished blinking");
     }
 

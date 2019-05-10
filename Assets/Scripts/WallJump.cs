@@ -176,6 +176,7 @@ public class WallJump : MonoBehaviour
                 m_movementScript.m_state = movementState.wallrunFront;
                 m_movementScript.m_animator.SetTrigger("wallrunFront");
                 m_movementScript.MovementVector = Vector3.up * wallClimbSpeed;
+                Debug.Break();
                 transform.rotation = Quaternion.LookRotation(-m_chosenHit.normal,Vector3.up);//line up the character properly
                 
                 Debug.Log("front wall run");
@@ -206,5 +207,6 @@ public class WallJump : MonoBehaviour
     public void Eject()
     {
         m_RunTimer = -1;
+        Debug.Log("ejection");
     }
 }

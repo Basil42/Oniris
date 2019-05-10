@@ -50,15 +50,15 @@ public class PlayerMovement : MonoBehaviour
 
     public Vector3 m_inputvector;
 
-    [HideInInspector] public movementState m_state;
+    public movementState m_state;
     [HideInInspector]public AbilityAvailability m_abilityFlags;
 
-    [HideInInspector] public Vector3 MovementVector;
+    public Vector3 MovementVector;
     [HideInInspector] public Animator m_animator;
 
 
     private float colliderHeight;
-    public float colliderHeightOffset = 0.1f;
+    private float colliderHeightOffset = 0.01f;
 
     [Header("debuging functions")]
     public bool StartWithBlink;
@@ -197,7 +197,7 @@ public class PlayerMovement : MonoBehaviour
         //If dash would not be useable, then do not use aircontrol
         if (m_abilityFlags.HasFlag(AbilityAvailability.dash))
         {
-            print("Air Control");
+            
             Vector3 airInput = Vector3.Project(inputVector, transform.forward) * m_AirForwardSpeed;
 
             airInput += Vector3.Project(inputVector, transform.right) * m_AirSteeringSpeed;
@@ -207,9 +207,6 @@ public class PlayerMovement : MonoBehaviour
                 MovementVector.z = Mathf.Lerp(MovementVector.z, airInput.z, m_AirInertiaIntensity);
                 MovementVector.x = Mathf.Lerp(MovementVector.x, airInput.x, m_AirInertiaIntensity);
             }
-        }else
-        {
-            print("no air control, dash not ready");
         }
     }
 
