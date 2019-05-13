@@ -23,11 +23,11 @@ public class CheckManager : MonoBehaviour
     static public extern void Randomizer(int[] content, int size);
     private void Awake()
     {
-        content = new int[68];
+        content = new int[69];
         content[0] = (int)checkContent.Double_jump;
         content[1] = (int)checkContent.Blink;
         content[2] = (int)checkContent.Wall_Jump;
-        assignedStatus = new bool[68];
+        assignedStatus = new bool[69];
         //run randomizer
         Randomizer(content, content.Length);
     }
