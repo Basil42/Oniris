@@ -88,7 +88,7 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate()
     {
         m_animator.SetBool("isGrounded", m_state == movementState.grounded);
-        m_animator.SetFloat("speed", controller.velocity.magnitude);
+        m_animator.SetFloat("speed", Vector3.ProjectOnPlane(MovementVector,Vector3.up).magnitude/m_RunningSpeed);
         if (m_state == movementState.grounded || m_state == movementState.falling) GroundCheck();
         switch (m_state)
         {
@@ -131,8 +131,9 @@ public class PlayerMovement : MonoBehaviour
     public void Move(Vector3 inputVector)
     {
             //Lerp'n Slerp towards a target velocity
-            MovementVector.x = Mathf.Lerp(MovementVector.x, inputVector.x * m_RunningSpeed, inertiaIntensity);
-            MovementVector.z = Mathf.Lerp(MovementVector.z, inputVector.z * m_RunningSpeed, inertiaIntensity);
+            //MovementVector.x = Mathf.Lerp(MovementVector.x, inputVector.x * m_RunningSpeed, inertiaIntensity);
+            //MovementVector.z = Mathf.Lerp(MovementVector.z, inputVector.z * m_RunningSpeed, inertiaIntensity);
+            MovementVector = Vector3.Lerp(MovementVector, inputVector * m_RunningSpeed, inertiaIntensity);
 
             if (Vector3.Scale(MovementVector,new Vector3(1.0f,0.0f,1.0f)).magnitude > 0.05f) transform.rotation = Quaternion.Slerp(transform.rotation,Quaternion.LookRotation(new Vector3(MovementVector.x,0.0f,MovementVector.z), Vector3.up), m_SteeringSpeed);
 

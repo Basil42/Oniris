@@ -57,7 +57,7 @@ public class Jump : MonoBehaviour
         }
     }
 
-    public void Liftoff()
+    public void LiftOff()
     {
         playerMovement.m_state = movementState.jumping;
         m_jumpTimer = 0;
