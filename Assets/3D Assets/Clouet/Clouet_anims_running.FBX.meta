@@ -45,6 +45,9 @@ ModelImporter:
   - first:
       74: -5976811683470061430
     second: Jump_up_land
+  - first:
+      74: -4931222917918166780
+    second: Jump_forward_land
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -287,7 +290,7 @@ ModelImporter:
       name: Jump_forward
       takeName: Jump_forward
       internalID: -8045310882627579393
-      firstFrame: 4.2
+      firstFrame: 4
       lastFrame: 10.3
       wrapMode: 0
       orientationOffsetY: 0
@@ -307,7 +310,14 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.2342466
+        functionName: LiftOff
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
@@ -353,7 +363,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -470,6 +480,35 @@ ModelImporter:
       internalID: -5976811683470061430
       firstFrame: 22.3
       lastFrame: 40.4
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Jump_forward_land
+      takeName: Jump_forward
+      internalID: -4931222917918166780
+      firstFrame: 13.1
+      lastFrame: 25.5
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
