@@ -19,15 +19,15 @@ public class CheckManager : MonoBehaviour
     [Tooltip("Set to 0 unless you need to test sometingand you know what you are doing.")]
     public int dashFragCount = 0;
 
-    [DllImport("Oniris_Randomizer.dll")]
+    [DllImport("Oniris_Randomizer")]
     static public extern void Randomizer(int[] content, int size);
     private void Awake()
     {
-        content = new int[66];
+        content = new int[68];
         content[0] = (int)checkContent.Double_jump;
         content[1] = (int)checkContent.Blink;
         content[2] = (int)checkContent.Wall_Jump;
-        assignedStatus = new bool[66];
+        assignedStatus = new bool[68];
         //run randomizer
         Randomizer(content, content.Length);
     }
