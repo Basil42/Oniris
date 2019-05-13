@@ -97,7 +97,7 @@ public class PlayerMovement : MonoBehaviour
                 airControl(m_inputvector);
                 break;
             case movementState.grounded:
-                MovementVector.y = -0.2f;
+                //MovementVector.y = 0.2f;
                 Move(m_inputvector);
                 break;
             case movementState.jumping:
@@ -197,7 +197,7 @@ public class PlayerMovement : MonoBehaviour
             }
             
         }
-        MovementVector += hit.normal * 0.1f;
+        //MovementVector += hit.normal * 0.1f;
     }
 
     private void airControl(Vector3 inputVector)
