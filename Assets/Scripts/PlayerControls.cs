@@ -67,7 +67,7 @@ public class PlayerControls : MonoBehaviour
             else if (m_playerMove.m_state == movementState.doubleJumping) m_jumpScript.stopDoublejumping();
         }
         if (Input.GetButtonDown("Blink")&& m_playerMove.m_abilityFlags.HasFlag(AbilityAvailability.hasBlink) && m_playerMove.m_abilityFlags.HasFlag(AbilityAvailability.blink)) m_blinkScript.blink(m_lStickInputVector);
-        if (Input.GetButtonDown("Dash") && m_playerMove.m_abilityFlags.HasFlag(AbilityAvailability.hasDash) && m_playerMove.m_abilityFlags.HasFlag(AbilityAvailability.dash)) m_dashScript.dash();
+        //if (Input.GetButtonDown("Dash") && m_playerMove.m_abilityFlags.HasFlag(AbilityAvailability.hasDash) && m_playerMove.m_abilityFlags.HasFlag(AbilityAvailability.dash)) m_dashScript.dash();
     }
 
     private void FixedUpdate()
