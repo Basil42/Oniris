@@ -92,12 +92,11 @@ public class WallJump : MonoBehaviour
         {
            
             
-            m_movementScript.MovementVector = -transform.forward * bounceVelocity;
-            m_movementScript.MovementVector -= -m_chosenHit.normal;
+            m_movementScript.MovementVector = m_chosenHit.normal * bounceVelocity;
             m_movementScript.m_state = movementState.falling;
             m_movementScript.m_animator.SetTrigger("fall");
             transform.forward = -transform.forward;
-            Debug.Log("bounce");
+
         }
         
     }
@@ -114,13 +113,12 @@ public class WallJump : MonoBehaviour
         m_RunTimer -= Time.fixedDeltaTime;
         if (!Physics.Raycast(m_origin, transform.right, out m_hit, m_absoluteReach) || m_RunTimer < 0)//to do : timer
         {
-            m_movementScript.MovementVector += -transform.right * bounceVelocity;
+            m_movementScript.MovementVector += m_chosenHit.normal * bounceVelocity;
             m_movementScript.m_state = movementState.falling;
-            m_movementScript.MovementVector -= -m_chosenHit.normal;
             m_movementScript.m_animator.SetTrigger("fall");
             transform.forward = new Vector3(m_movementScript.MovementVector.x, 0.0f, m_movementScript.MovementVector.z).normalized;
             //facethe character in the appropriate direction(this function might not be responsible for it)
-            Debug.Log("bounce");
+
         }
     }
     private void wallRunLeftBehavior()
@@ -128,12 +126,12 @@ public class WallJump : MonoBehaviour
         m_RunTimer -= Time.fixedDeltaTime;
         if (!Physics.Raycast(m_origin, -transform.right, out m_hit,m_absoluteReach) || m_RunTimer < 0)//timer
         {
-            m_movementScript.MovementVector += transform.right * bounceVelocity;//bounce
-            m_movementScript.MovementVector -= -m_chosenHit.normal;
+            m_movementScript.MovementVector += m_chosenHit.normal * bounceVelocity;//bounce
+
             m_movementScript.m_state = movementState.falling;//might implement a custom walljump state and behavior later
             m_movementScript.m_animator.SetTrigger("fall");
             transform.forward = new Vector3(m_movementScript.MovementVector.x, 0.0f, m_movementScript.MovementVector.z).normalized;
-            Debug.Log("bounce");
+
         }
     }
     public void WallJumpLateral()
@@ -176,10 +174,10 @@ public class WallJump : MonoBehaviour
                 m_movementScript.m_state = movementState.wallrunFront;
                 m_movementScript.m_animator.SetTrigger("wallrunFront");
                 m_movementScript.MovementVector = Vector3.up * wallClimbSpeed;
-                Debug.Break();
+                
                 transform.rotation = Quaternion.LookRotation(-m_chosenHit.normal,Vector3.up);//line up the character properly
                 
-                Debug.Log("front wall run");
+
                 //animation stuff
                 break;
             case Direction.Left:
@@ -187,7 +185,7 @@ public class WallJump : MonoBehaviour
                 m_movementScript.m_state = movementState.wallrunLeft;
                 m_movementScript.m_animator.SetTrigger("wallrunlateral");
                 m_movementScript.MovementVector = (Quaternion.AngleAxis(m_RunAngle,m_chosenHit.normal) * Vector3.up)* m_wallrunSpeed;
-                Debug.Log("left wall run");
+
                 //to do: line up character properly
                 //to do : plane running
                 break;
@@ -196,7 +194,7 @@ public class WallJump : MonoBehaviour
                 m_movementScript.m_state = movementState.wallrunRight;
                 m_movementScript.m_animator.SetTrigger("wallrunlateral");
                 m_movementScript.MovementVector = (Quaternion.AngleAxis(-m_RunAngle, m_chosenHit.normal) * Vector3.up) * m_wallrunSpeed;
-                Debug.Log("right wall run");
+
                 break;
             default:
                 break;
@@ -207,6 +205,6 @@ public class WallJump : MonoBehaviour
     public void Eject()
     {
         m_RunTimer = -1;
-        Debug.Log("ejection");
+
     }
 }

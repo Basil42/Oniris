@@ -172,7 +172,6 @@ public class PlayerMovement : MonoBehaviour
             Debug.DrawRay(transform.position + (transform.right * 0.3f + transform.up * 0.1f), transform.TransformDirection(Vector3.down) * 1000, Color.white);
             Debug.DrawRay(-transform.position + (transform.right * 0.3f + transform.up * 0.1f), transform.TransformDirection(Vector3.down) * 1000, Color.white);
             if(m_state == movementState.grounded)m_animator.SetTrigger("fall");
-            Debug.Log("groundCheckFail");
             m_state = movementState.falling;
         }
     }

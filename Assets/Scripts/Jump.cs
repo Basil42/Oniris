@@ -34,14 +34,14 @@ public class Jump : MonoBehaviour
         
         if (playerMovement.m_state == movementState.grounded || playerMovement.m_state == movementState.offLedge)
         {
-            print("Jumping");
+  
             playerMovement.m_state = movementState.jumping;
             playerMovement.m_animator.SetTrigger("jump");
             m_jumpTimer = 0; 
         }
         else if (playerMovement.m_abilityFlags.HasFlag(AbilityAvailability.doubleJump) && playerMovement.m_state == movementState.falling && playerMovement.m_abilityFlags.HasFlag(AbilityAvailability.hasDoublejump)) 
         {
-            print("DoubleJump");
+
             
             playerMovement.MovementVector.x = playerMovement.m_inputvector.x * playerMovement.m_RunningSpeed;
             playerMovement.MovementVector.z = playerMovement.m_inputvector.z * playerMovement.m_RunningSpeed;
