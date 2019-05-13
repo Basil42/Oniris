@@ -40,7 +40,8 @@ public class MovingPlatform : MonoBehaviour
     {
         if(other.gameObject.tag == "Player")
         {
-             player.transform.SetParent(gameObject.transform, true);
+            player.transform.SetParent(gameObject.transform, true);
+            player.transform.position = player.transform.localPosition;
         }
     }
 
