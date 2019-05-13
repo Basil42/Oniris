@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.Experimental.Rendering.HDPipeline;
 
 //This script is responsible for ground movement and for calling the update functions of each other state
 public enum movementState
@@ -47,6 +48,8 @@ public class PlayerMovement : MonoBehaviour
     public float m_AirMinSpeed = 0.01f; //Need a better name
     public float m_gravity = 0.3f;
 
+    private DecalProjectorComponent m_dropShadow;
+    public float m_dropShadowFadeMultiplier = 0.1f;
 
     public Vector3 m_inputvector;
 
@@ -78,6 +81,8 @@ public class PlayerMovement : MonoBehaviour
         if (StartWithDoubleJump) m_abilityFlags |= AbilityAvailability.hasDoublejump;
         if (StartWithWallJump) m_abilityFlags |= AbilityAvailability.hasWallJump;
         m_animator = GetComponent<Animator>();
+
+        m_dropShadow = GameObject.FindGameObjectWithTag("dropShadow").GetComponent<DecalProjectorComponent>();
     }
     // Update is called once per frame
     void FixedUpdate()
@@ -106,6 +111,7 @@ public class PlayerMovement : MonoBehaviour
                 break;
         }
         Abilityresets();
+        fadeShadow();
         if (controller.enabled) controller.Move(MovementVector);
     }
 
@@ -161,7 +167,8 @@ public class PlayerMovement : MonoBehaviour
             Debug.DrawRay(transform.position + (-transform.right * 0.3f + transform.up * 0.1f), transform.TransformDirection(Vector3.down) * hit.distance, Color.black);
             if(m_state == movementState.falling)m_animator.SetTrigger("run");
             m_state = movementState.grounded;
-            
+
+
         }
         else
         {
@@ -206,6 +213,12 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private void fadeShadow()
+    {
+        RaycastHit shadowHit;
+        Physics.Raycast(transform.position + new Vector3(0, 0.1f, 0), transform.TransformDirection(Vector3.down), out shadowHit, Mathf.Infinity);
+        m_dropShadow.m_FadeFactor = 1 - m_dropShadowFadeMultiplier * shadowHit.distance;
+    }
     
     public void fallingBehavior()
     {
