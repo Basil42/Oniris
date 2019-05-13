@@ -72,8 +72,10 @@ public class Blink : MonoBehaviour
         }
 
         //spherecast starts from center of player, slightly behind them in the opposite direction of the inputVector
-        Vector3 p1 = transform.position + charCtrl.center - blinkDirection;
-        Physics.SphereCast(p1, charCtrl.height / 2, blinkDirection, out hit, distance, blinkThrough);
+        Vector3 p1 = transform.position + charCtrl.center - blinkDirection -Vector3.up * (charCtrl.height-charCtrl.radius);
+        Vector3 p2 = transform.position + charCtrl.center - blinkDirection + Vector3.up * (charCtrl.height - charCtrl.radius);
+        Physics.CapsuleCast(p1, p2, charCtrl.radius, blinkDirection, out hit, distance, blinkThrough);
+        //Physics.SphereCast(p1, charCtrl.height / 2, blinkDirection, out hit, distance, blinkThrough);
 
         m_playerMovement.m_state = movementState.blinking;
         SpawnBlinkVFX();
