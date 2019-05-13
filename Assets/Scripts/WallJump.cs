@@ -96,7 +96,7 @@ public class WallJump : MonoBehaviour
             m_movementScript.m_state = movementState.falling;
             m_movementScript.m_animator.SetTrigger("fall");
             transform.forward = -transform.forward;
-
+            Debug.Log("bounce");
         }
         
     }
@@ -118,7 +118,7 @@ public class WallJump : MonoBehaviour
             m_movementScript.m_animator.SetTrigger("fall");
             transform.forward = new Vector3(m_movementScript.MovementVector.x, 0.0f, m_movementScript.MovementVector.z).normalized;
             //facethe character in the appropriate direction(this function might not be responsible for it)
-
+            Debug.Log("bounce");
         }
     }
     private void wallRunLeftBehavior()
@@ -131,7 +131,7 @@ public class WallJump : MonoBehaviour
             m_movementScript.m_state = movementState.falling;//might implement a custom walljump state and behavior later
             m_movementScript.m_animator.SetTrigger("fall");
             transform.forward = new Vector3(m_movementScript.MovementVector.x, 0.0f, m_movementScript.MovementVector.z).normalized;
-
+            Debug.Log("bounce");
         }
     }
     public void WallJumpLateral()
