@@ -21,7 +21,7 @@ public class Blink : MonoBehaviour
 
     private List<Material> dissolveBodies;
 
-    public float blinkDuration = 10;
+    public float blinkDuration = 0.3f;
     private float timer = 0.0f;
 
     public float dissolveSpeed = 4;
@@ -50,14 +50,9 @@ public class Blink : MonoBehaviour
 
     public void blink(Vector3 inputVector)
     {
-        print("Don't Blink");
         m_playerMovement.controller.enabled = false;
         m_playerMovement.m_abilityFlags &= ~AbilityAvailability.blink;
 
-        //foreach (Renderer renderer in blinkBodies)
-        //{
-        //    renderer.enabled = false;
-        //}
         StartCoroutine("Dissolve");
 
         Vector3 blinkDirection = inputVector;
@@ -83,7 +78,7 @@ public class Blink : MonoBehaviour
         m_playerMovement.m_state = movementState.blinking;
         SpawnBlinkVFX();
 
-        if (hit.distance == 0)
+        if (hit.distance == 0)//dangerous ?
         {
             //Raycast to check for blinkable colliders. 
             RaycastHit hit3;
@@ -113,7 +108,7 @@ public class Blink : MonoBehaviour
         m_playerMovement.MovementVector.x = inputVector.x;
         m_playerMovement.MovementVector.z = inputVector.z;
         m_playerMovement.MovementVector.y = 0;
-        m_playerMovement.MovementVector = m_playerMovement.MovementVector * mag;
+        m_playerMovement.MovementVector = inputVector.normalized * mag;
         
         //Blinking
         timer = 0.0f;
