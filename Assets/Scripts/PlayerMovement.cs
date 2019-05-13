@@ -50,15 +50,15 @@ public class PlayerMovement : MonoBehaviour
 
     public Vector3 m_inputvector;
 
-    [HideInInspector] public movementState m_state;
+    public movementState m_state;
     [HideInInspector]public AbilityAvailability m_abilityFlags;
 
-    [HideInInspector] public Vector3 MovementVector;
+    public Vector3 MovementVector;
     [HideInInspector] public Animator m_animator;
 
 
     private float colliderHeight;
-    public float colliderHeightOffset = 0.1f;
+    private float colliderHeightOffset = 0.01f;
 
     [Header("debuging functions")]
     public bool StartWithBlink;
@@ -92,6 +92,7 @@ public class PlayerMovement : MonoBehaviour
                 airControl(m_inputvector);
                 break;
             case movementState.grounded:
+                MovementVector.y = -0.2f;
                 Move(m_inputvector);
                 break;
             case movementState.jumping:
@@ -147,14 +148,14 @@ public class PlayerMovement : MonoBehaviour
         RaycastHit hit5;
        
 
-        if (Physics.Raycast(transform.position + new Vector3(0, 0.1f, 0), transform.TransformDirection(Vector3.down), out hit, 0.1f) |
-            Physics.Raycast(transform.position + (transform.forward * 0.5f + transform.up * 0.1f), transform.TransformDirection(Vector3.down), out hit2, 0.3f) |
-            Physics.Raycast(transform.position + (-transform.forward * 0.5f + transform.up * 0.1f), transform.TransformDirection(Vector3.down), out hit3, 0.3f) |
-            Physics.Raycast(transform.position + (transform.right * 0.3f + transform.up * 0.1f), transform.TransformDirection(Vector3.down), out hit4, 0.3f) |
+        if (Physics.Raycast(transform.position + new Vector3(0, 0.1f, 0), transform.TransformDirection(Vector3.down), out hit, 0.15f) ||
+            Physics.Raycast(transform.position + (transform.forward * 0.5f + transform.up * 0.1f), transform.TransformDirection(Vector3.down), out hit2, 0.3f) ||
+            Physics.Raycast(transform.position + (-transform.forward * 0.5f + transform.up * 0.1f), transform.TransformDirection(Vector3.down), out hit3, 0.3f) ||
+            Physics.Raycast(transform.position + (transform.right * 0.3f + transform.up * 0.1f), transform.TransformDirection(Vector3.down), out hit4, 0.3f) ||
             Physics.Raycast(transform.position + (-transform.right * 0.3f + transform.up * 0.1f), transform.TransformDirection(Vector3.down), out hit5, 0.3f)
            )
         {
-            Debug.DrawRay(transform.position + new Vector3(0, 0.1f, 0), transform.TransformDirection(Vector3.down) * hit2.distance, Color.yellow);
+            Debug.DrawRay(transform.position + new Vector3(0, 0.1f, 0), transform.TransformDirection(Vector3.down) * hit.distance, Color.yellow);
             Debug.DrawRay(transform.position + (transform.forward * 0.5f + transform.up * 0.1f), transform.TransformDirection(Vector3.down) * hit.distance, Color.red);
             Debug.DrawRay(transform.position + (-transform.forward * 0.5f + transform.up * 0.1f), transform.TransformDirection(Vector3.down) * hit.distance, Color.green);
             Debug.DrawRay(transform.position + (transform.right * 0.3f + transform.up * 0.1f), transform.TransformDirection(Vector3.down) * hit.distance, Color.blue);
@@ -180,8 +181,16 @@ public class PlayerMovement : MonoBehaviour
         if (hit.point.y >= transform.position.y + colliderHeight && MovementVector.y > 0)
         {
             MovementVector.y = 0;
-            m_state = movementState.falling;
+            if(m_state == movementState.wallrunFront) {
+                GetComponent<WallJump>().Eject();
+            }
+            else
+            {
+                m_state = movementState.falling;
+            }
+            
         }
+        MovementVector += hit.normal * 0.1f;
     }
 
     private void airControl(Vector3 inputVector)
@@ -190,7 +199,7 @@ public class PlayerMovement : MonoBehaviour
         //If dash would not be useable, then do not use aircontrol
         if (m_abilityFlags.HasFlag(AbilityAvailability.dash))
         {
-            print("Air Control");
+            
             Vector3 airInput = Vector3.Project(inputVector, transform.forward) * m_AirForwardSpeed;
 
             airInput += Vector3.Project(inputVector, transform.right) * m_AirSteeringSpeed;
@@ -200,9 +209,6 @@ public class PlayerMovement : MonoBehaviour
                 MovementVector.z = Mathf.Lerp(MovementVector.z, airInput.z, m_AirInertiaIntensity);
                 MovementVector.x = Mathf.Lerp(MovementVector.x, airInput.x, m_AirInertiaIntensity);
             }
-        }else
-        {
-            print("no air control, dash not ready");
         }
     }
 
