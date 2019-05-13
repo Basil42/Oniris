@@ -45,7 +45,10 @@ public class Jump : MonoBehaviour
             
             playerMovement.MovementVector.x = playerMovement.m_inputvector.x * playerMovement.m_RunningSpeed;
             playerMovement.MovementVector.z = playerMovement.m_inputvector.z * playerMovement.m_RunningSpeed;
-            transform.rotation = Quaternion.LookRotation(new Vector3(playerMovement.MovementVector.x,0.0f,playerMovement.MovementVector.z), Vector3.up);
+            if (playerMovement.m_inputvector.x != 0 && playerMovement.m_inputvector.z != 0)
+            {
+                transform.rotation = Quaternion.LookRotation(new Vector3(playerMovement.MovementVector.x, 0.0f, playerMovement.MovementVector.z), Vector3.up);
+            }
             playerMovement.m_state = movementState.doubleJumping;
             playerMovement.m_animator.SetTrigger("jump");
             playerMovement.m_abilityFlags &= ~AbilityAvailability.doubleJump;//set the double jump to unavailable
