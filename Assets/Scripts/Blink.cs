@@ -52,6 +52,8 @@ public class Blink : MonoBehaviour
     {
         m_playerMovement.controller.enabled = false;
         m_playerMovement.m_abilityFlags &= ~AbilityAvailability.blink;
+        //temp
+        GetComponent<ClouetSoundManager>().BlinkSound();
 
         StartCoroutine("Dissolve");
 
