@@ -24,7 +24,7 @@ public class SetVFXParameters : MonoBehaviour
         {
             m_attractiveForce = effect.GetFloat("PullStrength");
             effect.SetFloat("PullStrength", 0.0f);
-            Invoke("startAttraction", 0.3f);
+            Invoke("startAttraction", attractionDelay);
         }
         
     }
