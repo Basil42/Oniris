@@ -21,7 +21,7 @@ public class Blink : MonoBehaviour
 
     private List<Material> dissolveBodies;
 
-    public float blinkDuration = 10;
+    public float blinkDuration = 0.3f;
     private float timer = 0.0f;
 
     public float dissolveSpeed = 4;
@@ -50,14 +50,9 @@ public class Blink : MonoBehaviour
 
     public void blink(Vector3 inputVector)
     {
-        print("Don't Blink");
         m_playerMovement.controller.enabled = false;
         m_playerMovement.m_abilityFlags &= ~AbilityAvailability.blink;
 
-        //foreach (Renderer renderer in blinkBodies)
-        //{
-        //    renderer.enabled = false;
-        //}
         StartCoroutine("Dissolve");
 
         Vector3 blinkDirection = inputVector;
@@ -77,13 +72,15 @@ public class Blink : MonoBehaviour
         }
 
         //spherecast starts from center of player, slightly behind them in the opposite direction of the inputVector
-        Vector3 p1 = transform.position + charCtrl.center - blinkDirection;
-        Physics.SphereCast(p1, charCtrl.height / 2, blinkDirection, out hit, distance, blinkThrough);
+        Vector3 p1 = transform.position + charCtrl.center - blinkDirection -Vector3.up * (charCtrl.height-charCtrl.radius);
+        Vector3 p2 = transform.position + charCtrl.center - blinkDirection + Vector3.up * (charCtrl.height - charCtrl.radius);
+        Physics.CapsuleCast(p1, p2, charCtrl.radius, blinkDirection, out hit, distance, blinkThrough);
+        //Physics.SphereCast(p1, charCtrl.height / 2, blinkDirection, out hit, distance, blinkThrough);
 
         m_playerMovement.m_state = movementState.blinking;
         SpawnBlinkVFX();
 
-        if (hit.distance == 0)
+        if (hit.distance == 0)//dangerous ?
         {
             //Raycast to check for blinkable colliders. 
             RaycastHit hit3;
@@ -113,7 +110,7 @@ public class Blink : MonoBehaviour
         m_playerMovement.MovementVector.x = inputVector.x;
         m_playerMovement.MovementVector.z = inputVector.z;
         m_playerMovement.MovementVector.y = 0;
-        m_playerMovement.MovementVector = m_playerMovement.MovementVector * mag;
+        m_playerMovement.MovementVector = inputVector.normalized * mag;
         
         //Blinking
         timer = 0.0f;
