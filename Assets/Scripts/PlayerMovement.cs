@@ -154,11 +154,11 @@ public class PlayerMovement : MonoBehaviour
         RaycastHit hit5;
        
 
-        if (Physics.Raycast(transform.position + new Vector3(0, 0.1f, 0), transform.TransformDirection(Vector3.down), out hit, 0.15f) ||
-            Physics.Raycast(transform.position + (transform.forward * 0.5f + transform.up * 0.1f), transform.TransformDirection(Vector3.down), out hit2, 0.3f) ||
-            Physics.Raycast(transform.position + (-transform.forward * 0.5f + transform.up * 0.1f), transform.TransformDirection(Vector3.down), out hit3, 0.3f) ||
-            Physics.Raycast(transform.position + (transform.right * 0.3f + transform.up * 0.1f), transform.TransformDirection(Vector3.down), out hit4, 0.3f) ||
-            Physics.Raycast(transform.position + (-transform.right * 0.3f + transform.up * 0.1f), transform.TransformDirection(Vector3.down), out hit5, 0.3f)
+        if (Physics.Raycast(transform.position + new Vector3(0, 0.4f, 0), transform.TransformDirection(Vector3.down), out hit, 0.6f) ||
+            Physics.Raycast(transform.position + (transform.forward * 0.5f + transform.up * 0.4f), transform.TransformDirection(Vector3.down), out hit2, 0.6f) ||
+            Physics.Raycast(transform.position + (-transform.forward * 0.5f + transform.up * 0.4f), transform.TransformDirection(Vector3.down), out hit3, 0.6f) ||
+            Physics.Raycast(transform.position + (transform.right * 0.3f + transform.up * 0.4f), transform.TransformDirection(Vector3.down), out hit4, 0.6f) ||
+            Physics.Raycast(transform.position + (-transform.right * 0.3f + transform.up * 0.4f), transform.TransformDirection(Vector3.down), out hit5, 0.6f)
            )
         {
             Debug.DrawRay(transform.position + new Vector3(0, 0.1f, 0), transform.TransformDirection(Vector3.down) * hit.distance, Color.yellow);
