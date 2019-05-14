@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3657142250524735781}
   - component: {fileID: 2257436581491859472}
   - component: {fileID: 6650343586196739167}
+  - component: {fileID: 2095157244001854748}
   m_Layer: 0
   m_Name: SM_Railing
   m_TagString: Untagged
@@ -49,7 +50,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 670224309865224971, guid: 4c2eb7d6f8ab1af4cb9372f1c485e8be, type: 3}
+  - {fileID: 2100000, guid: c3c32109bee07404bb5a9ad36e4647cb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -100,3 +101,16 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!65 &2095157244001854748
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 332033102363724598}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 8.809495, y: 0.43869126, z: 2.5563397}
+  m_Center: {x: -4.1407723, y: 0.050996512, z: 1.2016007}
