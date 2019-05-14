@@ -48,15 +48,15 @@ public class ClouetSoundManager : MonoBehaviour
     }
     public void BlinkSound()
     {
-        if(Blink != null)m_sourceGeneral.PlayOneShot(Blink);
+        if(Blink != null)m_sourceGeneral.PlayOneShot(Blink, BlinkVolume);
     }
     public void LandingSound()
     {
-        if (Landing != null) m_sourceGeneral.PlayOneShot(Landing);
+        if (Landing != null) m_sourceGeneral.PlayOneShot(Landing, LandingVolume);
     }
     public void StepSound()
     {
-        if (Step != null) m_sourceGeneral.PlayOneShot(Step);
+        if (Step != null) m_sourceGeneral.PlayOneShot(Step, StepVolume);
     }
     
 }
