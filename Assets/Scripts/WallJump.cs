@@ -106,7 +106,9 @@ public class WallJump : MonoBehaviour
         m_movementScript.MovementVector = Vector3.up * verticalWallJumpHeight + m_chosenHit.normal * verticalWallJumpLength;
         transform.forward = new Vector3(m_movementScript.MovementVector.x, 0.0f, m_movementScript.MovementVector.z).normalized;
         m_movementScript.m_state = movementState.jumping;
-        m_movementScript.m_animator.SetTrigger("jump");
+        m_movementScript.m_animator.SetTrigger("fall");
+        //temp
+        
     }
     private void wallRunRightBehavior()
     {
