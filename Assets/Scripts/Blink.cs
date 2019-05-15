@@ -44,6 +44,7 @@ public class Blink : MonoBehaviour
         }
         m_playerMovement = GetComponent<PlayerMovement>();
         charCtrl = GetComponentInParent<CharacterController>();
+        
     }
 
     // Update is called once per frame

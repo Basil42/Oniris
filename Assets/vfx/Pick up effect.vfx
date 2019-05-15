@@ -23,7 +23,9 @@ MonoBehaviour:
   m_Label: 
   m_Data: {fileID: 0}
   m_InputFlowSlot:
-  - link: []
+  - link:
+    - context: {fileID: 8926484042661614692}
+      slotIndex: 0
   - link: []
   m_OutputFlowSlot:
   - link:
@@ -241,9 +243,9 @@ MonoBehaviour:
   uiBounds:
     serializedVersion: 2
     x: -662
-    y: -190
+    y: -220
     width: 1746
-    height: 1997
+    height: 2028
 --- !u!114 &114350483966674976
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -269,6 +271,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614626}
   - {fileID: 8926484042661614645}
   - {fileID: 8926484042661614647}
+  - {fileID: 8926484042661614692}
   m_UIPosition: {x: 0, y: 0}
   m_UICollapsed: 1
   m_UISuperCollapsed: 0
@@ -287,8 +290,8 @@ MonoBehaviour:
     min: -Infinity
     max: Infinity
     descendantCount: 0
-  - name: attractive strenght
-    path: attractive strenght
+  - name: PullStrength
+    path: PullStrength
     tooltip: 
     sheetType: m_Float
     realType: Single
@@ -1712,10 +1715,10 @@ VisualEffectResource:
       m_Bool:
         m_Array: []
     m_ExposedExpressions:
-    - nameId: attractive strenght
-      index: 5
     - nameId: attractive target position
       index: 1
+    - nameId: PullStrength
+      index: 5
     m_Buffers:
     - type: 1
       size: 4440
@@ -1884,11 +1887,14 @@ VisualEffectResource:
         data: 00000000
     m_Events:
     - name: OnPlay
-      playSystems: 00000000
+      playSystems: 
       stopSystems: 
     - name: OnStop
       playSystems: 
       stopSystems: 00000000
+    - name: PickUp
+      playSystems: 00000000
+      stopSystems: 
     m_RuntimeVersion: 8
     m_RendererSettings:
       motionVectorGenerationMode: 0
@@ -4816,7 +4822,7 @@ MonoBehaviour:
   m_InputSlots: []
   m_OutputSlots:
   - {fileID: 8926484042661614646}
-  m_exposedName: attractive strenght
+  m_exposedName: PullStrength
   m_exposed: 1
   m_Order: 1
   m_Category: 
@@ -5475,3 +5481,31 @@ MonoBehaviour:
   m_OutputSlots: []
   m_Disabled: 0
   mode: 0
+--- !u!114 &8926484042661614692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2461f61b3c026d54db1951a4e17ab20e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Parent: {fileID: 114350483966674976}
+  m_Children: []
+  m_UIPosition: {x: 500, y: -403}
+  m_UICollapsed: 0
+  m_UISuperCollapsed: 0
+  m_InputSlots: []
+  m_OutputSlots: []
+  m_Label: 
+  m_Data: {fileID: 0}
+  m_InputFlowSlot:
+  - link: []
+  m_OutputFlowSlot:
+  - link:
+    - context: {fileID: 114023846229194376}
+      slotIndex: 0
+  eventName: PickUp
