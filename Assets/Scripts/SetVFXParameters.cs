@@ -11,6 +11,8 @@ public class SetVFXParameters : MonoBehaviour
     public bool following;
     public float destroyTime;
     //public float lifeTime; might want this? not sure yet
+    private float m_attractiveForce;
+    public float attractionDelay =0.3f;
 
     // Start is called before the first frame update
     void Start()
@@ -18,6 +20,13 @@ public class SetVFXParameters : MonoBehaviour
         effect = GetComponent<VisualEffect>();
         targetPosition = GameObject.FindGameObjectWithTag("Player");
         effect.Play();
+        if (following)
+        {
+            m_attractiveForce = effect.GetFloat("PullStrength");
+            effect.SetFloat("PullStrength", 0.0f);
+            Invoke("startAttraction", attractionDelay);
+        }
+        
     }
 
     // Update is called once per frame
@@ -32,7 +41,13 @@ public class SetVFXParameters : MonoBehaviour
     public void StopEffect()
     {
         effect.Stop();
+        Debug.Log("vfx stop");
         Invoke("destroyObj", destroyTime);
+    }
+
+    private void startAttraction()
+    {
+        effect.SetFloat("PullStrength", m_attractiveForce);
     }
 
     private void destroyObj()

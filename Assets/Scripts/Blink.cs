@@ -44,6 +44,7 @@ public class Blink : MonoBehaviour
         }
         m_playerMovement = GetComponent<PlayerMovement>();
         charCtrl = GetComponentInParent<CharacterController>();
+        
     }
 
     // Update is called once per frame
@@ -52,6 +53,8 @@ public class Blink : MonoBehaviour
     {
         m_playerMovement.controller.enabled = false;
         m_playerMovement.m_abilityFlags &= ~AbilityAvailability.blink;
+        //temp
+        GetComponent<ClouetSoundManager>().BlinkSound();
 
         StartCoroutine("Dissolve");
 
