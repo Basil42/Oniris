@@ -304,9 +304,10 @@ MonoBehaviour:
   controller: {fileID: 0}
   m_RunningSpeed: 0.2
   m_SteeringSpeed: 0.1
-  m_AirSteeringSpeed: 0.01
-  m_AirForwardSpeed: 0.05
-  m_gravity: 0.6
+  m_LateralAircontrolIntensity: 0.02
+  m_ForwardAirControlIntensity: 0.05
+  m_airControlSmoothness: 0.01
+  m_gravity: 0.3
   m_dropShadowFadeMultiplier: 0.1
   m_AirControlSpeedCap: 0.2
   m_inputvector: {x: 0, y: 0, z: 0}
