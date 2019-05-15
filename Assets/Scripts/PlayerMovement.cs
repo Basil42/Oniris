@@ -42,7 +42,7 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector] public CharacterController controller;
     public float m_RunningSpeed = 1.0f;//the walk animation runs if the input vector is small enough
     public float m_SteeringSpeed = 0.2f;
-    public float m_AirSteeringSpeed = 0.2f;
+    public float m_AirSteeringSpeed = 0.1f;
     public float m_AirForwardSpeed = 0.2f;
     public const float m_AirInertiaIntensity = 0.08f;
     public float m_AirMinSpeed = 0.01f; //Need a better name
@@ -212,9 +212,9 @@ public class PlayerMovement : MonoBehaviour
         if (m_abilityFlags.HasFlag(AbilityAvailability.dash))
         {
             
-            Vector3 airInput = Vector3.Project(inputVector, transform.forward) * m_AirForwardSpeed;
+            Vector3 airInput = Vector3.Project(inputVector, Vector3.ProjectOnPlane(MovementVector, Vector3.up)) * m_AirForwardSpeed;
 
-            airInput += Vector3.Project(inputVector, transform.right) * m_AirSteeringSpeed;
+            airInput += Vector3.Project(inputVector, Vector3.Cross(Vector3.ProjectOnPlane(MovementVector, Vector3.up),Vector3.up)) * m_AirSteeringSpeed;
 
             if (Vector3.Dot(MovementVector, transform.forward) > m_AirMinSpeed) //If the value is too high, manuevering doesnt happen
             {
