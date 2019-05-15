@@ -34,8 +34,10 @@ public class Jump : MonoBehaviour
         
         if (playerMovement.m_state == movementState.grounded || playerMovement.m_state == movementState.offLedge)
         {
-  
+
             //playerMovement.m_state = movementState.jumping;
+            playerMovement.m_state = movementState.jumping;
+            m_jumpTimer = 0;
             playerMovement.m_animator.SetTrigger("jump");
             
         }
@@ -59,8 +61,7 @@ public class Jump : MonoBehaviour
 
     public void LiftOff()
     {
-        playerMovement.m_state = movementState.jumping;
-        m_jumpTimer = 0;
+        
     }
 
     public void stopJumping()
