@@ -7,6 +7,9 @@ public class check : MonoBehaviour
     public checkContent m_content;
     [Tooltip("Should never ever be duplicated")]
     public int index =-1;
+    public AudioClip pickUpSound;
+    [Range(0.0f, 1.0f)]
+    public float m_pickUpVolume;
     //vfx and tutorial images(tied to content)
     private CheckManager m_manager;
     private VisualEffect m_passive;
@@ -54,6 +57,8 @@ public class check : MonoBehaviour
         m_passive.SetFloat("ExplosionForce", 10.0f);
         m_pickup.SendEvent("PickUp");
         Invoke("stopPickup", 1.0f);
+        GetComponent<AudioSource>().Stop();
+        GetComponent<AudioSource>().PlayOneShot(pickUpSound, m_pickUpVolume);
     }
 
     private void stopPickup()
