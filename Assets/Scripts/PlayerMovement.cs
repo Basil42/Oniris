@@ -170,7 +170,7 @@ public class PlayerMovement : MonoBehaviour
             if (m_state == movementState.falling)
             {
                 m_animator.SetTrigger("run");
-                MovementVector = transform.forward * MovementVector.magnitude;
+                MovementVector = transform.forward * Vector3.ProjectOnPlane(MovementVector,Vector3.up).magnitude;
             }
             m_state = movementState.grounded;
 
@@ -200,14 +200,18 @@ public class PlayerMovement : MonoBehaviour
             {
                 m_state = movementState.falling;
             }
-            
+
         }
-        if (m_state == movementState.falling)MovementVector += hit.normal * 0.1f;
+        else
+        {
+            if (m_state == movementState.falling) MovementVector += hit.normal * 0.1f;
+        }
+       
     }
 
     private void airControl(Vector3 inputVector)
     {
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(m_inputvector, Vector3.up), 20.0f);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(m_inputvector, Vector3.up), 10.0f);
         //If dash would not be useable, then do not use aircontrol
         if (m_abilityFlags.HasFlag(AbilityAvailability.dash))
         {
