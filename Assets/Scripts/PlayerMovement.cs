@@ -45,12 +45,11 @@ public class PlayerMovement : MonoBehaviour
     public float m_AirSteeringSpeed = 0.1f;
     public float m_AirForwardSpeed = 0.2f;
     public const float m_AirInertiaIntensity = 0.08f;
-    public float m_AirMinSpeed = 0.01f; //Need a better name
     public float m_gravity = 0.3f;
 
     private DecalProjectorComponent m_dropShadow;
     public float m_dropShadowFadeMultiplier = 0.1f;
-
+    public float m_AirControlSpeedCap;
     public Vector3 m_inputvector;
 
     public movementState m_state;
@@ -68,8 +67,7 @@ public class PlayerMovement : MonoBehaviour
     public bool StartWithDoubleJump;
     public bool StartWithWallJump;
     public bool StartWithDash;
-
-
+    
 
     private void Awake()
     {
@@ -212,20 +210,35 @@ public class PlayerMovement : MonoBehaviour
     private void airControl(Vector3 inputVector)
     {
         transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(m_inputvector, Vector3.up), 10.0f);
-        //If dash would not be useable, then do not use aircontrol
-        if (m_abilityFlags.HasFlag(AbilityAvailability.dash))
+        Vector3 HorizontalMovement = Vector3.ProjectOnPlane(MovementVector, Vector3.up);
+        //Add air input influence to the input vector,modified to dampen lateral influence 
+        Vector3 airInput = Vector3.Project(inputVector, Vector3.ProjectOnPlane(MovementVector, Vector3.up)) * m_AirForwardSpeed;
+        airInput += Vector3.Project(inputVector, Vector3.Cross(Vector3.ProjectOnPlane(MovementVector, Vector3.up),Vector3.up)) * m_AirSteeringSpeed;
+        airInput += HorizontalMovement;
+        
+        if(airInput.magnitude > m_AirControlSpeedCap)
         {
-            
-            Vector3 airInput = Vector3.Project(inputVector, Vector3.ProjectOnPlane(MovementVector, Vector3.up)) * m_AirForwardSpeed;
-
-            airInput += Vector3.Project(inputVector, Vector3.Cross(Vector3.ProjectOnPlane(MovementVector, Vector3.up),Vector3.up)) * m_AirSteeringSpeed;
-
-            if (Vector3.Dot(MovementVector, transform.forward) > m_AirMinSpeed) //If the value is too high, manuevering doesnt happen
-            {
-                MovementVector.z = Mathf.Lerp(MovementVector.z, airInput.z, m_AirInertiaIntensity);
-                MovementVector.x = Mathf.Lerp(MovementVector.x, airInput.x, m_AirInertiaIntensity);
-            }
+            airInput = Vector3.ClampMagnitude(airInput, HorizontalMovement.magnitude);
         }
+        MovementVector.x = airInput.x;
+        MovementVector.z = airInput.z;
+
+
+
+        //If dash would not be useable, then do not use aircontrol
+        //if (m_abilityFlags.HasFlag(AbilityAvailability.dash))
+        //{
+        //    
+        //    Vector3 airInput = Vector3.Project(inputVector, Vector3.ProjectOnPlane(MovementVector, Vector3.up)) * m_AirForwardSpeed;
+        //
+        //    airInput += Vector3.Project(inputVector, Vector3.Cross(Vector3.ProjectOnPlane(MovementVector, Vector3.up),Vector3.up)) * m_AirSteeringSpeed;
+        //
+        //    if (Vector3.Dot(MovementVector, transform.forward) > m_AirMinSpeed) //If the value is too high, manuevering doesnt happen
+        //    {
+        //        MovementVector.z = Mathf.Lerp(MovementVector.z, airInput.z, m_AirInertiaIntensity);
+        //        MovementVector.x = Mathf.Lerp(MovementVector.x, airInput.x, m_AirInertiaIntensity);
+        //    }
+        //}
     }
 
     private void fadeShadow()
