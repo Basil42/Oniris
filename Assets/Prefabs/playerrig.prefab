@@ -356,6 +356,14 @@ MonoBehaviour:
   verticalWallJumpLength: 0.2
   m_lateralWallJumpHeight: 0.5
   m_lateralWallJumpLength: 0.2
+--- !u!81 &5974695669057136890
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2090871518065757083}
+  m_Enabled: 1
 --- !u!1 &4101978195016742405
 GameObject:
   m_ObjectHideFlags: 0
@@ -1581,7 +1589,8 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 9192661350741325511, guid: 21b815f661bbaf245864623512ba320d, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 21b815f661bbaf245864623512ba320d, type: 3}
 --- !u!4 &569674888571076165 stripped
 Transform:
