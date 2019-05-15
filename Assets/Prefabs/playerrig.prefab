@@ -1549,7 +1549,7 @@ PrefabInstance:
     - target: {fileID: 9192661349997861221, guid: 21b815f661bbaf245864623512ba320d,
         type: 3}
       propertyPath: m_ChildCameras.Array.size
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 9192661350785449742, guid: 21b815f661bbaf245864623512ba320d,
         type: 3}
@@ -1781,11 +1781,21 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8968498230181428125, guid: 6bfaa4ce2c912894e8d8a5ed40f5b954,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9989e2e1377c2f94b8d4b7d9331e3a24, type: 2}
     - target: {fileID: -4919799448626864297, guid: 6bfaa4ce2c912894e8d8a5ed40f5b954,
         type: 3}
       propertyPath: m_CastShadows
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -4919799448626864297, guid: 6bfaa4ce2c912894e8d8a5ed40f5b954,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9989e2e1377c2f94b8d4b7d9331e3a24, type: 2}
     - target: {fileID: -5762252851693048427, guid: 6bfaa4ce2c912894e8d8a5ed40f5b954,
         type: 3}
       propertyPath: m_CastShadows
@@ -1796,11 +1806,21 @@ PrefabInstance:
       propertyPath: m_RootBone
       value: 
       objectReference: {fileID: 2794225109349295951}
+    - target: {fileID: -5762252851693048427, guid: 6bfaa4ce2c912894e8d8a5ed40f5b954,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9989e2e1377c2f94b8d4b7d9331e3a24, type: 2}
     - target: {fileID: 1127095130084480537, guid: 6bfaa4ce2c912894e8d8a5ed40f5b954,
         type: 3}
       propertyPath: m_CastShadows
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1127095130084480537, guid: 6bfaa4ce2c912894e8d8a5ed40f5b954,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9989e2e1377c2f94b8d4b7d9331e3a24, type: 2}
     - target: {fileID: -7279125792094389280, guid: 6bfaa4ce2c912894e8d8a5ed40f5b954,
         type: 3}
       propertyPath: m_CastShadows
@@ -1836,6 +1856,11 @@ PrefabInstance:
       propertyPath: m_AABB.m_Extent.z
       value: 0.16663897
       objectReference: {fileID: 0}
+    - target: {fileID: -7279125792094389280, guid: 6bfaa4ce2c912894e8d8a5ed40f5b954,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9989e2e1377c2f94b8d4b7d9331e3a24, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6bfaa4ce2c912894e8d8a5ed40f5b954, type: 3}
 --- !u!1 &2090871518065757083 stripped
