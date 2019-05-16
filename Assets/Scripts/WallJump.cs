@@ -28,14 +28,17 @@ public class WallJump : MonoBehaviour
     [SerializeField] private float m_VerticalRunTime = 1.5f;
     [SerializeField] private float verticalWallJumpHeight = 0.5f;
     [SerializeField] private float verticalWallJumpLength = 0.2f;
+    [SerializeField] private float m_verticalSurfaceSizeTreshold = 0.1f;
     [SerializeField] private float m_lateralWallJumpHeight = 0.5f;
     [SerializeField] private float m_lateralWallJumpLength = 0.2f;
+    [SerializeField] private float m_LateralSurfaceSizeTreshold = 0.1f;
     private float m_absoluteReach;
 
     //allocations for values that need regular updating (blackboard)
     private float m_shortestHitDistance;//used in choosing which ray determines the angle of collision with walls
     private RaycastHit m_hit;//allocated memory to read raycast hits
     private RaycastHit m_chosenHit;
+    private RaycastHit m_securityhit;
     private Direction m_direction;
     private Vector3 m_origin;  //origin of the rays that detect walls
     private float m_RunTimer;
@@ -157,11 +160,16 @@ public class WallJump : MonoBehaviour
     }
     private void CheckDirection(Ray ray, Direction direction)
     {
-        if (Physics.Raycast(ray, out m_hit, m_absoluteReach) && m_hit.distance < m_shortestHitDistance && Vector3.Dot(m_hit.normal, m_movementScript.MovementVector) < 0  && Mathf.Abs(m_hit.normal.y)< m_slopeTreshold)
+        if (Physics.Raycast(ray, out m_hit, m_absoluteReach) && 
+            m_hit.distance < m_shortestHitDistance && Vector3.Dot(m_hit.normal, m_movementScript.MovementVector) < 0  && 
+            Mathf.Abs(m_hit.normal.y)< m_slopeTreshold && 
+            Physics.Raycast(ray.origin + ((direction == Direction.Front)? Vector3.up * m_verticalSurfaceSizeTreshold: transform.forward * m_LateralSurfaceSizeTreshold),ray.direction, out m_securityhit, m_absoluteReach)&&
+            m_securityhit.normal == m_hit.normal)
         {
             m_shortestHitDistance = m_hit.distance;
             m_direction = direction;
             m_chosenHit = m_hit;
+            
         }
     }
     private void InitiateWallRun()
