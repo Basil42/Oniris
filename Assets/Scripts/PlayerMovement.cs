@@ -38,7 +38,7 @@ public enum AbilityAvailability
 
 public class PlayerMovement : MonoBehaviour 
 {
-    public const float inertiaIntensity = 0.08f;
+    public float SteeringPower = 0.15f;
     [HideInInspector] public CharacterController controller;
     public float m_RunningSpeed = 1.0f;//the walk animation runs if the input vector is small enough
     public float m_SteeringSpeed = 0.2f;
@@ -51,12 +51,12 @@ public class PlayerMovement : MonoBehaviour
     private DecalProjectorComponent m_dropShadow;
     public float m_dropShadowFadeMultiplier = 0.1f;
     public float m_AirControlSpeedCap;
-    public Vector3 m_inputvector;
-
-    public movementState m_state;
+    [HideInInspector] public Vector3 m_inputvector;
+    
+    [HideInInspector] public movementState m_state;
     [HideInInspector]public AbilityAvailability m_abilityFlags;
 
-    public Vector3 MovementVector;
+    [HideInInspector] public Vector3 MovementVector;
     [HideInInspector] public Animator m_animator;
 
 
@@ -134,8 +134,8 @@ public class PlayerMovement : MonoBehaviour
             //Lerp'n Slerp towards a target velocity
             //MovementVector.x = Mathf.Lerp(MovementVector.x, inputVector.x * m_RunningSpeed, inertiaIntensity);
             //MovementVector.z = Mathf.Lerp(MovementVector.z, inputVector.z * m_RunningSpeed, inertiaIntensity);
-            MovementVector = Vector3.Lerp(MovementVector, inputVector * m_RunningSpeed, inertiaIntensity);
-
+            MovementVector = Vector3.Slerp(MovementVector, inputVector * m_RunningSpeed, SteeringPower);
+        Debug.Log(MovementVector.magnitude);
             if (Vector3.Scale(MovementVector,new Vector3(1.0f,0.0f,1.0f)).magnitude > 0.05f) transform.rotation = Quaternion.Slerp(transform.rotation,Quaternion.LookRotation(new Vector3(MovementVector.x,0.0f,MovementVector.z), Vector3.up), m_SteeringSpeed);
 
         if (MovementVector.y < -1.0f)
