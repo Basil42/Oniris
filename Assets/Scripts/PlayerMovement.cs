@@ -117,7 +117,6 @@ public class PlayerMovement : MonoBehaviour
         if (controller.enabled) controller.Move(MovementVector);
     }
 
-    
     private void Abilityresets()
     {
         if (m_state == movementState.grounded)
@@ -131,13 +130,12 @@ public class PlayerMovement : MonoBehaviour
 
     public void Move(Vector3 inputVector)
     {
-            //Lerp'n Slerp towards a target velocity
-            //MovementVector.x = Mathf.Lerp(MovementVector.x, inputVector.x * m_RunningSpeed, inertiaIntensity);
-            //MovementVector.z = Mathf.Lerp(MovementVector.z, inputVector.z * m_RunningSpeed, inertiaIntensity);
-            MovementVector = Vector3.Slerp(MovementVector, inputVector * m_RunningSpeed, SteeringPower);
-        Debug.Log(MovementVector.magnitude);
-            if (Vector3.Scale(MovementVector,new Vector3(1.0f,0.0f,1.0f)).magnitude > 0.05f) transform.rotation = Quaternion.Slerp(transform.rotation,Quaternion.LookRotation(new Vector3(MovementVector.x,0.0f,MovementVector.z), Vector3.up), m_SteeringSpeed);
+            //initial velocity case
 
+            MovementVector = (Vector3.Dot(MovementVector.normalized, inputVector) < -0.5f) ? Vector3.Lerp(MovementVector, inputVector * m_RunningSpeed, SteeringPower*2.0f) : Vector3.Slerp(MovementVector, inputVector * m_RunningSpeed, SteeringPower);
+      
+            if (Vector3.Scale(MovementVector,new Vector3(1.0f,0.0f,1.0f)).magnitude > 0.05f) transform.rotation = Quaternion.RotateTowards(transform.rotation,Quaternion.LookRotation(new Vector3(MovementVector.x,0.0f,MovementVector.z), Vector3.up), m_SteeringSpeed);
+            
         if (MovementVector.y < -1.0f)
         {
             
