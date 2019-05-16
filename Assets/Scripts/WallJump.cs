@@ -91,7 +91,7 @@ public class WallJump : MonoBehaviour
     private void wallRunFrontBehavior()
     {
         m_RunTimer -= Time.fixedDeltaTime;
-        if (!Physics.Raycast(m_origin, transform.forward, out m_hit, m_absoluteReach) || m_RunTimer < 0)//to do timer
+        if (!Physics.Raycast(m_origin, transform.forward, out m_hit, m_absoluteReach) || m_RunTimer < 0 || m_hit.normal != m_chosenHit.normal)//to do timer
         {
            
             
@@ -116,8 +116,9 @@ public class WallJump : MonoBehaviour
     private void wallRunRightBehavior()
     {
         m_RunTimer -= Time.fixedDeltaTime;
-        if (!Physics.Raycast(m_origin, transform.right, out m_hit, m_absoluteReach) || m_RunTimer < 0)//to do : timer
+        if (!Physics.Raycast(m_origin, transform.right, out m_hit, m_absoluteReach) || m_RunTimer < 0 || m_hit.normal != m_chosenHit.normal)//to do : timer
         {
+            m_movementScript.MovementVector = Vector3.Project(m_movementScript.MovementVector, transform.forward);
             m_movementScript.MovementVector += m_chosenHit.normal * bounceVelocity;
             m_movementScript.m_state = movementState.falling;
             m_movementScript.m_animator.SetTrigger("fall");
@@ -129,8 +130,9 @@ public class WallJump : MonoBehaviour
     private void wallRunLeftBehavior()
     {
         m_RunTimer -= Time.fixedDeltaTime;
-        if (!Physics.Raycast(m_origin, -transform.right, out m_hit,m_absoluteReach) || m_RunTimer < 0)//timer
+        if (!Physics.Raycast(m_origin, -transform.right, out m_hit,m_absoluteReach) || m_RunTimer < 0 || m_hit.normal != m_chosenHit.normal)//timer
         {
+            m_movementScript.MovementVector = Vector3.Project(m_movementScript.MovementVector, transform.forward);
             m_movementScript.MovementVector += m_chosenHit.normal * bounceVelocity;//bounce
 
             m_movementScript.m_state = movementState.falling;//might implement a custom walljump state and behavior later
