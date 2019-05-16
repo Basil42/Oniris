@@ -42,15 +42,15 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector] public CharacterController controller;
     public float m_RunningSpeed = 1.0f;//the walk animation runs if the input vector is small enough
     public float m_SteeringSpeed = 0.2f;
-    public float m_AirSteeringSpeed = 0.2f;
-    public float m_AirForwardSpeed = 0.2f;
-    public const float m_AirInertiaIntensity = 0.08f;
-    public float m_AirMinSpeed = 0.01f; //Need a better name
+
+    public float m_LateralAircontrolIntensity = 0.1f;
+    public float m_ForwardAirControlIntensity = 0.05f;
+    public float m_airControlSmoothness = 0.01f;
     public float m_gravity = 0.3f;
 
     private DecalProjectorComponent m_dropShadow;
     public float m_dropShadowFadeMultiplier = 0.1f;
-
+    public float m_AirControlSpeedCap;
     public Vector3 m_inputvector;
 
     public movementState m_state;
@@ -69,7 +69,8 @@ public class PlayerMovement : MonoBehaviour
     public bool StartWithWallJump;
     public bool StartWithDash;
 
-
+    private Vector3 m_LastAirMovement;
+    
 
     private void Awake()
     {
@@ -97,11 +98,11 @@ public class PlayerMovement : MonoBehaviour
                 airControl(m_inputvector);
                 break;
             case movementState.grounded:
-                //MovementVector.y = 0.2f;
+                //MovementVector.y = 0.1f;
                 Move(m_inputvector);
                 break;
             case movementState.jumping:
-                airControl(m_inputvector);
+                //airControl(m_inputvector);
                 break;
             case movementState.doubleJumping:
                 airControl(m_inputvector);
@@ -167,7 +168,12 @@ public class PlayerMovement : MonoBehaviour
             Debug.DrawRay(transform.position + (-transform.forward * 0.5f + transform.up * 0.1f), transform.TransformDirection(Vector3.down) * hit.distance, Color.green);
             Debug.DrawRay(transform.position + (transform.right * 0.3f + transform.up * 0.1f), transform.TransformDirection(Vector3.down) * hit.distance, Color.blue);
             Debug.DrawRay(transform.position + (-transform.right * 0.3f + transform.up * 0.1f), transform.TransformDirection(Vector3.down) * hit.distance, Color.black);
-            if(m_state == movementState.falling)m_animator.SetTrigger("run");
+            if (m_state == movementState.falling)
+            {
+                m_animator.SetTrigger("run");
+                MovementVector = Vector3.Project(transform.forward * Vector3.ProjectOnPlane(MovementVector,Vector3.up).magnitude,m_inputvector) + Vector3.Project(MovementVector, Vector3.up);
+                m_LastAirMovement = Vector3.zero;
+            }
             m_state = movementState.grounded;
 
 
@@ -196,28 +202,53 @@ public class PlayerMovement : MonoBehaviour
             {
                 m_state = movementState.falling;
             }
-            
+
         }
-        if (m_state == movementState.falling)MovementVector += hit.normal * 0.1f;
+        else
+        {
+            
+            if (m_state == movementState.falling) MovementVector += hit.normal * 0.1f;
+        }
+       
     }
 
     private void airControl(Vector3 inputVector)
     {
         
-        //If dash would not be useable, then do not use aircontrol
-        if (m_abilityFlags.HasFlag(AbilityAvailability.dash))
+        
+        if (m_inputvector != Vector3.zero)transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(m_inputvector, Vector3.up), 10.0f);
+        Vector3 HorizontalMovement = Vector3.ProjectOnPlane(MovementVector, Vector3.up);
+        
+        Vector3 airInput = (HorizontalMovement == Vector3.zero) ? 
+            (Vector3.Project(inputVector, transform.forward) * m_ForwardAirControlIntensity  + Vector3.Project(inputVector, transform.right) * m_LateralAircontrolIntensity) : 
+            (Vector3.Project(inputVector, HorizontalMovement.normalized) * m_ForwardAirControlIntensity + Vector3.Project(inputVector, Vector3.Cross(HorizontalMovement,Vector3.up)) * m_LateralAircontrolIntensity);
+
+        Vector3 newMove = airInput + HorizontalMovement;
+
+        if (newMove.magnitude > m_AirControlSpeedCap)
         {
-            
-            Vector3 airInput = Vector3.Project(inputVector, transform.forward) * m_AirForwardSpeed;
-
-            airInput += Vector3.Project(inputVector, transform.right) * m_AirSteeringSpeed;
-
-            if (Vector3.Dot(MovementVector, transform.forward) > m_AirMinSpeed) //If the value is too high, manuevering doesnt happen
-            {
-                MovementVector.z = Mathf.Lerp(MovementVector.z, airInput.z, m_AirInertiaIntensity);
-                MovementVector.x = Mathf.Lerp(MovementVector.x, airInput.x, m_AirInertiaIntensity);
-            }
+            newMove = Vector3.ClampMagnitude(newMove, HorizontalMovement.magnitude);
         }
+        newMove.y = MovementVector.y;
+        MovementVector = Vector3.Lerp(MovementVector, newMove, 0.2f);
+        
+        
+
+
+        //If dash would not be useable, then do not use aircontrol
+        //if (m_abilityFlags.HasFlag(AbilityAvailability.dash))
+        //{
+        //    
+        //    Vector3 airInput = Vector3.Project(inputVector, Vector3.ProjectOnPlane(MovementVector, Vector3.up)) * m_AirForwardSpeed;
+        //
+        //    airInput += Vector3.Project(inputVector, Vector3.Cross(Vector3.ProjectOnPlane(MovementVector, Vector3.up),Vector3.up)) * m_AirSteeringSpeed;
+        //
+        //    if (Vector3.Dot(MovementVector, transform.forward) > m_AirMinSpeed) //If the value is too high, manuevering doesnt happen
+        //    {
+        //        MovementVector.z = Mathf.Lerp(MovementVector.z, airInput.z, m_AirInertiaIntensity);
+        //        MovementVector.x = Mathf.Lerp(MovementVector.x, airInput.x, m_AirInertiaIntensity);
+        //    }
+        //}
     }
 
     private void fadeShadow()

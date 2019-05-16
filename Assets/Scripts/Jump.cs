@@ -102,6 +102,8 @@ public class Jump : MonoBehaviour
             playerMovement.m_state = movementState.falling;
             playerMovement.m_animator.SetTrigger("fall");
         }
+        
+            
     }
     private void DoubleJumpBehavior()
     {

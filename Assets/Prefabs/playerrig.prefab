@@ -147,6 +147,14 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!81 &5974695669057136890
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2090871518065757083}
+  m_Enabled: 1
 --- !u!82 &7415485598339443272
 AudioSource:
   m_ObjectHideFlags: 0
@@ -279,8 +287,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_jumpingSpeed: 0.2
   m_doubleJumpingSpeed: 0.2
-  m_jumpLength: 0.5
-  m_doubleJumpLength: 0.5
+  m_jumpLength: 0.2
+  m_doubleJumpLength: 0.2
 --- !u!114 &6194457499066563399
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -296,11 +304,12 @@ MonoBehaviour:
   controller: {fileID: 0}
   m_RunningSpeed: 0.2
   m_SteeringSpeed: 0.1
-  m_AirSteeringSpeed: 0.2
-  m_AirForwardSpeed: 0.2
-  m_AirMinSpeed: 0.01
-  m_gravity: 0.6
+  m_LateralAircontrolIntensity: 0.02
+  m_ForwardAirControlIntensity: 0.05
+  m_airControlSmoothness: 0.01
+  m_gravity: 0.3
   m_dropShadowFadeMultiplier: 0.1
+  m_AirControlSpeedCap: 0.2
   m_inputvector: {x: 0, y: 0, z: 0}
   m_state: 0
   m_abilityFlags: 0
@@ -308,7 +317,7 @@ MonoBehaviour:
   m_animator: {fileID: 0}
   StartWithBlink: 1
   StartWithDoubleJump: 1
-  StartWithWallJump: 1
+  StartWithWallJump: 0
   StartWithDash: 1
 --- !u!114 &7760997314061488136
 MonoBehaviour:
@@ -322,14 +331,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd92a07a5af279e44babec15206d69c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Jump: {fileID: 0}
+  Jump: {fileID: 8300000, guid: 79b0c3c288c05e947942dce4124e297c, type: 3}
   JumpVolume: 1
-  Blink: {fileID: 0}
-  BlinkVolume: 0
-  Landing: {fileID: 0}
-  LandingVolume: 0
-  Step: {fileID: 0}
-  StepVolume: 0
+  Blink: {fileID: 8300000, guid: b643306998e4c9c43a8358310e65f4e2, type: 3}
+  BlinkVolume: 1
+  Landing: {fileID: 8300000, guid: 1ac2fb04917f8524794640afd3a85bab, type: 3}
+  LandingVolume: 1
+  Step: {fileID: 8300000, guid: ddf82bda0efe32f498b45123cb768167, type: 3}
+  StepVolume: 1
   Speed: {fileID: 0}
   SpeedVolume: 0
 --- !u!114 &7901303441346135195
@@ -1581,7 +1590,8 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 9192661350741325511, guid: 21b815f661bbaf245864623512ba320d, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 21b815f661bbaf245864623512ba320d, type: 3}
 --- !u!4 &569674888571076165 stripped
 Transform:
