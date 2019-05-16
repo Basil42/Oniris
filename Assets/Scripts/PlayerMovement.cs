@@ -30,7 +30,8 @@ public enum AbilityAvailability
     hasBlink = 16,
     hasDoublejump = 32,
     hasDash = 64,
-    hasWallJump = 128
+    hasWallJump = 128,
+    WallJumpOn = 256
 }
 
 [RequireComponent(typeof (CharacterController))]

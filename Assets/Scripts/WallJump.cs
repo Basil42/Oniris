@@ -91,7 +91,7 @@ public class WallJump : MonoBehaviour
     private void wallRunFrontBehavior()
     {
         m_RunTimer -= Time.fixedDeltaTime;
-        if (!Physics.Raycast(m_origin, transform.forward, out m_hit, m_absoluteReach) || m_RunTimer < 0 || m_hit.normal != m_chosenHit.normal)//to do timer
+        if (!Physics.Raycast(m_origin, transform.forward, out m_hit, m_absoluteReach) || m_RunTimer < 0 || m_hit.normal != m_chosenHit.normal || !m_movementScript.m_abilityFlags.HasFlag(AbilityAvailability.WallJumpOn))//to do timer
         {
            
             
@@ -116,7 +116,7 @@ public class WallJump : MonoBehaviour
     private void wallRunRightBehavior()
     {
         m_RunTimer -= Time.fixedDeltaTime;
-        if (!Physics.Raycast(m_origin, transform.right, out m_hit, m_absoluteReach) || m_RunTimer < 0 || m_hit.normal != m_chosenHit.normal)//to do : timer
+        if (!Physics.Raycast(m_origin, transform.right, out m_hit, m_absoluteReach) || m_RunTimer < 0 || m_hit.normal != m_chosenHit.normal || !m_movementScript.m_abilityFlags.HasFlag(AbilityAvailability.WallJumpOn))//to do : timer
         {
             m_movementScript.MovementVector = Vector3.Project(m_movementScript.MovementVector, transform.forward);
             m_movementScript.MovementVector += m_chosenHit.normal * bounceVelocity;
@@ -130,7 +130,7 @@ public class WallJump : MonoBehaviour
     private void wallRunLeftBehavior()
     {
         m_RunTimer -= Time.fixedDeltaTime;
-        if (!Physics.Raycast(m_origin, -transform.right, out m_hit,m_absoluteReach) || m_RunTimer < 0 || m_hit.normal != m_chosenHit.normal)//timer
+        if (!Physics.Raycast(m_origin, -transform.right, out m_hit,m_absoluteReach) || m_RunTimer < 0 || m_hit.normal != m_chosenHit.normal || !m_movementScript.m_abilityFlags.HasFlag(AbilityAvailability.WallJumpOn))//timer
         {
             m_movementScript.MovementVector = Vector3.Project(m_movementScript.MovementVector, transform.forward);
             m_movementScript.MovementVector += m_chosenHit.normal * bounceVelocity;//bounce
@@ -151,6 +151,7 @@ public class WallJump : MonoBehaviour
     }
     private bool detectWalls()
     {
+        if (!m_movementScript.m_abilityFlags.HasFlag(AbilityAvailability.WallJumpOn)) return false;
         m_shortestHitDistance = m_absoluteReach + 1.0f;//initialized here so any hit will be shorter
         m_direction = Direction.None;
         
