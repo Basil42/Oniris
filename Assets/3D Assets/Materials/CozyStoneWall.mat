@@ -7,10 +7,10 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: WoodFloorMat
-  m_Shader: {fileID: -6465566751694194690, guid: 843ea58d1697b0b47a841255995a08f3,
+  m_Name: CozyStoneWall
+  m_Shader: {fileID: -6465566751694194690, guid: a78dcd966d8776c4288aef7ccdb3535a,
     type: 3}
-  m_ShaderKeywords: 
+  m_ShaderKeywords: _MASKMAP _NORMALMAP _NORMALMAP_TANGENT_SPACE
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -18,6 +18,10 @@ Material:
   stringTagMap:
     MotionVector: User
   disabledShaderPasses:
+  - DistortionVectors
+  - TransparentDepthPrepass
+  - TransparentDepthPostpass
+  - TransparentBackface
   - MOTIONVECTORS
   m_SavedProperties:
     serializedVersion: 3
@@ -27,7 +31,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseColorMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: f22b60a6c1940a74ab7327c5eb4ad00e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BentNormalMap:
@@ -67,31 +71,31 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: f22b60a6c1940a74ab7327c5eb4ad00e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MaskMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: d6bd1ac6883114247a67b8b971583640, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 687fae7caff81c34e9a9afbc69b23514, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMapOS:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _SampleTexture2D_2D24FE87_Texture:
-        m_Texture: {fileID: 2800000, guid: 6ddc18b4146062d4fa4e5c60e258ce0e, type: 3}
+    - _SampleTexture2D_11A4C8E7_Texture:
+        m_Texture: {fileID: 2800000, guid: d6bd1ac6883114247a67b8b971583640, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _SampleTexture2D_B9FC42FB_Texture:
-        m_Texture: {fileID: 2800000, guid: 1857dcd167890d64bb8a8096dfb6b656, type: 3}
+    - _SampleTexture2D_5DA76C3C_Texture:
+        m_Texture: {fileID: 2800000, guid: f22b60a6c1940a74ab7327c5eb4ad00e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _SampleTexture2D_C77070DB_Texture:
-        m_Texture: {fileID: 2800000, guid: 8e3e1af64dec89944a9dcf81afac7173, type: 3}
+    - _SampleTexture2D_7D5DBDA4_Texture:
+        m_Texture: {fileID: 2800000, guid: 687fae7caff81c34e9a9afbc69b23514, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SpecularColorMap:
@@ -147,16 +151,16 @@ Material:
     - _DisplacementMode: 0
     - _DistortionBlendMode: 0
     - _DistortionBlurBlendMode: 0
-    - _DistortionBlurDstBlend: 0
+    - _DistortionBlurDstBlend: 1
     - _DistortionBlurRemapMax: 1
     - _DistortionBlurRemapMin: 0
     - _DistortionBlurScale: 1
-    - _DistortionBlurSrcBlend: 0
+    - _DistortionBlurSrcBlend: 1
     - _DistortionDepthTest: 1
-    - _DistortionDstBlend: 0
+    - _DistortionDstBlend: 1
     - _DistortionEnable: 0
     - _DistortionScale: 1
-    - _DistortionSrcBlend: 0
+    - _DistortionSrcBlend: 1
     - _DistortionVectorBias: -1
     - _DistortionVectorScale: 2
     - _DoubleSidedEnable: 0
@@ -216,10 +220,10 @@ Material:
     - _StencilRefGBuffer: 2
     - _StencilRefMV: 128
     - _StencilWriteMask: 3
-    - _StencilWriteMaskDepth: 32
+    - _StencilWriteMaskDepth: 48
     - _StencilWriteMaskDistortionVec: 64
-    - _StencilWriteMaskGBuffer: 3
-    - _StencilWriteMaskMV: 128
+    - _StencilWriteMaskGBuffer: 51
+    - _StencilWriteMaskMV: 176
     - _Stiffness: 1
     - _SubsurfaceMask: 1
     - _SupportDecals: 1
@@ -239,12 +243,12 @@ Material:
     - _UVEmissive: 0
     - _UseEmissiveIntensity: 0
     - _UseShadowThreshold: 0
-    - _ZTestDepthEqualForOpaque: 4
+    - _ZTestDepthEqualForOpaque: 3
     - _ZTestGBuffer: 4
-    - _ZTestModeDistortion: 8
+    - _ZTestModeDistortion: 4
     - _ZWrite: 1
     m_Colors:
-    - Vector2_97E90EED: {r: 32.9, g: 19.93, b: 0, a: 0}
+    - Vector2_8507001: {r: 2.5, g: 2, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColorMap_MipInfo: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
