@@ -301,13 +301,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2871583b5c0c49644b8ef8cd887a2d58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SteeringPower: 0.15
   controller: {fileID: 0}
   m_RunningSpeed: 0.2
-  m_SteeringSpeed: 0.1
+  m_SteeringSpeed: 5
   m_LateralAircontrolIntensity: 0.02
   m_ForwardAirControlIntensity: 0.05
   m_airControlSmoothness: 0.01
-  m_gravity: 0.3
+  m_gravity: 0.4
   m_dropShadowFadeMultiplier: 0.1
   m_AirControlSpeedCap: 0.2
   m_inputvector: {x: 0, y: 0, z: 0}
@@ -1606,11 +1607,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6970803715795483203}
     m_Modifications:
-    - target: {fileID: 4193287116643665415, guid: 5e80bbec7757a4c4dae91fd33dc2af7f,
-        type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 41cc3bb841259324e950146b07946039, type: 2}
     - target: {fileID: 1361890680185002504, guid: 5e80bbec7757a4c4dae91fd33dc2af7f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1666,6 +1662,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4193287116643665415, guid: 5e80bbec7757a4c4dae91fd33dc2af7f,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 41cc3bb841259324e950146b07946039, type: 2}
     - target: {fileID: 7310634085743260392, guid: 5e80bbec7757a4c4dae91fd33dc2af7f,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
