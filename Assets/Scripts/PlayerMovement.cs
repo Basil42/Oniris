@@ -53,6 +53,7 @@ public class PlayerMovement : MonoBehaviour
     public float m_dropShadowFadeMultiplier = 0.1f;
     public float m_AirControlSpeedCap;
     [HideInInspector] public Vector3 m_inputvector;
+    [HideInInspector] public Vector3 m_externalMoveInfluence;
     
     [HideInInspector] public movementState m_state;
     [HideInInspector]public AbilityAvailability m_abilityFlags;
@@ -115,7 +116,9 @@ public class PlayerMovement : MonoBehaviour
         }
         Abilityresets();
         fadeShadow();
-        if (controller.enabled) controller.Move(MovementVector);
+        
+        if (controller.enabled) controller.Move(MovementVector + m_externalMoveInfluence);
+        m_externalMoveInfluence = Vector3.zero;
     }
 
     private void Abilityresets()
@@ -231,23 +234,7 @@ public class PlayerMovement : MonoBehaviour
         newMove.y = MovementVector.y;
         MovementVector = Vector3.Lerp(MovementVector, newMove, 0.2f);
         
-        
-
-
-        //If dash would not be useable, then do not use aircontrol
-        //if (m_abilityFlags.HasFlag(AbilityAvailability.dash))
-        //{
-        //    
-        //    Vector3 airInput = Vector3.Project(inputVector, Vector3.ProjectOnPlane(MovementVector, Vector3.up)) * m_AirForwardSpeed;
-        //
-        //    airInput += Vector3.Project(inputVector, Vector3.Cross(Vector3.ProjectOnPlane(MovementVector, Vector3.up),Vector3.up)) * m_AirSteeringSpeed;
-        //
-        //    if (Vector3.Dot(MovementVector, transform.forward) > m_AirMinSpeed) //If the value is too high, manuevering doesnt happen
-        //    {
-        //        MovementVector.z = Mathf.Lerp(MovementVector.z, airInput.z, m_AirInertiaIntensity);
-        //        MovementVector.x = Mathf.Lerp(MovementVector.x, airInput.x, m_AirInertiaIntensity);
-        //    }
-        //}
+      
     }
 
     private void fadeShadow()
@@ -261,5 +248,6 @@ public class PlayerMovement : MonoBehaviour
     {
         MovementVector.y -= m_gravity * Time.fixedDeltaTime;
     }
+
     
 }
