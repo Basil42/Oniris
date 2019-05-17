@@ -14,8 +14,10 @@ public class MovingPlatform : MonoBehaviour
 
     public float loopTime;
     private float timer;
+    [HideInInspector]public Vector3 deltaPosition;
 
     private GameObject player;
+   
 
     // Start is called before the first frame update
     void Start()
@@ -23,6 +25,7 @@ public class MovingPlatform : MonoBehaviour
         rb = gameObject.GetComponent<Rigidbody>();
         targetPosition = new Vector3(directionX, directionY, directionZ);
         player = GameObject.FindGameObjectWithTag("Player").transform.parent.gameObject;
+        tag = "MovingSurface";
     }
 
     private void FixedUpdate()
@@ -33,23 +36,21 @@ public class MovingPlatform : MonoBehaviour
             targetPosition *= -1;
             timer = 0;
         }
-        rb.MovePosition(transform.position + targetPosition * speed * Time.fixedDeltaTime);
+        deltaPosition = targetPosition * speed * Time.fixedDeltaTime;
+        rb.MovePosition(transform.position + deltaPosition);
+
     }
 
     private void OnTriggerStay(Collider other)
     {
         if(other.gameObject.tag == "Player")
         {
-            player.transform.SetParent(gameObject.transform, true);
-            player.transform.position = player.transform.localPosition;
+             other.gameObject.GetComponent<PlayerMovement>().m_externalMoveInfluence +=  deltaPosition;
+            
         }
     }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.tag == "Player")
-        {
-            player.transform.parent = null;
-        }
-    }
+   
+
+    
 }
