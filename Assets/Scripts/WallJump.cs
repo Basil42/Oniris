@@ -28,18 +28,22 @@ public class WallJump : MonoBehaviour
     [SerializeField] private float m_VerticalRunTime = 1.5f;
     [SerializeField] private float verticalWallJumpHeight = 0.5f;
     [SerializeField] private float verticalWallJumpLength = 0.2f;
+    [SerializeField] private float m_verticalSurfaceSizeTreshold = 0.1f;
     [SerializeField] private float m_lateralWallJumpHeight = 0.5f;
     [SerializeField] private float m_lateralWallJumpLength = 0.2f;
+    [SerializeField] private float m_LateralSurfaceSizeTreshold = 0.1f;
     private float m_absoluteReach;
 
     //allocations for values that need regular updating (blackboard)
     private float m_shortestHitDistance;//used in choosing which ray determines the angle of collision with walls
     private RaycastHit m_hit;//allocated memory to read raycast hits
     private RaycastHit m_chosenHit;
+    private RaycastHit m_securityhit;
     private Direction m_direction;
     private Vector3 m_origin;  //origin of the rays that detect walls
     private float m_RunTimer;
-    
+    [SerializeField]private float m_LateralJumpAngle = 0.5f;
+
     enum Direction
     {
         None,
@@ -88,7 +92,7 @@ public class WallJump : MonoBehaviour
     private void wallRunFrontBehavior()
     {
         m_RunTimer -= Time.fixedDeltaTime;
-        if (!Physics.Raycast(m_origin, transform.forward, out m_hit, m_absoluteReach) || m_RunTimer < 0)//to do timer
+        if (!Physics.Raycast(m_origin, transform.forward, out m_hit, m_absoluteReach) || m_RunTimer < 0 || m_hit.normal != m_chosenHit.normal || !m_movementScript.m_abilityFlags.HasFlag(AbilityAvailability.WallJumpOn))//to do timer
         {
            
             
@@ -105,16 +109,17 @@ public class WallJump : MonoBehaviour
         //animation stuff 
         m_movementScript.MovementVector = Vector3.up * verticalWallJumpHeight + m_chosenHit.normal * verticalWallJumpLength;
         transform.forward = new Vector3(m_movementScript.MovementVector.x, 0.0f, m_movementScript.MovementVector.z).normalized;
-        m_movementScript.m_state = movementState.jumping;
-        m_movementScript.m_animator.SetTrigger("fall");
-        //temp
-        
+        m_movementScript.m_state = movementState.falling;
+        m_movementScript.m_animator.SetTrigger("jump");
+    
+
     }
     private void wallRunRightBehavior()
     {
         m_RunTimer -= Time.fixedDeltaTime;
-        if (!Physics.Raycast(m_origin, transform.right, out m_hit, m_absoluteReach) || m_RunTimer < 0)//to do : timer
+        if (!Physics.Raycast(m_origin, transform.right, out m_hit, m_absoluteReach) || m_RunTimer < 0 || m_hit.normal != m_chosenHit.normal || !m_movementScript.m_abilityFlags.HasFlag(AbilityAvailability.WallJumpOn))//to do : timer
         {
+            m_movementScript.MovementVector = Vector3.Project(m_movementScript.MovementVector, transform.forward);
             m_movementScript.MovementVector += m_chosenHit.normal * bounceVelocity;
             m_movementScript.m_state = movementState.falling;
             m_movementScript.m_animator.SetTrigger("fall");
@@ -126,8 +131,9 @@ public class WallJump : MonoBehaviour
     private void wallRunLeftBehavior()
     {
         m_RunTimer -= Time.fixedDeltaTime;
-        if (!Physics.Raycast(m_origin, -transform.right, out m_hit,m_absoluteReach) || m_RunTimer < 0)//timer
+        if (!Physics.Raycast(m_origin, -transform.right, out m_hit,m_absoluteReach) || m_RunTimer < 0 || m_hit.normal != m_chosenHit.normal || !m_movementScript.m_abilityFlags.HasFlag(AbilityAvailability.WallJumpOn))//timer
         {
+            m_movementScript.MovementVector = Vector3.Project(m_movementScript.MovementVector, transform.forward);
             m_movementScript.MovementVector += m_chosenHit.normal * bounceVelocity;//bounce
 
             m_movementScript.m_state = movementState.falling;//might implement a custom walljump state and behavior later
@@ -139,13 +145,15 @@ public class WallJump : MonoBehaviour
     public void WallJumpLateral()
     {
        
-        m_movementScript.MovementVector = Vector3.up * m_lateralWallJumpHeight + m_chosenHit.normal * m_lateralWallJumpLength;
+        m_movementScript.MovementVector = Vector3.up * m_lateralWallJumpHeight + Vector3.Slerp(transform.forward,m_chosenHit.normal, m_LateralJumpAngle) * m_lateralWallJumpLength;
         transform.forward = new Vector3(m_movementScript.MovementVector.x, 0.0f, m_movementScript.MovementVector.z).normalized;
-        m_movementScript.m_state = movementState.jumping;
+        m_movementScript.m_state = movementState.falling;
         m_movementScript.m_animator.SetTrigger("jump");
+    
     }
     private bool detectWalls()
     {
+        if (!m_movementScript.m_abilityFlags.HasFlag(AbilityAvailability.WallJumpOn)) return false;
         m_shortestHitDistance = m_absoluteReach + 1.0f;//initialized here so any hit will be shorter
         m_direction = Direction.None;
         
@@ -157,11 +165,16 @@ public class WallJump : MonoBehaviour
     }
     private void CheckDirection(Ray ray, Direction direction)
     {
-        if (Physics.Raycast(ray, out m_hit, m_absoluteReach) && m_hit.distance < m_shortestHitDistance && Vector3.Dot(m_hit.normal, m_movementScript.MovementVector) < 0  && Mathf.Abs(m_hit.normal.y)< m_slopeTreshold)
+        if (Physics.Raycast(ray, out m_hit, m_absoluteReach) && 
+            m_hit.distance < m_shortestHitDistance && Vector3.Dot(m_hit.normal, m_movementScript.MovementVector) < 0  && 
+            Mathf.Abs(m_hit.normal.y)< m_slopeTreshold && 
+            Physics.Raycast(ray.origin + ((direction == Direction.Front)? Vector3.up * m_verticalSurfaceSizeTreshold: transform.forward * m_LateralSurfaceSizeTreshold),ray.direction, out m_securityhit, m_absoluteReach)&&
+            m_securityhit.normal == m_hit.normal)
         {
             m_shortestHitDistance = m_hit.distance;
             m_direction = direction;
             m_chosenHit = m_hit;
+            
         }
     }
     private void InitiateWallRun()

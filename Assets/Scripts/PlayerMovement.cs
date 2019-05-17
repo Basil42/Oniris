@@ -30,7 +30,8 @@ public enum AbilityAvailability
     hasBlink = 16,
     hasDoublejump = 32,
     hasDash = 64,
-    hasWallJump = 128
+    hasWallJump = 128,
+    WallJumpOn = 256
 }
 
 [RequireComponent(typeof (CharacterController))]
@@ -56,7 +57,7 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector] public movementState m_state;
     [HideInInspector]public AbilityAvailability m_abilityFlags;
 
-    [HideInInspector] public Vector3 MovementVector;
+    public Vector3 MovementVector;
     [HideInInspector] public Animator m_animator;
 
 
@@ -69,7 +70,7 @@ public class PlayerMovement : MonoBehaviour
     public bool StartWithWallJump;
     public bool StartWithDash;
 
-    private Vector3 m_LastAirMovement;
+   
     
 
     private void Awake()
@@ -170,7 +171,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 m_animator.SetTrigger("run");
                 MovementVector = Vector3.Project(transform.forward * Vector3.ProjectOnPlane(MovementVector,Vector3.up).magnitude,m_inputvector) + Vector3.Project(MovementVector, Vector3.up);
-                m_LastAirMovement = Vector3.zero;
+               
             }
             m_state = movementState.grounded;
 

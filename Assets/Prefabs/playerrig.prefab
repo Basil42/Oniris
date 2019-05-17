@@ -318,7 +318,7 @@ MonoBehaviour:
   m_animator: {fileID: 0}
   StartWithBlink: 1
   StartWithDoubleJump: 1
-  StartWithWallJump: 0
+  StartWithWallJump: 1
   StartWithDash: 1
 --- !u!114 &7760997314061488136
 MonoBehaviour:
@@ -358,14 +358,17 @@ MonoBehaviour:
   m_slopeTreshold: 0.2
   wallClimbSpeed: 0.3
   m_wallrunSpeed: 0.3
-  bounceVelocity: 0.3
+  bounceVelocity: 0.1
   m_RunAngle: 90
-  m_LateralRunTime: 3
+  m_LateralRunTime: 0.5
   m_VerticalRunTime: 0.5
-  verticalWallJumpHeight: 0.5
-  verticalWallJumpLength: 0.2
-  m_lateralWallJumpHeight: 0.5
-  m_lateralWallJumpLength: 0.2
+  verticalWallJumpHeight: 0.1
+  verticalWallJumpLength: 0.1
+  m_verticalSurfaceSizeTreshold: 0.3
+  m_lateralWallJumpHeight: 0.1
+  m_lateralWallJumpLength: 0.3
+  m_LateralSurfaceSizeTreshold: 0.3
+  m_LateralJumpAngle: 0.7
 --- !u!1 &4101978195016742405
 GameObject:
   m_ObjectHideFlags: 0

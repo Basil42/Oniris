@@ -36,6 +36,14 @@ public class PlayerControls : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetAxis("WallRunToggle") > 0.5f)
+        {
+            m_playerMove.m_abilityFlags |= AbilityAvailability.WallJumpOn;
+        }
+        else
+        {
+            m_playerMove.m_abilityFlags &= ~AbilityAvailability.WallJumpOn;
+        }
         if (Input.GetButtonDown("PauseMenu")) m_pauseMenuScript.PauseResume();
         if (m_pauseMenuScript.GameIsPaused) return;
         if (Input.GetButtonDown("Jump"))
