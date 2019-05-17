@@ -42,7 +42,8 @@ public class WallJump : MonoBehaviour
     private Direction m_direction;
     private Vector3 m_origin;  //origin of the rays that detect walls
     private float m_RunTimer;
-    
+    [SerializeField]private float m_LateralJumpAngle = 0.5f;
+
     enum Direction
     {
         None,
@@ -108,10 +109,10 @@ public class WallJump : MonoBehaviour
         //animation stuff 
         m_movementScript.MovementVector = Vector3.up * verticalWallJumpHeight + m_chosenHit.normal * verticalWallJumpLength;
         transform.forward = new Vector3(m_movementScript.MovementVector.x, 0.0f, m_movementScript.MovementVector.z).normalized;
-        m_movementScript.m_state = movementState.jumping;
-        m_movementScript.m_animator.SetTrigger("fall");
-        //temp
-        
+        m_movementScript.m_state = movementState.falling;
+        m_movementScript.m_animator.SetTrigger("jump");
+    
+
     }
     private void wallRunRightBehavior()
     {
@@ -144,10 +145,11 @@ public class WallJump : MonoBehaviour
     public void WallJumpLateral()
     {
        
-        m_movementScript.MovementVector = Vector3.up * m_lateralWallJumpHeight + m_chosenHit.normal * m_lateralWallJumpLength;
+        m_movementScript.MovementVector = Vector3.up * m_lateralWallJumpHeight + Vector3.Slerp(transform.forward,m_chosenHit.normal, m_LateralJumpAngle) * m_lateralWallJumpLength;
         transform.forward = new Vector3(m_movementScript.MovementVector.x, 0.0f, m_movementScript.MovementVector.z).normalized;
-        m_movementScript.m_state = movementState.jumping;
+        m_movementScript.m_state = movementState.falling;
         m_movementScript.m_animator.SetTrigger("jump");
+    
     }
     private bool detectWalls()
     {

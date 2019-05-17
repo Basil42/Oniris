@@ -92,7 +92,7 @@ public class Jump : MonoBehaviour
     //Run this while jumping
     public void JumpBehavior()
     {
-        if (m_jumpTimer < m_jumpLength)
+        if (m_jumpTimer < m_jumpLength )
         {
             playerMovement.MovementVector.y = m_jumpingSpeed;
             m_jumpTimer += Time.deltaTime;
@@ -101,6 +101,7 @@ public class Jump : MonoBehaviour
         {
             playerMovement.m_state = movementState.falling;
             playerMovement.m_animator.SetTrigger("fall");
+       
         }
         
             
