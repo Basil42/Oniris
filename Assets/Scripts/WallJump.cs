@@ -207,6 +207,5 @@ public class WallJump : MonoBehaviour
     public void Eject()
     {
         m_RunTimer = -1;
-
     }
 }
