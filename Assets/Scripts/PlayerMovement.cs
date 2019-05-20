@@ -211,7 +211,7 @@ public class PlayerMovement : MonoBehaviour
             
             if (m_state == movementState.falling) MovementVector += hit.normal * 0.1f;
         }
-       
+
     }
 
     private void airControl(Vector3 inputVector)
