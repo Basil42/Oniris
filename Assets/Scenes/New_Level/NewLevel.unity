@@ -2588,12 +2588,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1190234972}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &73887637 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3125248868856134024, guid: e046cc83b55387e45be2c7aceb18f41e,
-    type: 3}
-  m_PrefabInstance: {fileID: 655373043}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &75040254
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19149,22 +19143,22 @@ PrefabInstance:
     - target: {fileID: 8959065826343238271, guid: e046cc83b55387e45be2c7aceb18f41e,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.19591774
+      value: 0.19510314
       objectReference: {fileID: 0}
     - target: {fileID: 8959065826343238271, guid: e046cc83b55387e45be2c7aceb18f41e,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.16251384
+      value: -0.16349545
       objectReference: {fileID: 0}
     - target: {fileID: 8959065826343238271, guid: e046cc83b55387e45be2c7aceb18f41e,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.6174116
+      value: 0.61766946
       objectReference: {fileID: 0}
     - target: {fileID: 8959065826343238271, guid: e046cc83b55387e45be2c7aceb18f41e,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7443174
+      value: 0.7441024
       objectReference: {fileID: 0}
     - target: {fileID: 4307164917759894389, guid: e046cc83b55387e45be2c7aceb18f41e,
         type: 3}
@@ -19380,12 +19374,12 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LookAt
       value: 
-      objectReference: {fileID: 73887637}
+      objectReference: {fileID: 0}
     - target: {fileID: 8959065825291983806, guid: e046cc83b55387e45be2c7aceb18f41e,
         type: 3}
       propertyPath: m_Follow
       value: 
-      objectReference: {fileID: 73887637}
+      objectReference: {fileID: 0}
     - target: {fileID: 8959065825291983806, guid: e046cc83b55387e45be2c7aceb18f41e,
         type: 3}
       propertyPath: m_Orbits.Array.data[0].m_Radius
@@ -19450,6 +19444,36 @@ PrefabInstance:
         type: 3}
       propertyPath: m_FollowOffset.z
       value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5916347029881582842, guid: e046cc83b55387e45be2c7aceb18f41e,
+        type: 3}
+      propertyPath: m_AABB.m_Center.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5916347029881582842, guid: e046cc83b55387e45be2c7aceb18f41e,
+        type: 3}
+      propertyPath: m_AABB.m_Center.y
+      value: 0.022867203
+      objectReference: {fileID: 0}
+    - target: {fileID: 5916347029881582842, guid: e046cc83b55387e45be2c7aceb18f41e,
+        type: 3}
+      propertyPath: m_AABB.m_Center.z
+      value: 0.12250137
+      objectReference: {fileID: 0}
+    - target: {fileID: 5916347029881582842, guid: e046cc83b55387e45be2c7aceb18f41e,
+        type: 3}
+      propertyPath: m_AABB.m_Extent.x
+      value: 0.61277014
+      objectReference: {fileID: 0}
+    - target: {fileID: 5916347029881582842, guid: e046cc83b55387e45be2c7aceb18f41e,
+        type: 3}
+      propertyPath: m_AABB.m_Extent.y
+      value: 0.24629083
+      objectReference: {fileID: 0}
+    - target: {fileID: 5916347029881582842, guid: e046cc83b55387e45be2c7aceb18f41e,
+        type: 3}
+      propertyPath: m_AABB.m_Extent.z
+      value: 0.25750822
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e046cc83b55387e45be2c7aceb18f41e, type: 3}
@@ -24519,12 +24543,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2131332543940283927, guid: 743373798ca96b5469f4e87f0e20f385,
     type: 3}
   m_PrefabInstance: {fileID: 787923252}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &788515391 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3125248868856134024, guid: e046cc83b55387e45be2c7aceb18f41e,
-    type: 3}
-  m_PrefabInstance: {fileID: 1293328933}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &791394357
 GameObject:
@@ -43538,12 +43556,12 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LookAt
       value: 
-      objectReference: {fileID: 788515391}
+      objectReference: {fileID: 0}
     - target: {fileID: 8959065825291983806, guid: e046cc83b55387e45be2c7aceb18f41e,
         type: 3}
       propertyPath: m_Follow
       value: 
-      objectReference: {fileID: 788515391}
+      objectReference: {fileID: 0}
     - target: {fileID: 8959065825291983806, guid: e046cc83b55387e45be2c7aceb18f41e,
         type: 3}
       propertyPath: m_Orbits.Array.data[0].m_Radius
