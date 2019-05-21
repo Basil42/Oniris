@@ -7,16 +7,18 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Candlelight
-  m_Shader: {fileID: -6465566751694194690, guid: 1af9d56a0781e6d4cae61bdbb3658176,
+  m_Name: TitleOnirisMat
+  m_Shader: {fileID: -6465566751694194690, guid: 29d8106aaddfe84478ca233763cfde31,
     type: 3}
   m_ShaderKeywords: 
-  m_LightmapFlags: 4
+  m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
+  stringTagMap:
+    MotionVector: User
+  disabledShaderPasses:
+  - MOTIONVECTORS
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -25,7 +27,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseColorMap:
-        m_Texture: {fileID: 2800000, guid: 0e6c5874c92987e47a5e91fef6c1aa93, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BentNormalMap:
@@ -65,7 +67,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 0e6c5874c92987e47a5e91fef6c1aa93, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MaskMap:
@@ -80,12 +82,8 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _SampleTexture2D_D4A7F57C_Texture:
-        m_Texture: {fileID: 2800000, guid: 0e6c5874c92987e47a5e91fef6c1aa93, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _SampleTexture2D_F06A2010_Texture:
-        m_Texture: {fileID: 2800000, guid: 7c71cddb2338cc14ca145a3af261da36, type: 3}
+    - _SampleTexture2D_DCA925D_Texture:
+        m_Texture: {fileID: 2800000, guid: ede7658fea33e6a449d1a4f1c8e518fe, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SpecularColorMap:
@@ -113,6 +111,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - Vector1_630032BD: 0.194
     - _AORemapMax: 1
     - _AORemapMin: 0
     - _ATDistance: 1
