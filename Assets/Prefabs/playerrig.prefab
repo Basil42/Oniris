@@ -4844,7 +4844,8 @@ MonoBehaviour:
   m_slopeTreshold: 0.2
   wallClimbSpeed: 0.18
   m_wallrunSpeed: 0.3
-  bounceVelocity: 0.4
+  bounceVelocityLateral: 0.1
+  bounceVelocityVertical: 0.2
   m_RunAngle: 90
   m_LateralRunTime: 0.5
   m_VerticalRunTime: 0.5
@@ -5047,22 +5048,22 @@ PrefabInstance:
     - target: {fileID: 9192661350741325509, guid: 21b815f661bbaf245864623512ba320d,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.15705554
+      value: 0.15498376
       objectReference: {fileID: 0}
     - target: {fileID: 9192661350741325509, guid: 21b815f661bbaf245864623512ba320d,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.75825447
+      value: 0.7643978
       objectReference: {fileID: 0}
     - target: {fileID: 9192661350741325509, guid: 21b815f661bbaf245864623512ba320d,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.20032366
+      value: -0.20193076
       objectReference: {fileID: 0}
     - target: {fileID: 9192661350741325509, guid: 21b815f661bbaf245864623512ba320d,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.60021186
+      value: 0.5923682
       objectReference: {fileID: 0}
     - target: {fileID: 9192661350741325509, guid: 21b815f661bbaf245864623512ba320d,
         type: 3}
@@ -5072,7 +5073,7 @@ PrefabInstance:
     - target: {fileID: 9192661350741325509, guid: 21b815f661bbaf245864623512ba320d,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -33.69
+      value: 5.710003
       objectReference: {fileID: 0}
     - target: {fileID: 9192661350741325509, guid: 21b815f661bbaf245864623512ba320d,
         type: 3}
