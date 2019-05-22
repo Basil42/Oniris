@@ -26,6 +26,25 @@ public class CloudWalk : MonoBehaviour
         }
     }
 
+    private void FixedUpdate()
+    {
+        if(CloudInstance != null && transform.parent.tag == "Player")
+        {
+            switch (CloudInstance.transform.parent.GetComponent<PlayerMovement>().m_state)
+            {
+                case movementState.jumping:
+                case movementState.doubleJumping:
+                case movementState.dashing:
+                case movementState.blinking:
+                    CloudInstance.transform.parent = null;
+                    break;
+                
+                default:
+                    break;
+            }
+        }
+    }
+
     private IEnumerator PlatformBehavior()
     {
         while(m_Timer < m_Duration)
