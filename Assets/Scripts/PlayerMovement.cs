@@ -76,6 +76,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
+        Physics.queriesHitTriggers = false;
         controller = GetComponent<CharacterController>();
         colliderHeight = GetComponent<CharacterController>().height - colliderHeightOffset;
 
@@ -156,7 +157,6 @@ public class PlayerMovement : MonoBehaviour
         RaycastHit hit3;
         RaycastHit hit4;
         RaycastHit hit5;
-       
 
         if (Physics.Raycast(transform.position + new Vector3(0, 0.4f, 0), transform.TransformDirection(Vector3.down), out hit, 0.6f) ||
             Physics.Raycast(transform.position + (transform.forward * 0.5f + transform.up * 0.4f), transform.TransformDirection(Vector3.down), out hit2, 0.6f) ||
