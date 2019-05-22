@@ -19,7 +19,9 @@ public class WallJump : MonoBehaviour
     [Tooltip("Speed at which the character wall run horizontally")]
     [SerializeField] private float m_wallrunSpeed = 0.3f;
     [Tooltip("Speed at which the player bounces off the wall if they did not jump off of it before the wall run ends")]
-    [SerializeField] private float bounceVelocity = 1.0f;
+    [SerializeField] private float bounceVelocityLateral = 1.0f;
+    [Tooltip("Speed at which the player bounces off the wall if they did not jump off of it before the wall run ends")]
+    [SerializeField] private float bounceVelocityVertical = 1.0f;
     [Tooltip("Angle at which the player starts their horizontal wall run 90 is purely horizontal")]
     [SerializeField] private float m_RunAngle = 90.0f;
     [Tooltip("Time in seconds the player can 'stick' to a wall while wall running horizontally")]
@@ -96,7 +98,7 @@ public class WallJump : MonoBehaviour
         {
            
             
-            m_movementScript.MovementVector = m_chosenHit.normal * bounceVelocity;
+            m_movementScript.MovementVector = m_chosenHit.normal * bounceVelocityVertical;
             m_movementScript.m_state = movementState.falling;
             m_movementScript.m_animator.SetTrigger("fall");
             transform.forward = -transform.forward;
@@ -120,7 +122,7 @@ public class WallJump : MonoBehaviour
         if (!Physics.Raycast(m_origin, transform.right, out m_hit, m_absoluteReach) || m_RunTimer < 0 || m_hit.normal != m_chosenHit.normal || !m_movementScript.m_abilityFlags.HasFlag(AbilityAvailability.WallJumpOn))//to do : timer
         {
             m_movementScript.MovementVector = Vector3.Project(m_movementScript.MovementVector, transform.forward);
-            m_movementScript.MovementVector += m_chosenHit.normal * bounceVelocity;
+            m_movementScript.MovementVector += m_chosenHit.normal * bounceVelocityLateral;
             m_movementScript.m_state = movementState.falling;
             m_movementScript.m_animator.SetTrigger("fall");
             transform.forward = new Vector3(m_movementScript.MovementVector.x, 0.0f, m_movementScript.MovementVector.z).normalized;
@@ -134,7 +136,7 @@ public class WallJump : MonoBehaviour
         if (!Physics.Raycast(m_origin, -transform.right, out m_hit,m_absoluteReach) || m_RunTimer < 0 || m_hit.normal != m_chosenHit.normal || !m_movementScript.m_abilityFlags.HasFlag(AbilityAvailability.WallJumpOn))//timer
         {
             m_movementScript.MovementVector = Vector3.Project(m_movementScript.MovementVector, transform.forward);
-            m_movementScript.MovementVector += m_chosenHit.normal * bounceVelocity;//bounce
+            m_movementScript.MovementVector += m_chosenHit.normal * bounceVelocityLateral;//bounce
 
             m_movementScript.m_state = movementState.falling;//might implement a custom walljump state and behavior later
             m_movementScript.m_animator.SetTrigger("fall");
