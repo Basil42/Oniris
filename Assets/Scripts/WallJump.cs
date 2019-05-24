@@ -204,18 +204,20 @@ public class WallJump : MonoBehaviour
             case Direction.Left:
                 m_RunTimer = m_LateralRunTime;
                 m_movementScript.m_state = movementState.wallrunLeft;
+                m_movementScript.m_animator.SetBool("right", false);
                 m_movementScript.m_animator.SetTrigger("wallrunlateral");
                 m_movementScript.MovementVector = (Quaternion.AngleAxis(m_RunAngle,m_chosenHit.normal) * Vector3.up)* m_wallrunSpeed;
-                m_movementScript.m_animator.SetBool("right", false);
+                
                 //to do: line up character properly
                 //to do : plane running
                 break;
             case Direction.Right:
                 m_RunTimer = m_LateralRunTime;
                 m_movementScript.m_state = movementState.wallrunRight;
+                m_movementScript.m_animator.SetBool("right", true);
                 m_movementScript.m_animator.SetTrigger("wallrunlateral");
                 m_movementScript.MovementVector = (Quaternion.AngleAxis(-m_RunAngle, m_chosenHit.normal) * Vector3.up) * m_wallrunSpeed;
-                m_movementScript.m_animator.SetBool("right", true);
+                
                 break;
             default:
                 break;
