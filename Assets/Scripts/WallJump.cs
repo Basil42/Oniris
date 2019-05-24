@@ -40,6 +40,7 @@ public class WallJump : MonoBehaviour
     private float m_shortestHitDistance;//used in choosing which ray determines the angle of collision with walls
     private RaycastHit m_hit;//allocated memory to read raycast hits
     private RaycastHit m_chosenHit;
+    private Vector3 m_previousNormal;//last wall grabbed
     private RaycastHit m_securityhit;
     private Direction m_direction;
     private Vector3 m_origin;  //origin of the rays that detect walls
@@ -69,6 +70,7 @@ public class WallJump : MonoBehaviour
             switch (m_movementScript.m_state)
             {
                 case movementState.grounded:
+                    m_previousNormal = Vector3.zero;
                     break;
                 case movementState.falling:
                 case movementState.doubleJumping:
@@ -168,10 +170,12 @@ public class WallJump : MonoBehaviour
     private void CheckDirection(Ray ray, Direction direction)
     {
         if (Physics.Raycast(ray, out m_hit, m_absoluteReach) && 
-            m_hit.distance < m_shortestHitDistance && Vector3.Dot(m_hit.normal, m_movementScript.MovementVector) < 0  && 
+            m_hit.distance < m_shortestHitDistance && 
+            Vector3.Dot(m_hit.normal, m_movementScript.MovementVector) < 0  && 
             Mathf.Abs(m_hit.normal.y)< m_slopeTreshold && 
             Physics.Raycast(ray.origin + ((direction == Direction.Front)? Vector3.up * m_verticalSurfaceSizeTreshold: transform.forward * m_LateralSurfaceSizeTreshold),ray.direction, out m_securityhit, m_absoluteReach)&&
-            m_securityhit.normal == m_hit.normal)
+            m_securityhit.normal == m_hit.normal &&
+            m_hit.normal != m_previousNormal)
         {
             m_shortestHitDistance = m_hit.distance;
             m_direction = direction;
@@ -218,6 +222,7 @@ public class WallJump : MonoBehaviour
         }
         //to do : snap to the wall
         m_movementScript.MovementVector += -m_chosenHit.normal;
+        m_previousNormal = m_chosenHit.normal;
     }
     public void Eject()
     {
