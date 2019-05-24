@@ -6,7 +6,7 @@ using UnityEngine.Experimental.VFX;
 
 public class CloudWalk : MonoBehaviour
 {
-    [SerializeField] private GameObject Cloud;
+    public GameObject Cloud;
     private GameObject CloudInstance;
     private float m_Timer;
     public float m_Duration = 5.0f;
@@ -20,9 +20,29 @@ public class CloudWalk : MonoBehaviour
             CloudInstance = Instantiate(Cloud, other.gameObject.transform);
             CloudInstance.GetComponent<VisualEffect>().SetFloat("Intensity", m_StartingIntensity);
             m_Timer = 0.0f;
+            other.gameObject.GetComponent<PlayerMovement>().GroundCheck();
             GetComponent<BoxCollider>().enabled = false;
             GetComponent<VisualEffect>().Stop();
             StartCoroutine(PlatformBehavior());
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if(CloudInstance != null && CloudInstance.transform.parent != null && CloudInstance.transform.parent.tag == "Player")
+        {
+            switch (CloudInstance.transform.parent.GetComponent<PlayerMovement>().m_state)
+            {
+                case movementState.jumping:
+                case movementState.doubleJumping:
+                case movementState.dashing:
+                case movementState.blinking:
+                    CloudInstance.transform.parent = null;
+                    break;
+                
+                default:
+                    break;
+            }
         }
     }
 

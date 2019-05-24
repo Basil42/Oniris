@@ -22,6 +22,18 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - Texture2D_6BDDD49:
+        m_Texture: {fileID: 2800000, guid: 0f20922ecdec9894883f069ce947876c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_C695F0EC:
+        m_Texture: {fileID: 2800000, guid: b274e526953d5e440bd8c9a60bdca1de, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_C83FDE3D:
+        m_Texture: {fileID: 2800000, guid: 7c49f55dcd460a941a22d5b43be5af5e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _AnisotropyMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -94,6 +106,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: b87537a808ba0f845a31f2b4a58cad24, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_DBCFB288_Texture:
+        m_Texture: {fileID: 2800000, guid: 7c71cddb2338cc14ca145a3af261da36, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SpecularColorMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -119,6 +135,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - Vector1_33C26AF0: 0.04
     - _AORemapMax: 1
     - _AORemapMin: 0
     - _ATDistance: 1
@@ -145,6 +162,7 @@ Material:
     - _DisplacementLockObjectScale: 1
     - _DisplacementLockTilingScale: 1
     - _DisplacementMode: 0
+    - _Dissolve_Value: 0
     - _DistortionBlendMode: 0
     - _DistortionBlurBlendMode: 0
     - _DistortionBlurDstBlend: 0
