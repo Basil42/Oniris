@@ -9,11 +9,13 @@ public class PlayerVFXManager : MonoBehaviour
     private VisualEffect RunEffect;
     private Vector3 oldPosition;
     private Vector3 deltaPosition;
+    private Vector3 offset;
     //VisualEffect RunEffect2;
     // Start is called before the first frame update
     void Start()
     {
         RunEffect = RunEffectObject.GetComponent<VisualEffect>();
+        offset = RunEffect.transform.localPosition;
     }
 
     // Update is called once per frame
@@ -25,7 +27,7 @@ public class PlayerVFXManager : MonoBehaviour
 
     private void RunUpdate()
     {
-        RunEffectObject.transform.position = transform.position;
+        RunEffectObject.transform.position = transform.position + offset;
         RunEffect.SetVector3("DeltaPos", oldPosition - RunEffectObject.transform.position);
     }
 }

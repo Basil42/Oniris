@@ -217,7 +217,6 @@ public class WallJump : MonoBehaviour
                 m_movementScript.m_animator.SetBool("right", true);
                 m_movementScript.m_animator.SetTrigger("wallrunlateral");
                 m_movementScript.MovementVector = (Quaternion.AngleAxis(-m_RunAngle, m_chosenHit.normal) * Vector3.up) * m_wallrunSpeed;
-                
                 break;
             default:
                 break;
