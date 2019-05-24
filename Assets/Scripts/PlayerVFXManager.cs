@@ -10,6 +10,8 @@ public class PlayerVFXManager : MonoBehaviour
     private Vector3 oldPosition;
     private Vector3 deltaPosition;
     private Vector3 offset;
+    [SerializeField] float SpeedTreshold = 0.05f;
+    [SerializeField] int spawnRate = 10;
     //VisualEffect RunEffect2;
     // Start is called before the first frame update
     void Start()
@@ -23,11 +25,20 @@ public class PlayerVFXManager : MonoBehaviour
     {
         RunUpdate();
         oldPosition = RunEffectObject.transform.position;
+        if(deltaPosition.magnitude < SpeedTreshold)
+        {
+            RunEffect.SetInt("spawnrate",0);
+        }
+        else
+        {
+            RunEffect.SetInt("spawnrate", spawnRate);
+        }
     }
 
     private void RunUpdate()
     {
         RunEffectObject.transform.position = transform.position + offset;
-        RunEffect.SetVector3("DeltaPos", oldPosition - RunEffectObject.transform.position);
+        deltaPosition = oldPosition - RunEffectObject.transform.position;
+        RunEffect.SetVector3("DeltaPos",deltaPosition );
     }
 }
