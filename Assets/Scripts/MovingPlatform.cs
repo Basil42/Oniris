@@ -25,7 +25,6 @@ public class MovingPlatform : MonoBehaviour
         rb = gameObject.GetComponent<Rigidbody>();
         targetPosition = new Vector3(directionX, directionY, directionZ);
         player = GameObject.FindGameObjectWithTag("Player").transform.parent.gameObject;
-        tag = "MovingSurface";
     }
 
     private void FixedUpdate()
@@ -38,7 +37,7 @@ public class MovingPlatform : MonoBehaviour
         }
         deltaPosition = targetPosition * speed * Time.fixedDeltaTime;
         rb.MovePosition(transform.position + deltaPosition);
-
+        //rb.velocity = Vector3.zero;
     }
 
     private void OnTriggerStay(Collider other)
@@ -50,7 +49,8 @@ public class MovingPlatform : MonoBehaviour
         }
     }
 
-   
-
-    
+   //public void delete()
+   // {
+   //     Destroy(gameObject);
+   // } 
 }
