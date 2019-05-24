@@ -10,6 +10,7 @@ public class CloudWalk : MonoBehaviour
     private GameObject CloudInstance;
     private float m_Timer;
     public float m_Duration = 5.0f;
+    public float m_RespawnTime = 1;
     private float m_targetIntensity = 0.0f;
     private float m_StartingIntensity = 3.0f;
     
@@ -55,8 +56,13 @@ public class CloudWalk : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
         Destroy(CloudInstance);
+        m_Timer = 0.0f;
+        while(m_Timer < m_RespawnTime)
+        {
+            m_Timer += Time.fixedDeltaTime;
+            yield return new WaitForFixedUpdate();
+        }
         GetComponent<BoxCollider>().enabled = true;
         GetComponent<VisualEffect>().Reinit();
     }
-   
 }
