@@ -11,7 +11,9 @@ GameObject:
   - component: {fileID: 6277520273170787580}
   - component: {fileID: 6277520273170787581}
   - component: {fileID: 6277520273170787582}
-  - component: {fileID: 6277520273170787577}
+  - component: {fileID: 5769143539097478356}
+  - component: {fileID: 4724372597554915483}
+  - component: {fileID: 2437381759272037015}
   m_Layer: 0
   m_Name: BlinkStream
   m_TagString: Untagged
@@ -52,6 +54,9 @@ VisualEffect:
         m_Overridden: 1
       - m_Value: 50
         m_Name: PullStrength
+        m_Overridden: 1
+      - m_Value: 7.006e-42
+        m_Name: SpawnRate
         m_Overridden: 1
     m_Vector2f:
       m_Array: []
@@ -116,7 +121,7 @@ VFXRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &6277520273170787577
+--- !u!114 &5769143539097478356
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -125,9 +130,37 @@ MonoBehaviour:
   m_GameObject: {fileID: 6277520273170787583}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 37ed55f02ffab3f4ab215a0b4e736f59, type: 3}
+  m_Script: {fileID: 11500000, guid: e413d1ab6d851914f8047b88f28850cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  following: 1
-  destroyTime: 7
-  attractionDelay: 0.3
+--- !u!114 &4724372597554915483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6277520273170787583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdafc37f32b176349b1684c4455b98e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ExecuteInEditor: 0
+  m_Bindings:
+  - {fileID: 2437381759272037015}
+  m_VisualEffect: {fileID: 6277520273170787581}
+--- !u!114 &2437381759272037015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6277520273170787583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07c3070554d0a8944a95ff8f018c2c9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Parameter:
+    m_Name: attractive target position
+  Target: {fileID: 0}
