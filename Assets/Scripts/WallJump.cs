@@ -35,6 +35,9 @@ public class WallJump : MonoBehaviour
     [SerializeField] private float m_lateralWallJumpLength = 0.2f;
     [SerializeField] private float m_LateralSurfaceSizeTreshold = 0.1f;
     private float m_absoluteReach;
+    //vfx
+    public TrailRenderer m_trailLeft;
+    public TrailRenderer m_trailRight;
 
     //allocations for values that need regular updating (blackboard)
     private float m_shortestHitDistance;//used in choosing which ray determines the angle of collision with walls
@@ -59,6 +62,8 @@ public class WallJump : MonoBehaviour
         m_movementScript = GetComponent<PlayerMovement>();
         m_controlller = GetComponent<CharacterController>();
         m_absoluteReach = m_controlller.radius + m_controlller.skinWidth + m_reach;
+        m_trailLeft.emitting = false;
+        m_trailRight.emitting = false;
 
     }
     private void FixedUpdate()
@@ -128,6 +133,7 @@ public class WallJump : MonoBehaviour
             m_movementScript.m_state = movementState.falling;
             m_movementScript.m_animator.SetTrigger("fall");
             transform.forward = new Vector3(m_movementScript.MovementVector.x, 0.0f, m_movementScript.MovementVector.z).normalized;
+            m_trailRight.emitting = false;
             //facethe character in the appropriate direction(this function might not be responsible for it)
             Debug.Log("bounce");
         }
@@ -143,6 +149,7 @@ public class WallJump : MonoBehaviour
             m_movementScript.m_state = movementState.falling;//might implement a custom walljump state and behavior later
             m_movementScript.m_animator.SetTrigger("fall");
             transform.forward = new Vector3(m_movementScript.MovementVector.x, 0.0f, m_movementScript.MovementVector.z).normalized;
+            m_trailLeft.emitting = false;
             Debug.Log("bounce");
         }
     }
@@ -153,7 +160,8 @@ public class WallJump : MonoBehaviour
         transform.forward = new Vector3(m_movementScript.MovementVector.x, 0.0f, m_movementScript.MovementVector.z).normalized;
         m_movementScript.m_state = movementState.falling;
         m_movementScript.m_animator.SetTrigger("jump");
-    
+        m_trailRight.emitting = false;
+        m_trailLeft.emitting = false;
     }
     private bool detectWalls()
     {
@@ -207,7 +215,7 @@ public class WallJump : MonoBehaviour
                 m_movementScript.m_animator.SetBool("right", false);
                 m_movementScript.m_animator.SetTrigger("wallrunlateral");
                 m_movementScript.MovementVector = (Quaternion.AngleAxis(m_RunAngle,m_chosenHit.normal) * Vector3.up)* m_wallrunSpeed;
-                
+                m_trailLeft.emitting = true;
                 //to do: line up character properly
                 //to do : plane running
                 break;
@@ -217,6 +225,7 @@ public class WallJump : MonoBehaviour
                 m_movementScript.m_animator.SetBool("right", true);
                 m_movementScript.m_animator.SetTrigger("wallrunlateral");
                 m_movementScript.MovementVector = (Quaternion.AngleAxis(-m_RunAngle, m_chosenHit.normal) * Vector3.up) * m_wallrunSpeed;
+                m_trailRight.emitting = true;
                 break;
             default:
                 break;
