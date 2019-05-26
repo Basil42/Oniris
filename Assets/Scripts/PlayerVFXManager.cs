@@ -6,10 +6,13 @@ using UnityEngine.Experimental.VFX;
 public class PlayerVFXManager : MonoBehaviour
 {
     public GameObject RunEffectObject;
+    public GameObject BlinkEffectObject;
     private VisualEffect RunEffect;
+    private VisualEffect BlinkEffect;
     private Vector3 oldPosition;
     private Vector3 deltaPosition;
-    private Vector3 offset;
+    private Vector3 SpeedEffectoffset;
+    [SerializeField] private Vector3 BlinkEffectTargetOffset;
     [SerializeField] float SpeedTreshold = 0.05f;
     [SerializeField] int spawnRate = 10;
     //VisualEffect RunEffect2;
@@ -17,7 +20,9 @@ public class PlayerVFXManager : MonoBehaviour
     void Start()
     {
         RunEffect = RunEffectObject.GetComponent<VisualEffect>();
-        offset = RunEffect.transform.localPosition;
+        BlinkEffect = BlinkEffectObject.GetComponent<VisualEffect>();
+        SpeedEffectoffset = RunEffect.transform.localPosition;
+        
     }
 
     // Update is called once per frame
@@ -33,12 +38,18 @@ public class PlayerVFXManager : MonoBehaviour
         {
             RunEffect.SetInt("spawnrate", spawnRate);
         }
+        BlinkEffectObject.transform.position = transform.position;
+        BlinkEffect.SetVector3("attractive target position", transform.position + BlinkEffectTargetOffset);
     }
 
     private void RunUpdate()
     {
-        RunEffectObject.transform.position = transform.position + offset;
+        RunEffectObject.transform.position = transform.position + SpeedEffectoffset;
         deltaPosition = oldPosition - RunEffectObject.transform.position;
         RunEffect.SetVector3("DeltaPos",deltaPosition );
+    }
+    public void PlayBlink()
+    {
+        BlinkEffect.SendEvent("Spawn");
     }
 }

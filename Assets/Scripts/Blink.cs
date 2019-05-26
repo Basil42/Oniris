@@ -125,7 +125,7 @@ public class Blink : MonoBehaviour
         }
 
         StartCoroutine("Appear");
-        EndBlinkVFX();
+        
 
         m_playerMovement.controller.enabled = true;
         m_playerMovement.GroundCheck();
@@ -162,13 +162,12 @@ public class Blink : MonoBehaviour
 
     private void SpawnBlinkVFX()
     {
-        currentBlinkStream = Instantiate(blinkStream, transform.position, transform.rotation);
-        currentBlinkParticles = Instantiate(blinkParticles, transform.position, transform.rotation);
+        GetComponent<PlayerVFXManager>().PlayBlink();
     }
 
-    private void EndBlinkVFX()
-    {
-        currentBlinkStream.GetComponent<SetVFXParameters>().StopEffect();
-        currentBlinkParticles.GetComponent<SetVFXParameters>().StopEffect();
-    }
+    //private void EndBlinkVFX()
+    //{
+    //    currentBlinkStream.GetComponent<SetVFXParameters>().StopEffect();
+    //    currentBlinkParticles.GetComponent<SetVFXParameters>().StopEffect();
+    //}
 }
