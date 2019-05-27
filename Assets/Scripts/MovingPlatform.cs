@@ -11,6 +11,10 @@ public class MovingPlatform : MonoBehaviour
     public int directionY;
     public int directionZ;
     private Vector3 targetPosition;
+    private Vector3 originalPostion;
+
+    public bool automatic = true;
+    private bool active = false;
 
     public float loopTime;
     private float timer;
@@ -22,6 +26,7 @@ public class MovingPlatform : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        originalPostion = transform.position;
         rb = gameObject.GetComponent<Rigidbody>();
         targetPosition = new Vector3(directionX, directionY, directionZ);
         player = GameObject.FindGameObjectWithTag("Player").transform.parent.gameObject;
@@ -29,15 +34,17 @@ public class MovingPlatform : MonoBehaviour
 
     private void FixedUpdate()
     {
-        timer += Time.fixedDeltaTime;
-        if(timer >= loopTime)
+        if(automatic || active)
         {
-            targetPosition *= -1;
-            timer = 0;
+            timer += Time.fixedDeltaTime;
+            if (timer >= loopTime)
+            {
+                targetPosition *= -1;
+                timer = 0;
+            }
+            deltaPosition = targetPosition * speed * Time.fixedDeltaTime;
+            rb.MovePosition(transform.position + deltaPosition);
         }
-        deltaPosition = targetPosition * speed * Time.fixedDeltaTime;
-        rb.MovePosition(transform.position + deltaPosition);
-        //rb.velocity = Vector3.zero;
     }
 
     private void OnTriggerStay(Collider other)
@@ -49,8 +56,19 @@ public class MovingPlatform : MonoBehaviour
         }
     }
 
-   //public void delete()
-   // {
-   //     Destroy(gameObject);
-   // } 
+    public void activate()
+    {
+        if(active == false)
+        {
+            print("Hello there");
+            active = true;
+            Invoke("deactivate", loopTime);
+        }
+    }
+
+    private void deActivate()
+    {
+        active = false;
+        transform.position = originalPostion;
+    }
 }
