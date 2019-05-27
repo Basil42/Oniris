@@ -7,8 +7,10 @@ public class PlayerVFXManager : MonoBehaviour
 {
     public GameObject RunEffectObject;
     public GameObject BlinkEffectObject;
+    public GameObject AmbiantDustObject;
     private VisualEffect RunEffect;
     private VisualEffect BlinkEffect;
+    private VisualEffect AmbiantEffect;
     private Vector3 oldPosition;
     private Vector3 deltaPosition;
     private Vector3 SpeedEffectoffset;
@@ -22,7 +24,7 @@ public class PlayerVFXManager : MonoBehaviour
         RunEffect = RunEffectObject.GetComponent<VisualEffect>();
         BlinkEffect = BlinkEffectObject.GetComponent<VisualEffect>();
         SpeedEffectoffset = RunEffect.transform.localPosition;
-        
+        AmbiantEffect = AmbiantDustObject.GetComponent<VisualEffect>();
     }
 
     // Update is called once per frame
@@ -40,6 +42,7 @@ public class PlayerVFXManager : MonoBehaviour
         }
         BlinkEffectObject.transform.position = transform.position;
         BlinkEffect.SetVector3("attractive target position", transform.position + BlinkEffectTargetOffset);
+        AmbiantDustObject.transform.position = transform.position;
     }
 
     private void RunUpdate()
