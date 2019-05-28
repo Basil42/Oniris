@@ -210,11 +210,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8228990969806906617}
     m_Modifications:
-    - target: {fileID: 8613884662584895332, guid: 75ae5a26c7617b94fae5d7e680ee509d,
-        type: 3}
-      propertyPath: m_Name
-      value: Updraft
-      objectReference: {fileID: 0}
     - target: {fileID: 8613884662584895329, guid: 75ae5a26c7617b94fae5d7e680ee509d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -285,6 +280,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.66666675
       objectReference: {fileID: 0}
+    - target: {fileID: 8613884662584895332, guid: 75ae5a26c7617b94fae5d7e680ee509d,
+        type: 3}
+      propertyPath: m_Name
+      value: Updraft
+      objectReference: {fileID: 0}
     - target: {fileID: 8613884662584895330, guid: 75ae5a26c7617b94fae5d7e680ee509d,
         type: 3}
       propertyPath: m_Size.y
@@ -314,6 +314,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Center.y
       value: 1.5824443
+      objectReference: {fileID: 0}
+    - target: {fileID: 2140593258750937946, guid: 75ae5a26c7617b94fae5d7e680ee509d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8613884662584895331, guid: 75ae5a26c7617b94fae5d7e680ee509d,
+        type: 3}
+      propertyPath: m_updraftStrength
+      value: 0.015
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 75ae5a26c7617b94fae5d7e680ee509d, type: 3}
