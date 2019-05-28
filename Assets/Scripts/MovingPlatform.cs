@@ -37,7 +37,7 @@ public class MovingPlatform : MonoBehaviour
         if(automatic || active)
         {
             timer += Time.fixedDeltaTime;
-            if (timer >= loopTime)
+            if (timer >= loopTime && automatic)
             {
                 targetPosition *= -1;
                 timer = 0;
@@ -62,7 +62,7 @@ public class MovingPlatform : MonoBehaviour
         {
             print("Hello there");
             active = true;
-            Invoke("deactivate", loopTime);
+            Invoke("deActivate", loopTime);
         }
     }
 
