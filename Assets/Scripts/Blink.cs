@@ -10,10 +10,8 @@ public class Blink : MonoBehaviour
 
     private CameraController cameraController;
     private CharacterController charCtrl;
-    public GameObject blinkStream;
-    private GameObject currentBlinkStream;
-    public GameObject blinkParticles;
-    private GameObject currentBlinkParticles;
+
+ 
 
     private LayerMask blinkThrough;
     public float distance = 10;
@@ -165,9 +163,5 @@ public class Blink : MonoBehaviour
         GetComponent<PlayerVFXManager>().PlayBlink();
     }
 
-    //private void EndBlinkVFX()
-    //{
-    //    currentBlinkStream.GetComponent<SetVFXParameters>().StopEffect();
-    //    currentBlinkParticles.GetComponent<SetVFXParameters>().StopEffect();
-    //}
+    
 }
