@@ -9,7 +9,7 @@ public class Updraft : MonoBehaviour
 
     private Vector3 m_direction;
 
-    [SerializeField] private bool smoothY;
+    [SerializeField] private bool smoothY = false;
 
     private void OnTriggerStay(Collider other)
     {
