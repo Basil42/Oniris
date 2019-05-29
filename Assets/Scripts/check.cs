@@ -43,14 +43,17 @@ public class check : MonoBehaviour
                 case checkContent.Double_jump:
                     player.m_abilityFlags |= AbilityAvailability.hasDoublejump;
                     CallDialogue("I think I got a new power! Press A in the air to double jump!");
+                    GameObject.FindGameObjectWithTag("DoubleJumpUI").SetActive(true);
                     break;
                 case checkContent.Blink:
                     player.m_abilityFlags |= AbilityAvailability.hasBlink;
-                    CallDialogue("I think I got a new power! Press Y to blink!");
+                    CallDialogue("I think I got a new power! Press Y to blink! I might be able to go through certain walls with this");
+                    GameObject.FindGameObjectWithTag("BlinkUI").SetActive(true);
                     break;
                 case checkContent.Wall_Jump:
                     player.m_abilityFlags |= AbilityAvailability.hasWallJump;
                     CallDialogue("I think I got a new power! Hold RT to wall run, horizontally and vertically, press A to jump during wall run!");
+                    GameObject.FindGameObjectWithTag("WallJumpUI").SetActive(true);
                     break;
                 default:
                     Debug.LogError("Check has no content, ensure that its index is valid.");
