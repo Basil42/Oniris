@@ -14,7 +14,7 @@ public class PlayerVFXManager : MonoBehaviour
     private Vector3 oldPosition;
     private Vector3 deltaPosition;
     private Vector3 SpeedEffectoffset;
-    [SerializeField] private Vector3 BlinkEffectTargetOffset;
+    [SerializeField] private Vector3 BlinkEffectTargetOffset = Vector3.zero;
     [SerializeField] float SpeedTreshold = 0.05f;
     [SerializeField] int spawnRate = 10;
     //VisualEffect RunEffect2;

@@ -213,7 +213,7 @@ public class WallJump : MonoBehaviour
                 m_RunTimer = m_LateralRunTime;
                 m_movementScript.m_state = movementState.wallrunLeft;
                 m_movementScript.m_animator.SetBool("right", false);
-                m_movementScript.m_animator.SetTrigger("wallrunlateral");
+                m_movementScript.m_animator.SetTrigger("wallrunLeft");
                 m_movementScript.MovementVector = (Quaternion.AngleAxis(m_RunAngle,m_chosenHit.normal) * Vector3.up)* m_wallrunSpeed;
                 m_trailLeft.emitting = true;
                 //to do: line up character properly
@@ -223,7 +223,7 @@ public class WallJump : MonoBehaviour
                 m_RunTimer = m_LateralRunTime;
                 m_movementScript.m_state = movementState.wallrunRight;
                 m_movementScript.m_animator.SetBool("right", true);
-                m_movementScript.m_animator.SetTrigger("wallrunlateral");
+                m_movementScript.m_animator.SetTrigger("wallrunRight");
                 m_movementScript.MovementVector = (Quaternion.AngleAxis(-m_RunAngle, m_chosenHit.normal) * Vector3.up) * m_wallrunSpeed;
                 m_trailRight.emitting = true;
                 break;

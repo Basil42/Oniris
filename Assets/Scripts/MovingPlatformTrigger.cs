@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MovingPlatformTrigger : MonoBehaviour
 {
-    [SerializeField] private MovingPlatform platform;
+    [SerializeField] private MovingPlatform platform = null;
 
     private void OnTriggerEnter(Collider other)
     {
