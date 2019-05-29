@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Experimental.VFX;
 public class check : MonoBehaviour
 {
@@ -43,17 +44,17 @@ public class check : MonoBehaviour
                 case checkContent.Double_jump:
                     player.m_abilityFlags |= AbilityAvailability.hasDoublejump;
                     CallDialogue("I think I got a new power! Press A in the air to double jump!");
-                    GameObject.FindGameObjectWithTag("DoubleJumpUI").SetActive(true);
+                    GameObject.FindGameObjectWithTag("DoubleJumpUI").GetComponent<Image>().fillAmount = 1;
                     break;
                 case checkContent.Blink:
                     player.m_abilityFlags |= AbilityAvailability.hasBlink;
                     CallDialogue("I think I got a new power! Press Y to blink! I might be able to go through certain walls with this");
-                    GameObject.FindGameObjectWithTag("BlinkUI").SetActive(true);
+                    GameObject.FindGameObjectWithTag("BlinkUI").GetComponent<Image>().fillAmount = 1;
                     break;
                 case checkContent.Wall_Jump:
                     player.m_abilityFlags |= AbilityAvailability.hasWallJump;
                     CallDialogue("I think I got a new power! Hold RT to wall run, horizontally and vertically, press A to jump during wall run!");
-                    GameObject.FindGameObjectWithTag("WallJumpUI").SetActive(true);
+                    GameObject.FindGameObjectWithTag("WallJumpUI").GetComponent<Image>().fillAmount = 1;
                     break;
                 default:
                     Debug.LogError("Check has no content, ensure that its index is valid.");
@@ -76,6 +77,7 @@ public class check : MonoBehaviour
 
     private void CallDialogue(string text)
     {
+        //Might want to optimise finding the dialogue system
         GameObject.FindGameObjectWithTag("DialogueSystem").GetComponent<DialougeSystem>().StartDialogue(text, dialogueTime);
     }
 }
