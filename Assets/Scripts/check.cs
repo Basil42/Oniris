@@ -14,6 +14,7 @@ public class check : MonoBehaviour
     private CheckManager m_manager;
     private VisualEffect m_passive;
     private VisualEffect m_pickup;
+    [SerializeField] private float dialogueTime = 10;
     // Start is called before the first frame update
     void Awake()
     {
@@ -37,15 +38,19 @@ public class check : MonoBehaviour
             switch (m_content)
             {
                 case checkContent.Dash_fragment:
+                    CallDialogue("Seems like nothing is here");
                     break;
                 case checkContent.Double_jump:
                     player.m_abilityFlags |= AbilityAvailability.hasDoublejump;
+                    CallDialogue("I think I got a new power! Press A in the air to double jump!");
                     break;
                 case checkContent.Blink:
                     player.m_abilityFlags |= AbilityAvailability.hasBlink;
+                    CallDialogue("I think I got a new power! Press Y to blink!");
                     break;
                 case checkContent.Wall_Jump:
                     player.m_abilityFlags |= AbilityAvailability.hasWallJump;
+                    CallDialogue("I think I got a new power! Hold RT to wall run, horizontally and vertically, press A to jump during wall run!");
                     break;
                 default:
                     Debug.LogError("Check has no content, ensure that its index is valid.");
@@ -64,5 +69,10 @@ public class check : MonoBehaviour
     private void stopPickup()
     {
         m_pickup.Stop();
+    }
+
+    private void CallDialogue(string text)
+    {
+        GameObject.FindGameObjectWithTag("DialogueSystem").GetComponent<DialougeSystem>().StartDialogue(text, dialogueTime);
     }
 }
