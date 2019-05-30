@@ -494,7 +494,7 @@ GameObject:
   - component: {fileID: 8333890082826299820}
   m_Layer: 0
   m_Name: MusicManager
-  m_TagString: Untagged
+  m_TagString: MusicManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -522,7 +522,7 @@ AudioSource:
   m_GameObject: {fileID: 3693660367647453550}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 472277530314780801, guid: 666f63ad34276094eb415e59d4919c74,
+  OutputAudioMixerGroup: {fileID: -8622425724616158159, guid: 666f63ad34276094eb415e59d4919c74,
     type: 2}
   m_audioClip: {fileID: 8300000, guid: 54a9af0f89103bb4da7b98adcb2e085e, type: 3}
   m_PlayOnAwake: 1
@@ -619,7 +619,7 @@ AudioSource:
   m_GameObject: {fileID: 3693660367647453550}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: -3676131869290022394, guid: 666f63ad34276094eb415e59d4919c74,
+  OutputAudioMixerGroup: {fileID: -3161526646463514271, guid: 666f63ad34276094eb415e59d4919c74,
     type: 2}
   m_audioClip: {fileID: 8300000, guid: 57782cda83087fc49923f6dc376ae53c, type: 3}
   m_PlayOnAwake: 1
@@ -716,7 +716,7 @@ AudioSource:
   m_GameObject: {fileID: 3693660367647453550}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 141955689219120131, guid: 666f63ad34276094eb415e59d4919c74,
+  OutputAudioMixerGroup: {fileID: 4813368516637239450, guid: 666f63ad34276094eb415e59d4919c74,
     type: 2}
   m_audioClip: {fileID: 8300000, guid: d8e63a78be5681e49947d6a51c1319ce, type: 3}
   m_PlayOnAwake: 1
@@ -816,6 +816,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5b5f6d60361cca468c0ed78e80657e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mixer: {fileID: 24100000, guid: 666f63ad34276094eb415e59d4919c74, type: 2}
 --- !u!1 &4848801324544556278
 GameObject:
   m_ObjectHideFlags: 0
@@ -1456,12 +1457,12 @@ PrefabInstance:
     - target: {fileID: 9192661350091932900, guid: 21b815f661bbaf245864623512ba320d,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.08753257
+      value: 0.08753251
       objectReference: {fileID: 0}
     - target: {fileID: 9192661350091932900, guid: 21b815f661bbaf245864623512ba320d,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.8125801
+      value: -0.81258017
       objectReference: {fileID: 0}
     - target: {fileID: 9192661350091932900, guid: 21b815f661bbaf245864623512ba320d,
         type: 3}
@@ -1491,22 +1492,22 @@ PrefabInstance:
     - target: {fileID: 9192661350037599761, guid: 21b815f661bbaf245864623512ba320d,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.08653092
+      value: -0.08653108
       objectReference: {fileID: 0}
     - target: {fileID: 9192661350037599761, guid: 21b815f661bbaf245864623512ba320d,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.8154207
+      value: 0.81542075
       objectReference: {fileID: 0}
     - target: {fileID: 9192661350037599761, guid: 21b815f661bbaf245864623512ba320d,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.48782343
+      value: -0.4878233
       objectReference: {fileID: 0}
     - target: {fileID: 9192661350037599761, guid: 21b815f661bbaf245864623512ba320d,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.2993823
+      value: -0.29938242
       objectReference: {fileID: 0}
     - target: {fileID: 9192661350037599761, guid: 21b815f661bbaf245864623512ba320d,
         type: 3}
@@ -1526,7 +1527,7 @@ PrefabInstance:
     - target: {fileID: 9192661349997861221, guid: 21b815f661bbaf245864623512ba320d,
         type: 3}
       propertyPath: m_ChildCameras.Array.size
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 9192661350785449742, guid: 21b815f661bbaf245864623512ba320d,
         type: 3}
@@ -1887,6 +1888,10 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1832635705, guid: 5e80bbec7757a4c4dae91fd33dc2af7f, type: 3}
+      propertyPath: m_TagString
+      value: DialogueSystem
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5e80bbec7757a4c4dae91fd33dc2af7f, type: 3}
