@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1076164965879382033}
   - component: {fileID: 8337368983119936039}
   - component: {fileID: 2344336369950836446}
+  - component: {fileID: 1821328500862636450}
   m_Layer: 0
   m_Name: SM_TunnelStraight
   m_TagString: Untagged
@@ -77,3 +78,17 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!64 &1821328500862636450
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4085916657386582530}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 940693467966954288, guid: 610ffc7ecafe0bd46b9b1283a3d8a47f, type: 3}
