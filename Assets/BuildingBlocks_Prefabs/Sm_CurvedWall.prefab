@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3345675245864681875}
   - component: {fileID: 5995768125656284069}
   - component: {fileID: 2733646449592156}
+  - component: {fileID: -3606781726973751463}
   m_Layer: 0
   m_Name: Sm_CurvedWall
   m_TagString: Untagged
@@ -77,3 +78,17 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!64 &-3606781726973751463
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1744406190420652928}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: -5089661469706153427, guid: 231f9f580a844e745a3ab2216ea72bd2, type: 3}
