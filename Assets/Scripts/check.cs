@@ -6,6 +6,7 @@ using UnityEngine.Experimental.VFX;
 public class check : MonoBehaviour
 {
     public checkContent m_content;
+    public string textPrompt;
     [Tooltip("Should never ever be duplicated")]
     public int index =-1;
     public AudioClip pickUpSound;
