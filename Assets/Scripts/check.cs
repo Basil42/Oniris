@@ -18,6 +18,7 @@ public class check : MonoBehaviour
     private VisualEffect m_pickup;
     private musicManager m_musicManager;
     private CheckCounter m_counter;
+    private DialougeSystem m_dialogSystem;
     [SerializeField] private float dialogueTime = 10;
     // Start is called before the first frame update
     void Awake()
@@ -27,6 +28,7 @@ public class check : MonoBehaviour
         //m_content = m_manager.getContent(index, out textPrompt);
         m_musicManager = GameObject.FindGameObjectWithTag("MusicManager").GetComponent<musicManager>();
         m_counter = GameObject.FindGameObjectWithTag("CheckCounter").GetComponent<CheckCounter>();
+        m_dialogSystem = GameObject.FindGameObjectWithTag("DialogueSystem").GetComponent<DialougeSystem>();
     }
     private void Start()
     {
@@ -87,7 +89,6 @@ public class check : MonoBehaviour
 
     private void CallDialogue(string text)
     {
-        //Might want to optimise finding the dialogue system
-        GameObject.FindGameObjectWithTag("DialogueSystem").GetComponent<DialougeSystem>().StartDialogue(text, dialogueTime);
+        m_dialogSystem.GetComponent<DialougeSystem>().StartDialogue(text, dialogueTime);
     }
 }
