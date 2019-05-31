@@ -6,7 +6,7 @@ using UnityEngine.Experimental.VFX;
 public class check : MonoBehaviour
 {
     public checkContent m_content;
-    public string textPrompt;
+    public string textPrompt = "This is a test. Or the devs forgot to remove it.";
     [Tooltip("Should never ever be duplicated")]
     public int index =-1;
     public AudioClip pickUpSound;
@@ -41,26 +41,27 @@ public class check : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             PlayerMovement player = other.gameObject.GetComponent<PlayerMovement>();
+            CallDialogue(textPrompt);
             switch (m_content)
             {
                 case checkContent.Dash_fragment:
-                    CallDialogue("Seems like nothing is here");
+                    
                     break;
                 case checkContent.Double_jump:
                     player.m_abilityFlags |= AbilityAvailability.hasDoublejump;
-                    CallDialogue("I think I got a new power! Press A in the air to double jump!");
+                    
                     GameObject.FindGameObjectWithTag("DoubleJumpUI").GetComponent<Image>().fillAmount = 1;
                     m_musicManager.StartCoroutine(m_musicManager.ChoirFadeIn());
                     break;
                 case checkContent.Blink:
                     player.m_abilityFlags |= AbilityAvailability.hasBlink;
-                    CallDialogue("I think I got a new power! Press Y to blink! I might be able to go through certain walls with this");
+                    
                     GameObject.FindGameObjectWithTag("BlinkUI").GetComponent<Image>().fillAmount = 1;
                     m_musicManager.StartCoroutine(m_musicManager.SynthFadeIn());
                     break;
                 case checkContent.Wall_Jump:
                     player.m_abilityFlags |= AbilityAvailability.hasWallJump;
-                    CallDialogue("I think I got a new power! Hold RT to wall run, horizontally and vertically, press A to jump during wall run!");
+                    
                     GameObject.FindGameObjectWithTag("WallJumpUI").GetComponent<Image>().fillAmount = 1;
                     m_musicManager.StartCoroutine(m_musicManager.FluteFadeIn());
                     break;
