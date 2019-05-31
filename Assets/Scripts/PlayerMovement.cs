@@ -209,7 +209,7 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             
-            if (m_state == movementState.falling) MovementVector += hit.normal * 0.1f;
+            if (m_state == movementState.falling && !Input.GetButton("Jump")) MovementVector += hit.normal * 0.1f;
         }
 
     }

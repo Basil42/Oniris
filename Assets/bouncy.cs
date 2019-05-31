@@ -19,6 +19,8 @@ public class bouncy : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             movement.MovementVector.y = bounciness;
+            movement.MovementVector.x = movement.MovementVector.x / 3.0f;
+            movement.MovementVector.z = movement.MovementVector.z / 3.0f;
         }
     }
 }
