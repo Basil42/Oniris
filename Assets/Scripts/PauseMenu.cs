@@ -27,7 +27,7 @@ public class PauseMenu : MonoBehaviour
     //I would like to do something with this later, it would allow for different fadeouts/fadeins
 
     //private void ChangedActiveScene(Scene current, Scene next)
-    //{
+    //{ Switch statement perhaps?
     //    print("Hello there");
     //    if (current.name == next.name)
     //    {
