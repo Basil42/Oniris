@@ -59,6 +59,7 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector]public AbilityAvailability m_abilityFlags;
 
     public Vector3 MovementVector;
+    private Vector3 m_GroundPlane;
     [HideInInspector] public Animator m_animator;
 
 
@@ -133,10 +134,10 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void Move(Vector3 inputVector)
+    public void Move(Vector3 inputVectorRaw)
     {
-            //initial velocity case
-
+        //initial velocity case
+        Vector3 inputVector = Vector3.ProjectOnPlane(inputVectorRaw, m_GroundPlane);
             MovementVector = (Vector3.Dot(MovementVector.normalized, inputVector) < -0.5f) ? Vector3.Lerp(MovementVector, inputVector * m_RunningSpeed, SteeringPower*2.0f) : Vector3.Slerp(MovementVector, inputVector * m_RunningSpeed, SteeringPower);
       
             if (Vector3.Scale(MovementVector,new Vector3(1.0f,0.0f,1.0f)).magnitude > 0.005f) transform.rotation = Quaternion.RotateTowards(transform.rotation,Quaternion.LookRotation(new Vector3(MovementVector.x,0.0f,MovementVector.z), Vector3.up), m_SteeringSpeed);
@@ -153,16 +154,12 @@ public class PlayerMovement : MonoBehaviour
     public void GroundCheck()
     {
         RaycastHit hit;
-        RaycastHit hit2;
-        RaycastHit hit3;
-        RaycastHit hit4;
-        RaycastHit hit5;
 
         if (Physics.Raycast(transform.position + new Vector3(0, 0.4f, 0), transform.TransformDirection(Vector3.down), out hit, 0.6f) ||
-            Physics.Raycast(transform.position + (transform.forward * 0.5f + transform.up * 0.4f), transform.TransformDirection(Vector3.down), out hit2, 0.6f) ||
-            Physics.Raycast(transform.position + (-transform.forward * 0.5f + transform.up * 0.4f), transform.TransformDirection(Vector3.down), out hit3, 0.6f) ||
-            Physics.Raycast(transform.position + (transform.right * 0.3f + transform.up * 0.4f), transform.TransformDirection(Vector3.down), out hit4, 0.6f) ||
-            Physics.Raycast(transform.position + (-transform.right * 0.3f + transform.up * 0.4f), transform.TransformDirection(Vector3.down), out hit5, 0.6f)
+            Physics.Raycast(transform.position + (transform.forward * 0.5f + transform.up * 0.4f), transform.TransformDirection(Vector3.down), out hit, 0.6f) ||
+            Physics.Raycast(transform.position + (-transform.forward * 0.5f + transform.up * 0.4f), transform.TransformDirection(Vector3.down), out hit, 0.6f) ||
+            Physics.Raycast(transform.position + (transform.right * 0.3f + transform.up * 0.4f), transform.TransformDirection(Vector3.down), out hit, 0.6f) ||
+            Physics.Raycast(transform.position + (-transform.right * 0.3f + transform.up * 0.4f), transform.TransformDirection(Vector3.down), out hit, 0.6f)
            )
         {
             Debug.DrawRay(transform.position + new Vector3(0, 0.1f, 0), transform.TransformDirection(Vector3.down) * hit.distance, Color.yellow);
@@ -177,7 +174,7 @@ public class PlayerMovement : MonoBehaviour
                
             }
             m_state = movementState.grounded;
-
+            m_GroundPlane = hit.normal;
 
         }
         else
