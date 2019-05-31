@@ -24,7 +24,7 @@ public class check : MonoBehaviour
     {
         //if (index == -1) Debug.LogError("cannot have check without proper index");
         //m_manager = GameObject.FindGameObjectWithTag("checkManager").GetComponent<CheckManager>();
-        //m_content = m_manager.getContent(index);
+        //m_content = m_manager.getContent(index, out textPrompt);
         m_musicManager = GameObject.FindGameObjectWithTag("MusicManager").GetComponent<musicManager>();
         m_counter = GameObject.FindGameObjectWithTag("CheckCounter").GetComponent<CheckCounter>();
     }
