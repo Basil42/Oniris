@@ -16,6 +16,7 @@ public class check : MonoBehaviour
     private VisualEffect m_passive;
     private VisualEffect m_pickup;
     private musicManager m_musicManager;
+    private CheckCounter m_counter;
     [SerializeField] private float dialogueTime = 10;
     // Start is called before the first frame update
     void Awake()
@@ -24,6 +25,7 @@ public class check : MonoBehaviour
         //m_manager = GameObject.FindGameObjectWithTag("checkManager").GetComponent<CheckManager>();
         //m_content = m_manager.getContent(index);
         m_musicManager = GameObject.FindGameObjectWithTag("MusicManager").GetComponent<musicManager>();
+        m_counter = GameObject.FindGameObjectWithTag("CheckCounter").GetComponent<CheckCounter>();
     }
     private void Start()
     {
@@ -71,6 +73,7 @@ public class check : MonoBehaviour
         m_passive.SetFloat("ExplosionForce", 10.0f);
         m_pickup.SendEvent("PickUp");
         Invoke("stopPickup", 1.0f);
+        m_counter.addCheck();
         GetComponent<AudioSource>().Stop();
         GetComponent<AudioSource>().PlayOneShot(pickUpSound, m_pickUpVolume);
     }
