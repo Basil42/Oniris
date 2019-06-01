@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.Experimental.VFX;
 public class check : MonoBehaviour
 {
+    private const float FadeOutSpeed = 0.1f;
     public checkContent m_content;
     public string textPrompt = "This is a test. Or the devs forgot to remove it.";
     [Tooltip("Should never ever be duplicated")]
@@ -80,6 +81,7 @@ public class check : MonoBehaviour
         m_counter.addCheck();
         GetComponent<AudioSource>().Stop();
         GetComponent<AudioSource>().PlayOneShot(pickUpSound, m_pickUpVolume);
+        StartCoroutine(FadeOut());
     }
 
     private void stopPickup()
@@ -90,5 +92,19 @@ public class check : MonoBehaviour
     private void CallDialogue(string text)
     {
         m_dialogSystem.GetComponent<DialougeSystem>().StartDialogue(text, dialogueTime);
+    }
+
+    IEnumerator FadeOut()
+    {
+        Light light = GetComponent<Light>();
+        float StartingIntensity = light.intensity;
+        float step = 0.0f;
+        while(light.intensity > 0.0f)
+        {
+            light.intensity = Mathf.SmoothStep(StartingIntensity, 0.0f, step);
+            step += FadeOutSpeed * Time.deltaTime;
+            yield return null;
+        }
+        
     }
 }

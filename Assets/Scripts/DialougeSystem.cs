@@ -15,13 +15,14 @@ public class DialougeSystem : MonoBehaviour
     public Image image;
     public TextMeshProUGUI textBubble;
     private float targetPosition;
+    private float targetOffset = 200.0f;
     private float dialogueStep = 0.01f;
     private float imageStep = 0.01f;
     private bool runningDialogue = false;
 
     private void Start()
     {
-        targetPosition = textBubble.transform.localPosition.x - 186;
+        targetPosition = textBubble.transform.localPosition.x - targetOffset;
     }
 
     // Update is called once per frame
