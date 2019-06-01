@@ -8,8 +8,10 @@ public class PlayerVFXManager : MonoBehaviour
     public GameObject RunEffectObject;
     public GameObject BlinkEffectObject;
     public GameObject AmbiantDustObject;
+    public Renderer HairRenderer;
     private VisualEffect RunEffect;
     private VisualEffect BlinkEffect;
+    private PlayerMovement playerMovement;
     private VisualEffect AmbiantEffect;
     private Vector3 oldPosition;
     private Vector3 deltaPosition;
@@ -18,6 +20,7 @@ public class PlayerVFXManager : MonoBehaviour
     [SerializeField] float SpeedTreshold = 0.05f;
     [SerializeField] int spawnRate = 10;
     //VisualEffect RunEffect2;
+    private float m_windPrevious = 0.0f;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,6 +28,7 @@ public class PlayerVFXManager : MonoBehaviour
         BlinkEffect = BlinkEffectObject.GetComponent<VisualEffect>();
         SpeedEffectoffset = RunEffect.transform.localPosition;
         AmbiantEffect = AmbiantDustObject.GetComponent<VisualEffect>();
+        playerMovement = GetComponent<PlayerMovement>();
     }
 
     // Update is called once per frame
@@ -43,6 +47,14 @@ public class PlayerVFXManager : MonoBehaviour
         BlinkEffectObject.transform.position = transform.position;
         BlinkEffect.SetVector3("attractive target position", transform.position + BlinkEffectTargetOffset);
         AmbiantDustObject.transform.position = transform.position;
+        HairRenderer.material.SetFloat("Vector1_7F45795D", HairRenderer.material.GetFloat("Vector1_7F45795D") + Time.deltaTime * (1.0f +m_windPrevious * 5.0f));
+    }
+    private void FixedUpdate()
+    {
+        m_windPrevious = HairRenderer.material.GetFloat("Vector1_F38142DE");
+        
+        HairRenderer.material.SetFloat("Vector1_F38142DE", Mathf.Lerp(m_windPrevious, Mathf.Clamp01(Vector3.Project(playerMovement.MovementVector, transform.forward).magnitude / playerMovement.m_RunningSpeed),0.05f ));
+        
     }
 
     private void RunUpdate()
