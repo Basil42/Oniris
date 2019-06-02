@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6051495307951228699}
   - component: {fileID: 56210886237076450}
   - component: {fileID: 3388207925287296007}
+  - component: {fileID: 3650781356060250765}
   m_Layer: 0
   m_Name: SM_Desk_ANTIQUE
   m_TagString: Untagged
@@ -58,7 +59,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 670224309865224971, guid: 84f87d95f34e984449c6c71e315ded5b, type: 3}
+  - {fileID: 2100000, guid: 0694dd8ff5e088d40bd0fbdb6d706732, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -87,7 +88,21 @@ BoxCollider:
   m_GameObject: {fileID: 1800144129766297406}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
-  m_Size: {x: 5.779249, y: 3.2582872, z: 5.2083707}
-  m_Center: {x: 0, y: 0, z: 2.6040924}
+  m_Size: {x: 5.779249, y: 3.2582872, z: 0.7371011}
+  m_Center: {x: 0, y: 9.294872e-15, z: 4.839728}
+--- !u!64 &3650781356060250765
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1800144129766297406}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: -7678798291151755454, guid: 84f87d95f34e984449c6c71e315ded5b, type: 3}

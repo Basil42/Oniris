@@ -15,13 +15,14 @@ public class DialougeSystem : MonoBehaviour
     public Image image;
     public TextMeshProUGUI textBubble;
     private float targetPosition;
+    private float targetOffset = 200.0f;
     private float dialogueStep = 0.01f;
     private float imageStep = 0.01f;
     private bool runningDialogue = false;
 
     private void Start()
     {
-        targetPosition = textBubble.transform.localPosition.x - 186;
+        targetPosition = textBubble.transform.localPosition.x - targetOffset;
     }
 
     // Update is called once per frame
@@ -52,7 +53,7 @@ public class DialougeSystem : MonoBehaviour
         while (runningDialogue)
         {
            // image.fillAmount += 0.01f;
-            image.transform.localPosition = new Vector3(Mathf.Lerp(image.transform.localPosition.x, -360, imageStep), image.transform.localPosition.y, image.transform.localPosition.z);
+            //image.transform.localPosition = new Vector3(Mathf.Lerp(image.transform.localPosition.x, -360, imageStep), image.transform.localPosition.y, image.transform.localPosition.z);
             imageStep += 0.001f;
             yield return new WaitForFixedUpdate();
         }
@@ -66,7 +67,7 @@ public class DialougeSystem : MonoBehaviour
         while (imageStep < 0.3f && !runningDialogue)
         {
             //image.fillAmount -= 0.01f;
-            image.transform.localPosition = new Vector3(Mathf.Lerp(image.transform.localPosition.x, -200, imageStep), image.transform.localPosition.y, image.transform.localPosition.z);
+            //image.transform.localPosition = new Vector3(Mathf.Lerp(image.transform.localPosition.x, -200, imageStep), image.transform.localPosition.y, image.transform.localPosition.z);
             imageStep += 0.001f;
             yield return new WaitForFixedUpdate();
         }

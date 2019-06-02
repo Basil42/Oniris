@@ -11,6 +11,10 @@ public class MovingPlatform : MonoBehaviour
     public int directionY;
     public int directionZ;
     private Vector3 targetPosition;
+    private Vector3 originalPostion;
+
+    public bool automatic = true;
+    private bool active = false;
 
     public float loopTime;
     private float timer;
@@ -22,23 +26,25 @@ public class MovingPlatform : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        originalPostion = transform.position;
         rb = gameObject.GetComponent<Rigidbody>();
         targetPosition = new Vector3(directionX, directionY, directionZ);
         player = GameObject.FindGameObjectWithTag("Player").transform.parent.gameObject;
-        tag = "MovingSurface";
     }
 
     private void FixedUpdate()
     {
-        timer += Time.fixedDeltaTime;
-        if(timer >= loopTime)
+        if(automatic || active)
         {
-            targetPosition *= -1;
-            timer = 0;
+            timer += Time.fixedDeltaTime;
+            if (timer >= loopTime && automatic)
+            {
+                targetPosition *= -1;
+                timer = 0;
+            }
+            deltaPosition = targetPosition * speed * Time.fixedDeltaTime;
+            rb.MovePosition(transform.position + deltaPosition);
         }
-        deltaPosition = targetPosition * speed * Time.fixedDeltaTime;
-        rb.MovePosition(transform.position + deltaPosition);
-
     }
 
     private void OnTriggerStay(Collider other)
@@ -50,7 +56,19 @@ public class MovingPlatform : MonoBehaviour
         }
     }
 
-   
+    public void activate()
+    {
+        if(active == false)
+        {
+            print("Hello there");
+            active = true;
+            Invoke("deActivate", loopTime);
+        }
+    }
 
-    
+    private void deActivate()
+    {
+        active = false;
+        transform.position = originalPostion;
+    }
 }

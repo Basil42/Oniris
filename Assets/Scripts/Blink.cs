@@ -10,10 +10,8 @@ public class Blink : MonoBehaviour
 
     private CameraController cameraController;
     private CharacterController charCtrl;
-    public GameObject blinkStream;
-    private GameObject currentBlinkStream;
-    public GameObject blinkParticles;
-    private GameObject currentBlinkParticles;
+
+ 
 
     private LayerMask blinkThrough;
     public float distance = 10;
@@ -125,7 +123,7 @@ public class Blink : MonoBehaviour
         }
 
         StartCoroutine("Appear");
-        EndBlinkVFX();
+        
 
         m_playerMovement.controller.enabled = true;
         m_playerMovement.GroundCheck();
@@ -162,13 +160,8 @@ public class Blink : MonoBehaviour
 
     private void SpawnBlinkVFX()
     {
-        currentBlinkStream = Instantiate(blinkStream, transform.position, transform.rotation);
-        currentBlinkParticles = Instantiate(blinkParticles, transform.position, transform.rotation);
+        GetComponent<PlayerVFXManager>().PlayBlink();
     }
 
-    private void EndBlinkVFX()
-    {
-        currentBlinkStream.GetComponent<SetVFXParameters>().StopEffect();
-        currentBlinkParticles.GetComponent<SetVFXParameters>().StopEffect();
-    }
+    
 }
