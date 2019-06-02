@@ -58,11 +58,11 @@ public class Opening : MonoBehaviour
             
         }
         
-        BlackFrame.CrossFadeAlpha(0.0f, SceneFadeInSpeed,true);//fade in
+        BlackFrame.CrossFadeAlpha(0, SceneFadeInSpeed,true);//fade in
         foreach(TextMeshProUGUI text in InText) {
-            text.CrossFadeAlpha(0.0f, SceneFadeInSpeed, true);
+            text.CrossFadeAlpha(0, SceneFadeInSpeed, true);
         }
-        yield return new WaitUntil(() => Mathf.Approximately(BlackFrame.color.a, 0.0f));
+        yield return new WaitForSecondsRealtime(SceneFadeInSpeed + frameDuration);
         //animation
         yield return new WaitForSecondsRealtime(frameDuration);
         Frame1.CrossFadeAlpha(0.0f, CrossfadeDuration, true);
