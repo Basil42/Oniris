@@ -24,9 +24,9 @@ public class check : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        //if (index == -1) Debug.LogError("cannot have check without proper index");
-        //m_manager = GameObject.FindGameObjectWithTag("checkManager").GetComponent<CheckManager>();
-        //m_content = m_manager.getContent(index, out textPrompt);
+        if (index == -1) Debug.LogError("cannot have check without proper index");
+        m_manager = GameObject.FindGameObjectWithTag("checkManager").GetComponent<CheckManager>();
+        
         m_musicManager = GameObject.FindGameObjectWithTag("MusicManager").GetComponent<musicManager>();
         m_counter = GameObject.FindGameObjectWithTag("CheckCounter").GetComponent<CheckCounter>();
         m_dialogSystem = GameObject.FindGameObjectWithTag("DialogueSystem").GetComponent<DialougeSystem>();
@@ -36,6 +36,7 @@ public class check : MonoBehaviour
         m_passive = GetComponentsInChildren<VisualEffect>()[0];
         m_pickup = GetComponentsInChildren<VisualEffect>()[1];
         m_passive.SetFloat("ExplosionForce", 0.0f);
+        m_content = m_manager.getContent(index, out textPrompt);
     }
 
 

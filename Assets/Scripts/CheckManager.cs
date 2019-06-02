@@ -27,11 +27,11 @@ public class CheckManager : MonoBehaviour
     private void Awake()
     {
         
-        content = new int[69];
+        content = new int[17];
         content[0] = (int)checkContent.Double_jump;
         content[1] = (int)checkContent.Blink;
         content[2] = (int)checkContent.Wall_Jump;
-        assignedStatus = new bool[69];
+        assignedStatus = new bool[17];
         //run randomizer
         Randomizer(content, content.Length);
     }
@@ -39,10 +39,10 @@ public class CheckManager : MonoBehaviour
     void Start()
     {
         
-        //for(int i = 0; i < content.Length; i++)
-        //{
-        //    assignedStatus[i] = false;
-        //}
+        for(int i = 0; i < content.Length; i++)
+        {
+            assignedStatus[i] = false;
+        }
     }
 
     // Update is called once per frame
