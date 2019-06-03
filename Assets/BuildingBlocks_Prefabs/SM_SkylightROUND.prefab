@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7281364329376074021}
   - component: {fileID: 1754043170635019027}
   - component: {fileID: 5434461097105919978}
+  - component: {fileID: -5635640317240058165}
   m_Layer: 0
   m_Name: SM_SkylightROUND
   m_TagString: Untagged
@@ -77,3 +78,16 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &-5635640317240058165
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6005483718259489590}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 73.96181, y: 73.95726, z: 1.580993}
+  m_Center: {x: 0.01638794, y: 0.0016021729, z: 3.069675}
