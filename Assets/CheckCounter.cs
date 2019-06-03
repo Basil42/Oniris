@@ -28,7 +28,7 @@ public class CheckCounter : MonoBehaviour
     public void addCheck()
     {
         collectedChecks++;
-        counter.text = collectedChecks +"/"+ totalChecks + " orbs";
+        counter.text = collectedChecks +"/"+ totalChecks;
         if(collectedChecks >= requiredChecks)
         {
             GameObject.FindGameObjectWithTag("DialogueSystem").GetComponent<DialougeSystem>().StartDialogue("I think I have enough orbs now. I should head back to the start", 7);
