@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 
 public class Opening : MonoBehaviour
@@ -14,6 +15,7 @@ public class Opening : MonoBehaviour
     public RawImage CursorFrame;
     public RawImage BlackFrame;
     public TextMeshProUGUI[] InText;
+    public TextMeshProUGUI[] OutText;
     public float TextFadeTime = 1.5f;
     private float internalTime = 0.0f;
     public float frameDuration = 2.0f;
@@ -22,6 +24,7 @@ public class Opening : MonoBehaviour
     public float Sceneduration = 10.0f;
     public float SceneFadeInSpeed = 3.0f;
     public float SceneFadeOutSpeed = 4.0f;
+    [HideInInspector] public AsyncOperation loading;
 
     private void Awake()
     {
@@ -32,10 +35,25 @@ public class Opening : MonoBehaviour
             text.alpha = 0.0f;
             
         }
+        foreach (TextMeshProUGUI text in OutText)
+        {
+            text.alpha = 0.0f;
+        }
     }
     void Start()
     {
+        foreach (TextMeshProUGUI text in InText)
+        {
+            text.alpha = 0.0f;
+
+        }
+        foreach (TextMeshProUGUI text in OutText)
+        {
+            text.alpha = 0.0f;
+        }
         StartCoroutine(SceneRoll());
+        loading = SceneManager.LoadSceneAsync("Final_Level");
+        loading.allowSceneActivation = false;
     }
 
     private void Update()
@@ -73,6 +91,16 @@ public class Opening : MonoBehaviour
         yield return new WaitUntil(() => internalTime > Sceneduration);
         //fade out
         BlackFrame.CrossFadeAlpha(1.0f, SceneFadeOutSpeed, true);
-
+        foreach (TextMeshProUGUI text in OutText)
+        {
+            float timer = 0.0f;
+            while(timer < 1.0f)
+            {
+                timer += Time.deltaTime / TextFadeTime;
+                text.alpha = Mathf.Lerp(0, 1, timer);
+                yield return null;
+            }
+        }
+        loading.allowSceneActivation = true;
     }
 }
