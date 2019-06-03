@@ -97,10 +97,12 @@ public class PlayerMovement : MonoBehaviour
         if (m_state == movementState.grounded || m_state == movementState.falling) GroundCheck();
         switch (m_state)
         {
+            case movementState.offLedge:
             case movementState.falling:
                 fallingBehavior();
                 airControl(m_inputvector);
                 break;
+            
             case movementState.grounded:
                 //MovementVector.y = 0.1f;
                 Move(m_inputvector);
@@ -167,7 +169,7 @@ public class PlayerMovement : MonoBehaviour
             Debug.DrawRay(transform.position + (-transform.forward * 0.5f + transform.up * 0.1f), transform.TransformDirection(Vector3.down) * hit.distance, Color.green);
             Debug.DrawRay(transform.position + (transform.right * 0.3f + transform.up * 0.1f), transform.TransformDirection(Vector3.down) * hit.distance, Color.blue);
             Debug.DrawRay(transform.position + (-transform.right * 0.3f + transform.up * 0.1f), transform.TransformDirection(Vector3.down) * hit.distance, Color.black);
-            if (m_state == movementState.falling)
+            if (m_state == movementState.falling || m_state == movementState.offLedge)
             {
                 m_animator.SetTrigger("run");
                 MovementVector = Vector3.Project(transform.forward * Vector3.ProjectOnPlane(MovementVector,Vector3.up).magnitude,m_inputvector) + Vector3.Project(MovementVector, Vector3.up);
@@ -184,9 +186,24 @@ public class PlayerMovement : MonoBehaviour
             Debug.DrawRay(transform.position + (-transform.forward * 0.5f + transform.up * 0.1f), transform.TransformDirection(Vector3.down) * 1000, Color.white);
             Debug.DrawRay(transform.position + (transform.right * 0.3f + transform.up * 0.1f), transform.TransformDirection(Vector3.down) * 1000, Color.white);
             Debug.DrawRay(-transform.position + (transform.right * 0.3f + transform.up * 0.1f), transform.TransformDirection(Vector3.down) * 1000, Color.white);
-            if(m_state == movementState.grounded)m_animator.SetTrigger("fall");
-            m_state = movementState.falling;
+            if (m_state == movementState.grounded)
+            {
+                m_animator.SetTrigger("fall");
+                StartCoroutine(offLedge());
+            }
+            else if (m_state != movementState.offLedge)
+            {
+                m_state = movementState.falling;
+            }
+            
         }
+    }
+
+    private IEnumerator offLedge()
+    {
+        m_state = movementState.offLedge;
+        yield return new WaitForSeconds(0.3f); // stout code
+        m_state = movementState.falling;
     }
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
