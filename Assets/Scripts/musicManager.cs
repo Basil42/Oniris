@@ -40,7 +40,7 @@ public class musicManager : MonoBehaviour
     void FixedUpdate()
     {
         mixer.GetFloat("MasterVol", out m_MasterVolume);
-        mixer.SetFloat("MasterVol", Mathf.MoveTowards(m_MasterVolume, (Mathf.Clamp01(m_player.MovementVector.magnitude / m_player.m_RunningSpeed) * 40.0f) - 40.0f, m_MasterFadeSpeed));
+        mixer.SetFloat("MasterVol", Mathf.MoveTowards(m_MasterVolume, (Mathf.Clamp01(m_player.MovementVector.magnitude / m_player.m_RunningSpeed) * 10.0f) - 10.0f, m_MasterFadeSpeed));
 
     }
 
