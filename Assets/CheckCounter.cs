@@ -41,13 +41,16 @@ public class CheckCounter : MonoBehaviour
 
     private IEnumerator end()
     {
-        while(fadeOut.color.a < 1)
+        //AsyncOperation load = SceneManager.LoadSceneAsync("");
+        //load.allowSceneActivation = false;
+        while (fadeOut.color.a < 1)
         {
             var tempcolor = fadeOut.color;
-            tempcolor.a += 0.0f;
+            tempcolor.a += 0.01f;
             fadeOut.color = tempcolor;
             yield return new WaitForFixedUpdate();
         }
-        //SceneManager.LoadSceneAsync();
+        yield return new WaitForSeconds(1.5f);
+        //load.allowSceneActivation = true;
     }
 }
