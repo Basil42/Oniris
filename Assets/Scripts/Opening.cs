@@ -51,11 +51,12 @@ public class Opening : MonoBehaviour
         {
             text.alpha = 0.0f;
         }
-        StartCoroutine(SceneRoll());
-        loading = SceneManager.LoadSceneAsync("Final_Level");
-        loading.allowSceneActivation = false;
-    }
+        
 
+        
+        StartCoroutine(SceneRoll());
+    }
+    
     private void Update()
     {
         internalTime += Time.deltaTime;
@@ -75,7 +76,8 @@ public class Opening : MonoBehaviour
             }
             
         }
-        
+        loading = SceneManager.LoadSceneAsync("Final_Level");
+        loading.allowSceneActivation = false;
         BlackFrame.CrossFadeAlpha(0, SceneFadeInSpeed,true);//fade in
         foreach(TextMeshProUGUI text in InText) {
             text.CrossFadeAlpha(0, SceneFadeInSpeed, true);
