@@ -41,6 +41,7 @@ public class CheckCounter : MonoBehaviour
 
     private IEnumerator end()
     {
+        GameObject.FindGameObjectWithTag("LevelTimer").GetComponent<LevelTimer>().goal();
         AsyncOperation load = SceneManager.LoadSceneAsync("Ending");
         load.allowSceneActivation = false;
         while (fadeOut.color.a < 1)

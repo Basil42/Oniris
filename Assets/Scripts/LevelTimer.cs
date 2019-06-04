@@ -9,34 +9,38 @@ public class LevelTimer : MonoBehaviour
 {
     private static float timer;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
+    //// Start is called before the first frame update
+    //void Start()
+    //{
+    //    SceneManager.sceneLoaded += OnSceneLoaded;
+    //}
 
     private void Update()
     {
         timer += Time.deltaTime;
         //if(Input.GetKeyDown(KeyCode.A))
         //{
-        //    timer = timer / 60;
+        //    //timer = timer ;
         //    WriteString();
         //}
     }
 
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    //private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    //{
+    //    if(scene == Ending)
+    //    {
+    //      timer = timer / 60;
+    //      WriteString();
+    //    }
+    //}
+
+    public void goal()
     {
-        //if(scene == /*endScene*/)
-        //{
-            //timer = timer / 60;
-            //WriteString();
-        //}
+        timer = timer / 60;
+        WriteString();
     }
 
-
     //adapted from https://support.unity3d.com/hc/en-us/articles/115000341143-How-do-I-read-and-write-data-from-a-text-file-
-    [MenuItem("Tools/Write file")]
     static void WriteString()
     {
         string path = "Assets/Scores/Scores.txt";
@@ -52,7 +56,6 @@ public class LevelTimer : MonoBehaviour
         AssetDatabase.ImportAsset(path);
     }
 
-    [MenuItem("Tools/Read file")]
     static void ReadString()
     {
         string path = "Assets/Resources/test.txt";
