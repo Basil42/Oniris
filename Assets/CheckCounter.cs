@@ -42,8 +42,9 @@ public class CheckCounter : MonoBehaviour
     private IEnumerator end()
     {
         GameObject.FindGameObjectWithTag("LevelTimer").GetComponent<LevelTimer>().goal();
-        AsyncOperation load = SceneManager.LoadSceneAsync("Ending");
-        load.allowSceneActivation = false;
+        //AsyncOperation load = SceneManager.LoadSceneAsync("Ending");
+        // load.allowSceneActivation = false;
+        Debug.Log("Starting end");
         while (fadeOut.color.a < 1)
         {
             var tempcolor = fadeOut.color;
@@ -52,6 +53,8 @@ public class CheckCounter : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
         yield return new WaitForSeconds(1.5f);
-        load.allowSceneActivation = true;
+        //load.allowSceneActivation = true;
+        Debug.Log("Finishing End");
+        SceneManager.LoadSceneAsync("Ending");
     }
 }

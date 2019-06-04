@@ -43,7 +43,7 @@ public class LevelTimer : MonoBehaviour
     //adapted from https://support.unity3d.com/hc/en-us/articles/115000341143-How-do-I-read-and-write-data-from-a-text-file-
     static void WriteString()
     {
-        string path = "Assets/Scores/Scores.txt";
+        string path = "Scores/Scores.txt"; //"Assets/Resources/Scores/Scores.txt";
 
         string score = timer.ToString();
 
@@ -56,13 +56,13 @@ public class LevelTimer : MonoBehaviour
         //AssetDatabase.ImportAsset(path);
     }
 
-    static void ReadString()
-    {
-        string path = "Assets/Resources/test.txt";
+    //static void ReadString()
+    //{
+    //    string path = "Assets/Resources/test.txt";
 
-        //Read the text from directly from the test.txt file
-        StreamReader reader = new StreamReader(path);
-        Debug.Log(reader.ReadToEnd());
-        reader.Close();
-    }
+    //    //Read the text from directly from the test.txt file
+    //    StreamReader reader = new StreamReader(path);
+    //    Debug.Log(reader.ReadToEnd());
+    //    reader.Close();
+    //}
 }

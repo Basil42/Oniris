@@ -9,6 +9,7 @@ public class PauseMenu : MonoBehaviour
     public bool GameIsPaused = false;
     public GameObject pauseMenu;
     public Selectable resumeButton;
+    public Selectable MenuButton;
     public Selectable restartButton;
     public Selectable quitButton;
     public Image fadeOut;
@@ -72,13 +73,20 @@ public class PauseMenu : MonoBehaviour
         pauseMenu.SetActive(false);
         Time.timeScale = 1;
         //StartCoroutine("LoadYourAsyncScene", scene.name);
-        StartCoroutine(ShowImage());
+        StartCoroutine(ShowImage(scene.name));
     }
 
     public void ResumeTime()
     {
         GameIsPaused = false;
         
+    }
+
+    public void MainMenuReturn()
+    {
+        pauseMenu.SetActive(false);
+        Time.timeScale = 1;
+        StartCoroutine(ShowImage("StartMenu"));
     }
 
     IEnumerator LoadYourAsyncScene(string SceneName)
@@ -100,7 +108,7 @@ public class PauseMenu : MonoBehaviour
         Application.Quit();
     }
 
-    public IEnumerator ShowImage()
+    public IEnumerator ShowImage(string sceneName)
     {
         //Mathf.Lerp(CurrentPosition , targetPosition, step);
         fadeOut.gameObject.SetActive(true);
@@ -109,7 +117,7 @@ public class PauseMenu : MonoBehaviour
             fadeOut.fillAmount += 0.01f;
             yield return new WaitForFixedUpdate();
         }
-        StartCoroutine("LoadYourAsyncScene", scene.name);
+        StartCoroutine("LoadYourAsyncScene", sceneName);
     }
 
     public IEnumerator HideImage()
