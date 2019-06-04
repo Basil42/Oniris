@@ -31,7 +31,7 @@ public class CheckCounter : MonoBehaviour
     public void addCheck()
     {
         collectedChecks++;
-        counter.text = collectedChecks +"/"+ (totalChecks - 3); //Hard code for now
+        counter.text = collectedChecks +"/"+ (requiredChecks); 
         if(collectedChecks >= requiredChecks)
         {
             StartCoroutine(end());
