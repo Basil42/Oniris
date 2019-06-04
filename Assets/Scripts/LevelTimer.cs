@@ -53,7 +53,7 @@ public class LevelTimer : MonoBehaviour
         writer.Close();
 
         //Re-import the file to update the reference in the editor
-        AssetDatabase.ImportAsset(path);
+        //AssetDatabase.ImportAsset(path);
     }
 
     static void ReadString()
