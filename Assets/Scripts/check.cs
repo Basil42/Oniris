@@ -53,20 +53,23 @@ public class check : MonoBehaviour
                     break;
                 case checkContent.Double_jump:
                     player.m_abilityFlags |= AbilityAvailability.hasDoublejump;
-                    
-                    GameObject.FindGameObjectWithTag("DoubleJumpUI").GetComponent<Image>().fillAmount = 1;
+                    GameObject UIDJObject = GameObject.FindGameObjectWithTag("DoubleJumpUI");
+                    UIDJObject.GetComponent<Image>().fillAmount = 1;
+                    UIDJObject.transform.GetChild(0).gameObject.GetComponent<Image>().fillAmount = 1;
                     m_musicManager.StartCoroutine(m_musicManager.ChoirFadeIn());
                     break;
                 case checkContent.Blink:
                     player.m_abilityFlags |= AbilityAvailability.hasBlink;
-                    
-                    GameObject.FindGameObjectWithTag("BlinkUI").GetComponent<Image>().fillAmount = 1;
+                    GameObject UIBObject = GameObject.FindGameObjectWithTag("BlinkUI");
+                    UIBObject.GetComponent<Image>().fillAmount = 1;
+                    UIBObject.transform.GetChild(0).gameObject.GetComponent<Image>().fillAmount = 1;
                     m_musicManager.StartCoroutine(m_musicManager.SynthFadeIn());
                     break;
                 case checkContent.Wall_Jump:
                     player.m_abilityFlags |= AbilityAvailability.hasWallJump;
-                    
-                    GameObject.FindGameObjectWithTag("WallJumpUI").GetComponent<Image>().fillAmount = 1;
+                    GameObject UIWJObject = GameObject.FindGameObjectWithTag("WallJumpUI");
+                    UIWJObject.GetComponent<Image>().fillAmount = 1;
+                    UIWJObject.transform.GetChild(0).gameObject.GetComponent<Image>().fillAmount = 1;
                     m_musicManager.StartCoroutine(m_musicManager.FluteFadeIn());
                     break;
                 default:
